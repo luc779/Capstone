@@ -8,6 +8,7 @@ export interface People {
     initials: string;
 }
 
+// get employees from Database
 export const works: People[] = [
     {
         initials: "CN"
@@ -89,5 +90,5 @@ function Employees() {
     </Card>
   );
 }
-// flex items-center space-x-4 rounded-md border p-4
+
 export default Employees;
