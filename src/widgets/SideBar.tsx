@@ -27,11 +27,11 @@ export interface Links {
 
 export const works: Links[] = [
     {
-        link: "#",
+        link: "",
         icon: <LayoutDashboard />
     }, 
     {
-        link: "#",
+        link: "/test",
         icon: <AreaChart style={{ color: '#7C3AED' }}/>
     },
     {

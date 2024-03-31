@@ -10,18 +10,17 @@ import {
 } from "@/components/ui/card"
 
 import { WeatherApiCall } from '@/apiCalls/WeatherApiCall';
-
 function Weather() {
   return (
-    <Card className="h-full overflow-auto">
-      <CardHeader>
-        <CardTitle>Weather</CardTitle>
-        <CardDescription>Next 7 day weather.</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <WeatherApiCall></WeatherApiCall>
-      </CardContent>
-    </Card>
+      <Card className="h-full overflow-auto">
+        <CardHeader>
+          <CardTitle>Weather</CardTitle>
+          <CardDescription>Next 7 day weather.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <WeatherApiCall></WeatherApiCall>
+        </CardContent>
+      </Card>
   );
 }
 
