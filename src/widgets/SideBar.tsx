@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react';
 
 import {
@@ -9,6 +11,8 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 
+import { usePathname } from 'next/navigation'
+
 import {
     HoverCard,
     HoverCardContent,
@@ -18,7 +22,6 @@ import {
 import { Button } from "@/components/ui/button"
 
 import { AreaChart, LayoutDashboard, Car, ClipboardList, Ticket, LogOut } from 'lucide-react';
-import { link } from 'fs';
 import Link from 'next/link';
 
 export interface Links {
@@ -26,10 +29,15 @@ export interface Links {
     icon: React.ReactNode;
 }
 
+export function ExampleClientComponent() {
+    const pathname = usePathname()
+    return <p>{pathname}</p>
+}
+
 export const works: Links[] = [
     {
-        link: "/",
-        icon: <LayoutDashboard />
+        link: "/Dashboard",
+        icon: <LayoutDashboard style={{ color: '#7C3AED'}}/>
     }, 
     {
         link: "/Sales",
@@ -48,7 +56,7 @@ export const works: Links[] = [
         icon: <ClipboardList style={{ color: '#7C3AED' }}/>
     },
     {
-        link: "#",
+        link: "/",
         icon: <LogOut style={{ color: '#7C3AED' }}/>
     }
 ]
@@ -57,7 +65,6 @@ function SideBar() {
   return (
     <Card className="h-full w-full overflow-auto">
         <CardContent className="grid p-10 gap-10 justify-center h-full">
-            
             {works.map((links) => (
                 <figure key={links.link}>
                     <span>

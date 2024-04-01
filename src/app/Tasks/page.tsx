@@ -2,6 +2,8 @@ import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/componen
 
 import SideBar from "@/widgets/SideBar";
 
+ 
+
 export default function Sales() {
   return (
     <main>
@@ -46,3 +48,7 @@ const BottomContentPanel = () => (
     </div>
   </ResizablePanel>
 );
+
+function useState<T>(pathname: string): [any, any] {
+  throw new Error("Function not implemented.");
+}

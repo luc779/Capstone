@@ -10,6 +10,7 @@ import {
     CardHeader,
     CardTitle,
   } from "@/components/ui/card"
+import Link from 'next/link';
 
 function SalesPreformance() {
   return (
@@ -25,7 +26,7 @@ function SalesPreformance() {
         </CardContent>
         <CardFooter>
             <Button variant="default">
-                <p>Direct to Sales Preformance Page</p>
+                <Link href="/Sales">Direct to Sales Preformance Page</Link>
             </Button>
         </CardFooter>
     </Card>
