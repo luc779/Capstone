@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/button"
 
 import { AreaChart, LayoutDashboard, Car, ClipboardList, Ticket, LogOut } from 'lucide-react';
 import { link } from 'fs';
+import Link from 'next/link';
 
 export interface Links {
     link: string;
@@ -27,23 +28,23 @@ export interface Links {
 
 export const works: Links[] = [
     {
-        link: "",
+        link: "/",
         icon: <LayoutDashboard />
     }, 
     {
-        link: "/test",
+        link: "/Sales",
         icon: <AreaChart style={{ color: '#7C3AED' }}/>
     },
     {
-        link: "#",
+        link: "/Inventory",
         icon: <Car style={{ color: '#7C3AED' }}/>
     },
     {
-        link: "#",
+        link: "/Events",
         icon: <Ticket style={{ color: '#7C3AED' }}/>
     },
     {
-        link: "#",
+        link: "/Tasks",
         icon: <ClipboardList style={{ color: '#7C3AED' }}/>
     },
     {
@@ -63,9 +64,9 @@ function SideBar() {
                         <HoverCard>
                             <HoverCardTrigger asChild>
                                 <Button variant="ghost" size="icon">
-                                    <a href={links.link}>
+                                    <Link href={links.link}>
                                         {links.icon}
-                                    </a>
+                                    </Link>
                                 </Button>
                             </HoverCardTrigger>
                         </HoverCard>

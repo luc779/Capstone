@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/card"
 
 import { WeatherApiCall } from '@/apiCalls/WeatherApiCall';
+
 function Weather() {
   return (
       <Card className="h-full overflow-auto">
