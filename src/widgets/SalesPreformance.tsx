@@ -12,6 +12,7 @@ import {
   } from "@/components/ui/card"
 import Link from 'next/link';
 
+// uses a card component 
 function SalesPreformance() {
   return (
     <Card className="h-full overflow-auto">

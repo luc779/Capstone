@@ -8,7 +8,7 @@ export interface People {
     initials: string;
 }
 
-// get employees from Database
+// TODO: get employees from Database
 export const works: People[] = [
     {
         initials: "CN"
@@ -63,6 +63,7 @@ import {
     CardTitle,
   } from "@/components/ui/card"
 
+// returns a card that displays in a horizontal list the employees, has an avatar icon above and the initials underneath
 function Employees() {
   return (
     <Card className="h-full overflow-auto">

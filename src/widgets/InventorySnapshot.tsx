@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/table"
 import Link from 'next/link';
 
+// TODO: get museum inventory
 const RecentInventory = [
   {
     make: "Ferrari",
@@ -47,6 +48,7 @@ const RecentInventory = [
   }
 ]
 
+// creates a card component which holds a table component on a few vehicles, at the bottom of the card contains a button to direct to inventory
 function InventorySnapshot() {
   return (
     <Card className="h-full overflow-auto">

@@ -18,9 +18,7 @@ import {
     HoverCardContent,
     HoverCardTrigger,
 } from "@/components/ui/hover-card"
-
 import { Button } from "@/components/ui/button"
-
 import { AreaChart, LayoutDashboard, Car, ClipboardList, Ticket, LogOut } from 'lucide-react';
 import Link from 'next/link';
 
@@ -29,38 +27,41 @@ export interface Links {
     icon: React.ReactNode;
 }
 
+// attempt to get current pathname to change icon color
 export function ExampleClientComponent() {
     const pathname = usePathname()
     return <p>{pathname}</p>
 }
 
+// the software has these links 
 export const works: Links[] = [
     {
         link: "/Dashboard",
-        icon: <LayoutDashboard style={{ color: '#7C3AED'}}/>
+        icon: <LayoutDashboard className='text-primary'/>
     }, 
     {
         link: "/Sales",
-        icon: <AreaChart style={{ color: '#7C3AED' }}/>
+        icon: <AreaChart className='text-primary'/>
     },
     {
         link: "/Inventory",
-        icon: <Car style={{ color: '#7C3AED' }}/>
+        icon: <Car className='text-primary'/>
     },
     {
         link: "/Events",
-        icon: <Ticket style={{ color: '#7C3AED' }}/>
+        icon: <Ticket className='text-primary'/>
     },
     {
         link: "/Tasks",
-        icon: <ClipboardList style={{ color: '#7C3AED' }}/>
+        icon: <ClipboardList className='text-primary'/>
     },
     {
         link: "/",
-        icon: <LogOut style={{ color: '#7C3AED' }}/>
+        icon: <LogOut className='text-primary'/>
     }
 ]
 
+// a card component which holds hovercard components for each link allowing an animation
 function SideBar() {
   return (
     <Card className="h-full w-full overflow-auto">

@@ -2,6 +2,7 @@ import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/componen
 
 import SideBar from "@/widgets/SideBar";
 
+// base panel
 export default function Sales() {
   return (
     <main>
@@ -13,6 +14,7 @@ export default function Sales() {
   );
 }
 
+// same side bar panel
 const SidebarPanel = () => (
     <ResizablePanel defaultSize={10}>
       <div className="flex h-screen justify-center py-4 pl-4">
@@ -21,6 +23,7 @@ const SidebarPanel = () => (
     </ResizablePanel>
 );
 
+// main content next to the sidebar
 const MainContentPanel = () => (
   <ResizablePanel defaultSize={90}>
     <ResizablePanelGroup direction="vertical">
@@ -31,6 +34,7 @@ const MainContentPanel = () => (
   </ResizablePanel>
 );
 
+// top panel for user
 const TopContentPanel = () => (
   <ResizablePanel defaultSize={10}>
     <div className="flex h-full items-center justify-center p-6">
@@ -39,6 +43,7 @@ const TopContentPanel = () => (
   </ResizablePanel>
 );
 
+// space for events
 const BottomContentPanel = () => (
   <ResizablePanel defaultSize={90}>
     <div className="flex h-full items-center justify-center p-6">

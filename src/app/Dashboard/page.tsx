@@ -1,4 +1,5 @@
 
+// page for the softwares dashboard
 
 import {
   ResizableHandle,
@@ -23,6 +24,7 @@ export default function Home() {
   );
 };
 
+// content fo the sidebar panel
 const SidebarPanel = () => (
   <ResizablePanel defaultSize={10}>
     <div className="flex h-screen justify-center py-4 pl-4">
@@ -31,6 +33,7 @@ const SidebarPanel = () => (
   </ResizablePanel>
 );
 
+// main overview
 const MainContentPanel = () => (
   <ResizablePanel defaultSize={90}>
     <ResizablePanelGroup direction="vertical">
@@ -41,6 +44,7 @@ const MainContentPanel = () => (
   </ResizablePanel>
 );
 
+// top of th page content
 const TopContentPanel = () => (
   <ResizablePanel defaultSize={10}>
     <div className="flex h-full items-center justify-center p-6">
@@ -49,6 +53,7 @@ const TopContentPanel = () => (
   </ResizablePanel>
 );
 
+// bottom section will be split again
 const BottomContentPanel = () => (
   <ResizablePanel defaultSize={90}>
     <ResizablePanelGroup direction="horizontal">
@@ -59,15 +64,17 @@ const BottomContentPanel = () => (
   </ResizablePanel>
 );
 
+// where sales and weather are shown
 const LeftMainPanel = () => (
   <ResizablePanel defaultSize={70}>
     <ResizablePanelGroup direction="vertical">
-      <SalesPreformancePanel />
-      <WeatherPanel />
+      <SalesAndWeatherPanel />
+      <EmployeeAndInventoryPanel />
     </ResizablePanelGroup>
   </ResizablePanel>
 );
 
+// where the calendars will go
 const RightMainPanel = () => (
   <ResizablePanel defaultSize={30}>
     <div className="flex h-screen items-center justify-center p-6">
@@ -76,7 +83,8 @@ const RightMainPanel = () => (
   </ResizablePanel>
 );
 
-const SalesPreformancePanel = () => (
+// sales and weather panel
+const SalesAndWeatherPanel = () => (
   <ResizablePanel defaultSize={38}>
     <div className="flex h-full">
       <div className="w-1/2 py-4 pl-4">
@@ -89,7 +97,8 @@ const SalesPreformancePanel = () => (
   </ResizablePanel>
 );
 
-const WeatherPanel = () => (
+// section of both employee and inventory
+const EmployeeAndInventoryPanel = () => (
   <ResizablePanel defaultSize={62}>
     <ResizablePanelGroup direction="vertical">
       <EmployeesPanel />
@@ -98,6 +107,7 @@ const WeatherPanel = () => (
   </ResizablePanel>
 );
 
+// panel to display employees 
 const EmployeesPanel = () => (
   <ResizablePanel defaultSize={40} className="min-h-[100px]">
     <div className="h-full w-full px-4 pb-4">
@@ -106,6 +116,7 @@ const EmployeesPanel = () => (
   </ResizablePanel>
 );
 
+// panel to display inventory
 const InventorySnapshotPanel = () => (
   <ResizablePanel defaultSize={60} className="min-h-[100px]">
     <div className="h-full px-4 pb-4">
