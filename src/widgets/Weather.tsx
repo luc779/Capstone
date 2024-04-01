@@ -9,8 +9,10 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 
+// gets API call
 import { WeatherApiCall } from '@/apiCalls/WeatherApiCall';
 
+// uses a card component to display the recieved upcoming 7 day forcast from weatherAPI
 function Weather() {
   return (
       <Card className="h-full overflow-auto">

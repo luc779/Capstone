@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
+// landing page
 export default function Home() {
   return (
     <main className="flex h-full items-center justify-center p-6">

@@ -13,6 +13,7 @@ export default function Sales() {
   );
 }
 
+// side bar
 const SidebarPanel = () => (
     <ResizablePanel defaultSize={10}>
       <div className="flex h-screen justify-center py-4 pl-4">
@@ -21,6 +22,7 @@ const SidebarPanel = () => (
     </ResizablePanel>
 );
 
+// main content next to sideBar
 const MainContentPanel = () => (
   <ResizablePanel defaultSize={90}>
     <ResizablePanelGroup direction="vertical">
@@ -31,6 +33,7 @@ const MainContentPanel = () => (
   </ResizablePanel>
 );
 
+// top panel
 const TopContentPanel = () => (
   <ResizablePanel defaultSize={10}>
     <div className="flex h-full items-center justify-center p-6">
@@ -39,6 +42,7 @@ const TopContentPanel = () => (
   </ResizablePanel>
 );
 
+// space for inventory
 const BottomContentPanel = () => (
   <ResizablePanel defaultSize={90}>
     <div className="flex h-full items-center justify-center p-6">
