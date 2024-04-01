@@ -21,6 +21,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import Link from 'next/link';
 
 const RecentInventory = [
   {
@@ -69,7 +70,6 @@ function InventorySnapshot() {
               <TableBody>
                 {RecentInventory.map((item) => (
                   <TableRow key={item.VIN}>
-                    {/* <TableCell>{item.make}</TableCell> */}
                     <TableCell className="font-medium">{item.make}</TableCell>
                     <TableCell>{item.model}</TableCell>
                     <TableCell>{item.year}</TableCell>
@@ -88,7 +88,7 @@ function InventorySnapshot() {
         </CardContent>
         <CardFooter>
           <Button variant="default">
-              <p>Direct to Sales Preformance Page</p>
+            <Link href="/Inventory">Direct to Invnetory</Link>
           </Button>
         </CardFooter>
     </Card>

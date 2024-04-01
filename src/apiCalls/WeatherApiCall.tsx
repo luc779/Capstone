@@ -27,7 +27,7 @@ const formatDate = (dateString: string) => {
 const callAPI = async () => {
   try {
     const city = "Seattle";
-    const day = "7";
+    const day = "5";
     const res = await fetch(
       `http://api.weatherapi.com/v1/forecast.json?key=427e509e4ec7471e95615748243103&q=${city}&days=${day}&aqi=no&tides=no&hour=12`
     );
