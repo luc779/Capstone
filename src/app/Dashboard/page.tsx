@@ -12,6 +12,7 @@ import SalesPreformance from "@/widgets/SalesPreformance";
 import Employees from "@/widgets/Employees";
 import InventorySnapshot from "@/widgets/InventorySnapshot";
 import SideBar from "@/widgets/SideBar";
+import { TopBar } from "@/widgets/TopBar";
 
 export default function Home() {
   return (
@@ -38,7 +39,6 @@ const MainContentPanel = () => (
   <ResizablePanel defaultSize={90}>
     <ResizablePanelGroup direction="vertical">
       <TopContentPanel />
-      <ResizableHandle />
       <BottomContentPanel />
     </ResizablePanelGroup>
   </ResizablePanel>
@@ -47,9 +47,7 @@ const MainContentPanel = () => (
 // top of th page content
 const TopContentPanel = () => (
   <ResizablePanel defaultSize={10}>
-    <div className="flex h-full items-center justify-center p-6">
-      <span className="font-semibold">Two</span>
-    </div>
+    {TopBar("Dashboard")}
   </ResizablePanel>
 );
 

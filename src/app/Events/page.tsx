@@ -1,6 +1,7 @@
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 
 import SideBar from "@/widgets/SideBar";
+import TopBar from "@/widgets/TopBar";
 
 // base panel
 export default function Sales() {
@@ -37,9 +38,7 @@ const MainContentPanel = () => (
 // top panel for user
 const TopContentPanel = () => (
   <ResizablePanel defaultSize={10}>
-    <div className="flex h-full items-center justify-center p-6">
-      <span className="font-semibold">Two</span>
-    </div>
+    {TopBar("Events")}
   </ResizablePanel>
 );
 
