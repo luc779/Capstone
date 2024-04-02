@@ -90,7 +90,7 @@ function InventorySnapshot() {
         </CardContent>
         <CardFooter>
           <Button variant="default">
-            <Link href="/Inventory">Direct to Invnetory</Link>
+            <Link href="/Inventory">Direct to Inventory</Link>
           </Button>
         </CardFooter>
     </Card>
