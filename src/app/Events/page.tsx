@@ -45,8 +45,12 @@ const TopContentPanel = () => (
 // space for events
 const BottomContentPanel = () => (
   <ResizablePanel defaultSize={90}>
-    <div className="flex h-full items-center justify-center p-6">
-      <span className="font-semibold">Events</span>
-    </div>
+    <EventCard />
   </ResizablePanel>
+);
+
+const EventCard = () => (
+  <div className="flex h-full items-center justify-center p-6">
+    <span className="font-semibold">{process.env.WEATHER_API_KEY}</span>
+  </div>
 );
