@@ -7,12 +7,25 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable"
 
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+
 import Weather from '@/widgets/Weather';
 import SalesPreformance from "@/widgets/SalesPreformance";
 import Employees from "@/widgets/Employees";
 import InventorySnapshot from "@/widgets/InventorySnapshot";
 import SideBar from "@/widgets/SideBar";
 import { TopBar } from "@/widgets/TopBar";
+import { Calendars } from "@/widgets/Calendars";
+import { CalendarForm } from "@/components/CalendarForm";
+import { AddToCalendar } from "@/components/AddToCalendar";
+
 
 export default function Home() {
   return (
@@ -74,10 +87,30 @@ const LeftMainPanel = () => (
 
 // where the calendars will go
 const RightMainPanel = () => (
-  <ResizablePanel defaultSize={30}>
-    <div className="flex h-screen items-center justify-center p-6">
-      <span className="font-semibold">Three</span>
-    </div>
+  <ResizablePanel defaultSize={30} className="pt-4 pb-4 pr-4">
+    <Card className="h-full overflow-auto ">
+        <CardHeader>
+          <CardTitle>Events Calendars</CardTitle>
+          <CardDescription>A place to organize events.</CardDescription>
+        </CardHeader>
+        <CardContent className="inline-block">
+          <div className="pb-4"> 
+            <Calendars />
+          </div>
+          {/* <CalendarForm /> */}
+          <AddToCalendar />
+        </CardContent>
+        <CardHeader>
+          <CardTitle>Tasks Calendars</CardTitle>
+          <CardDescription>A place to list tasks.</CardDescription>
+        </CardHeader>
+        <CardContent className="inline-block">
+          <div className="pb-4"> 
+            <Calendars />
+          </div>
+          <AddToCalendar />
+        </CardContent>
+      </Card>
   </ResizablePanel>
 );
 

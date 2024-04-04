@@ -2,6 +2,7 @@ import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/componen
 
 import SideBar from "@/widgets/SideBar";
 import TopBar from "@/widgets/TopBar";
+import FullInventory from "@/widgets/FullInventory";
 
 export default function Sales() {
   return (
@@ -43,9 +44,7 @@ const TopContentPanel = () => (
 
 // space for inventory
 const BottomContentPanel = () => (
-  <ResizablePanel defaultSize={90}>
-    <div className="flex h-full items-center justify-center p-6">
-      <span className="font-semibold">Inventory</span>
-    </div>
+  <ResizablePanel defaultSize={90} className="overflow-auto p-4">
+    <FullInventory />
   </ResizablePanel>
 );
