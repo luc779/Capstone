@@ -11,6 +11,13 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
+
 import { usePathname } from 'next/navigation'
 
 import {
@@ -24,6 +31,7 @@ import Link from 'next/link';
 
 export interface Links {
     link: string;
+    name: string;
     icon: React.ReactNode;
 }
 
@@ -37,26 +45,32 @@ export function ExampleClientComponent() {
 export const works: Links[] = [
     {
         link: "/Dashboard",
+        name: "Dashboard",
         icon: <LayoutDashboard className='text-primary'/>
     }, 
     {
         link: "/Sales",
+        name: "Sales",
         icon: <AreaChart className='text-primary'/>
     },
     {
         link: "/Inventory",
+        name: "Inventory",
         icon: <Car className='text-primary'/>
     },
     {
         link: "/Events",
+        name: "Events",
         icon: <Ticket className='text-primary'/>
     },
     {
         link: "/Tasks",
+        name: "Tasks",
         icon: <ClipboardList className='text-primary'/>
     },
     {
         link: "/",
+        name: "Sign Out",
         icon: <LogOut className='text-primary'/>
     }
 ]
@@ -69,15 +83,19 @@ function SideBar() {
             {works.map((links) => (
                 <figure key={links.link}>
                     <span>
-                        <HoverCard>
-                            <HoverCardTrigger asChild>
-                                <Button variant="ghost" size="icon">
-                                    <Link href={links.link}>
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger>
+                                    {/* <Button variant="ghost" size="icon">  add  WAF find what constitues PII OPA open policy agent, AVP allows users to access certain things*/}
+                                    <Link href={links.link} className="hover:text-foreground">
                                         {links.icon}
                                     </Link>
-                                </Button>
-                            </HoverCardTrigger>
-                        </HoverCard>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                <p>{links.name}</p>
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
                     </span>
                 </figure>
             ))}

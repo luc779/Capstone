@@ -57,7 +57,7 @@ function InventorySnapshot() {
             <CardDescription>Recent inventory changes.</CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
-            <div className=" ">
+            {/* <div className=" "> */}
             <Table>
               <TableCaption>A list of your recent items.</TableCaption>
               <TableHeader>
@@ -86,7 +86,7 @@ function InventorySnapshot() {
                 </TableRow>
               </TableFooter>
             </Table>
-            </div>
+            {/* </div> */}
         </CardContent>
         <CardFooter>
           <Button variant="default">
