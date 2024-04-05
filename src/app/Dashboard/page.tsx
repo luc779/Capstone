@@ -1,6 +1,6 @@
 
 // page for the softwares dashboard
-
+"use client"
 import {
   ResizableHandle,
   ResizablePanel,
@@ -23,18 +23,19 @@ import InventorySnapshot from "@/widgets/InventorySnapshot";
 import SideBar from "@/widgets/SideBar";
 import { TopBar } from "@/widgets/TopBar";
 import { Calendars } from "@/widgets/Calendars";
-import { CalendarForm } from "@/components/CalendarForm";
 import { AddToCalendar } from "@/components/AddToCalendar";
 import FullInventory from "@/widgets/FullInventory";
 import { Separator } from "@/components/ui/separator";
+import { useState } from "react";
 
 
 export default function Dashboard() {
+  const [date, setDate] = useState<Date | undefined>(new Date());
   return (
     <main>
       <ResizablePanelGroup direction="horizontal">
         <SidebarPanel />
-        <MainContentPanel />
+        <MainContentPanel date={date} setDate={setDate}/>
       </ResizablePanelGroup>
     </main>
   );
@@ -50,14 +51,14 @@ const SidebarPanel = () => (
 );
 
 // main overview
-const MainContentPanel = () => (
+const MainContentPanel : React.FC<PanelProps> = ({ date, setDate }) => (
   <ResizablePanel defaultSize={90}>
     <ResizablePanelGroup direction="vertical">
       <TopContentPanel />
       <div className="pl-4">
         <Separator />
       </div>
-      <BottomContentPanel />
+      <BottomContentPanel date={date} setDate={setDate} />
     </ResizablePanelGroup>
   </ResizablePanel>
 );
@@ -70,11 +71,11 @@ const TopContentPanel = () => (
 );
 
 // bottom section will be split again
-const BottomContentPanel = () => (
+const BottomContentPanel : React.FC<PanelProps> = ({ date, setDate }) => (
   <ResizablePanel defaultSize={90}>
     <ResizablePanelGroup direction="horizontal">
       <LeftMainPanel />
-      <RightMainPanel />
+      <RightMainPanel date={date} setDate={setDate} />
     </ResizablePanelGroup>
   </ResizablePanel>
 );
@@ -90,9 +91,9 @@ const LeftMainPanel = () => (
 );
 
 // where the calendars will go
-const RightMainPanel = () => (
+const RightMainPanel: React.FC<PanelProps> = ({ date, setDate }) => (
   <ResizablePanel defaultSize={30} className="pt-4 pb-4 pr-4">
-    <CalendarPanel />
+    <CalendarPanel date={date} setDate={setDate} />
   </ResizablePanel>
 );
 
@@ -129,6 +130,11 @@ const EmployeesPanel = () => (
   </ResizablePanel>
 );
 
+interface PanelProps {
+  date: Date | undefined;
+  setDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
+}
+
 // panel to display inventory
 const InventorySnapshotPanel = () => (
   <ResizablePanel defaultSize={60}>
@@ -138,7 +144,7 @@ const InventorySnapshotPanel = () => (
   </ResizablePanel>
 );
 
-const CalendarPanel = () => (
+const CalendarPanel : React.FC<PanelProps> = ({ date, setDate }) => (
   <Card className="h-full overflow-auto">
       <CardHeader>
         <CardTitle>Events Calendars</CardTitle>
@@ -146,7 +152,7 @@ const CalendarPanel = () => (
       </CardHeader>
       <CardContent className="inline-block">
         <div className="pb-4"> 
-          <Calendars />
+          <Calendars date={date} setDate={setDate} />
         </div>
         {/* <CalendarForm /> */}
         <AddToCalendar />
@@ -157,7 +163,7 @@ const CalendarPanel = () => (
       </CardHeader>
       <CardContent className="inline-block">
         <div className="pb-4"> 
-          <Calendars />
+          <Calendars date={date} setDate={setDate} />
         </div>
         <AddToCalendar />
       </CardContent>
