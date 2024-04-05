@@ -1,5 +1,5 @@
 import FullInventory from "@/widgets/FullInventory";
-import PageBaseDesign from "@/widgets/Design";
+import PageBaseDesign from "@/widgets/SoftwareDesign";
 
 const currentPanelName: string = "Inventory";
 

@@ -1,51 +1,21 @@
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
+import { ResizablePanel } from "@/components/ui/resizable";
+import PageBaseDesign from "@/widgets/SoftwareDesign";
 
-import SideBar from "@/widgets/SideBar";
-import TopBar from "@/widgets/TopBar";
+const currentPanelName: string = "Sales";
 
 export default function Sales() {
   return (
     <main>
-      <ResizablePanelGroup direction="horizontal">
-        <SidebarPanel />
-        <MainContentPanel />
-      </ResizablePanelGroup>
+      <PageBaseDesign panelName={currentPanelName}>
+        <BottomContentPanel />
+      </PageBaseDesign>
     </main>
   );
 }
 
-// side bar
-const SidebarPanel = () => (
-  <ResizablePanel defaultSize={10}>
-    <div className="flex h-screen justify-center py-4 pl-4">
-      <SideBar />
-    </div>
-  </ResizablePanel>
-);
-
-// main content next to sideBar
-const MainContentPanel = () => (
-<ResizablePanel defaultSize={90}>
-  <ResizablePanelGroup direction="vertical">
-    <TopContentPanel />
-    <ResizableHandle />
-    <BottomContentPanel />
-  </ResizablePanelGroup>
-</ResizablePanel>
-);
-
-// top panel
-const TopContentPanel = () => (
-<ResizablePanel defaultSize={10}>
-  {TopBar("Sales")}
-</ResizablePanel>
-);
-
 // space for inventory
 const BottomContentPanel = () => (
-<ResizablePanel defaultSize={90}>
-  <div className="flex h-full items-center justify-center p-6">
+<ResizablePanel defaultSize={90} className="flex h-full items-center justify-center p-6">
     <span className="font-semibold">Sales</span>
-  </div>
 </ResizablePanel>
 );

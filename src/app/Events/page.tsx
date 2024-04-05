@@ -13,7 +13,7 @@ import { Calendars } from "@/widgets/Calendars";
 import { useState } from "react";
 import { AddToCalendarForm } from "@/components/CalendarForm";
 import { Separator } from "@/components/ui/separator";
-import PageBaseDesign from "@/widgets/Design";
+import PageBaseDesign from "@/widgets/SoftwareDesign";
 
 const currentPanelName: string = "Events";
 
