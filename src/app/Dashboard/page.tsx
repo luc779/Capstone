@@ -25,9 +25,11 @@ import { TopBar } from "@/widgets/TopBar";
 import { Calendars } from "@/widgets/Calendars";
 import { CalendarForm } from "@/components/CalendarForm";
 import { AddToCalendar } from "@/components/AddToCalendar";
+import FullInventory from "@/widgets/FullInventory";
+import { Separator } from "@/components/ui/separator";
 
 
-export default function Home() {
+export default function Dashboard() {
   return (
     <main>
       <ResizablePanelGroup direction="horizontal">
@@ -52,6 +54,9 @@ const MainContentPanel = () => (
   <ResizablePanel defaultSize={90}>
     <ResizablePanelGroup direction="vertical">
       <TopContentPanel />
+      <div className="pl-4">
+        <Separator />
+      </div>
       <BottomContentPanel />
     </ResizablePanelGroup>
   </ResizablePanel>
@@ -69,7 +74,6 @@ const BottomContentPanel = () => (
   <ResizablePanel defaultSize={90}>
     <ResizablePanelGroup direction="horizontal">
       <LeftMainPanel />
-      <ResizableHandle />
       <RightMainPanel />
     </ResizablePanelGroup>
   </ResizablePanel>
@@ -88,29 +92,7 @@ const LeftMainPanel = () => (
 // where the calendars will go
 const RightMainPanel = () => (
   <ResizablePanel defaultSize={30} className="pt-4 pb-4 pr-4">
-    <Card className="h-full overflow-auto ">
-        <CardHeader>
-          <CardTitle>Events Calendars</CardTitle>
-          <CardDescription>A place to organize events.</CardDescription>
-        </CardHeader>
-        <CardContent className="inline-block">
-          <div className="pb-4"> 
-            <Calendars />
-          </div>
-          {/* <CalendarForm /> */}
-          <AddToCalendar />
-        </CardContent>
-        <CardHeader>
-          <CardTitle>Tasks Calendars</CardTitle>
-          <CardDescription>A place to list tasks.</CardDescription>
-        </CardHeader>
-        <CardContent className="inline-block">
-          <div className="pb-4"> 
-            <Calendars />
-          </div>
-          <AddToCalendar />
-        </CardContent>
-      </Card>
+    <CalendarPanel />
   </ResizablePanel>
 );
 
@@ -140,7 +122,7 @@ const EmployeeAndInventoryPanel = () => (
 
 // panel to display employees 
 const EmployeesPanel = () => (
-  <ResizablePanel defaultSize={40} className="min-h-[100px]">
+  <ResizablePanel defaultSize={40}>
     <div className="h-full w-full px-4 pb-4">
       <Employees />
     </div>
@@ -149,9 +131,35 @@ const EmployeesPanel = () => (
 
 // panel to display inventory
 const InventorySnapshotPanel = () => (
-  <ResizablePanel defaultSize={60} className="min-h-[100px]">
-    <div className="h-full px-4 pb-4">
+  <ResizablePanel defaultSize={60}>
+    <div className=" h-full pb-4 px-4">
       <InventorySnapshot />
     </div>
   </ResizablePanel>
 );
+
+const CalendarPanel = () => (
+  <Card className="h-full overflow-auto">
+      <CardHeader>
+        <CardTitle>Events Calendars</CardTitle>
+        <CardDescription>A place to organize events.</CardDescription>
+      </CardHeader>
+      <CardContent className="inline-block">
+        <div className="pb-4"> 
+          <Calendars />
+        </div>
+        {/* <CalendarForm /> */}
+        <AddToCalendar />
+      </CardContent>
+      <CardHeader>
+        <CardTitle>Tasks Calendars</CardTitle>
+        <CardDescription>A place to list tasks.</CardDescription>
+      </CardHeader>
+      <CardContent className="inline-block">
+        <div className="pb-4"> 
+          <Calendars />
+        </div>
+        <AddToCalendar />
+      </CardContent>
+    </Card>
+)

@@ -22,6 +22,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import Link from 'next/link';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 // TODO: get museum inventory
 const RecentInventory = [
@@ -51,13 +52,12 @@ const RecentInventory = [
 // creates a card component which holds a table component on a few vehicles, at the bottom of the card contains a button to direct to inventory
 function InventorySnapshot() {
   return (
-    <Card className="h-full overflow-auto">
+    <Card className="overflow-auto h-full">
         <CardHeader>
             <CardTitle>Inventory Snapshot</CardTitle>
             <CardDescription>Recent inventory changes.</CardDescription>
         </CardHeader>
-        <CardContent className="grid gap-4">
-            {/* <div className=" "> */}
+        <CardContent className="">
             <Table>
               <TableCaption>A list of your recent items.</TableCaption>
               <TableHeader>
@@ -86,7 +86,6 @@ function InventorySnapshot() {
                 </TableRow>
               </TableFooter>
             </Table>
-            {/* </div> */}
         </CardContent>
         <CardFooter>
           <Button variant="default">

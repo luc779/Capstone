@@ -1,14 +1,12 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { format } from "date-fns"
-import { CalendarIcon } from "lucide-react"
-import { useForm } from "react-hook-form"
+import { useFieldArray, useForm } from "react-hook-form"
 import { z } from "zod"
+import { CalendarIcon } from "@radix-ui/react-icons"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
 import {
   Form,
   FormControl,
@@ -18,25 +16,30 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
+import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/use-toast"
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
+import { Calendar } from "./ui/calendar"
+import { format } from "date-fns"
 
-const FormSchema = z.object({
-  dob: z.date({
-    required_error: "Date input is required",
+const profileFormSchema = z.object({
+  dateStart: z.date({
+    required_error: "A date required.",
   }),
+  dateEnd: z.date({
+    required_error: "A date required.",
+  }),
+  description: z.string().max(160).min(4),
 })
 
-export function CalendarForm() {
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+type ProfileFormValues = z.infer<typeof profileFormSchema>
+
+export function AddToCalendarForm({ calendarType }: { calendarType: string }) {
+  const form = useForm<ProfileFormValues>({
+    resolver: zodResolver(profileFormSchema)
   })
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
+  function onSubmit(data: ProfileFormValues) {
     toast({
       title: "You submitted the following values:",
       description: (
@@ -50,19 +53,19 @@ export function CalendarForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
+      <FormField
           control={form.control}
-          name="dob"
+          name="dateStart"
           render={({ field }) => (
-            <FormItem className="flex flex-col pt-2">
-              <FormLabel>Starting Date.</FormLabel>
+            <FormItem className="flex flex-col">
+              <FormLabel>Starting Date</FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <FormControl>
                     <Button
                       variant={"outline"}
                       className={cn(
-                        " pl-3 text-left font-normal",
+                        "w-[240px] pl-3 text-left font-normal",
                         !field.value && "text-muted-foreground"
                       )}
                     >
@@ -81,20 +84,85 @@ export function CalendarForm() {
                     selected={field.value}
                     onSelect={field.onChange}
                     disabled={(date) =>
-                      date > new Date() || date < new Date("1900-01-01")
+                      date < new Date()
                     }
                     initialFocus
                   />
                 </PopoverContent>
               </Popover>
+              <FormDescription>
+                Starting date and time of {calendarType}
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
+      />
+      <FormField
+        control={form.control}
+        name="dateEnd"
+        render={({ field }) => (
+          <FormItem className="flex flex-col">
+            <FormLabel>End Date</FormLabel>
+            <Popover>
+              <PopoverTrigger asChild>
+                <FormControl>
+                  <Button
+                    variant={"outline"}
+                    className={cn(
+                      "w-[240px] pl-3 text-left font-normal",
+                      !field.value && "text-muted-foreground"
+                    )}
+                  >
+                    {field.value ? (
+                      format(field.value, "PPP")
+                    ) : (
+                      <span>Pick a date</span>
+                    )}
+                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                  </Button>
+                </FormControl>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="start">
+                <Calendar
+                  mode="single"
+                  selected={field.value}
+                  onSelect={field.onChange}
+                  disabled={(date) =>
+                    date < new Date()
+                  }
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
+            <FormDescription>
+              End date and time of {calendarType}
+            </FormDescription>
+            <FormMessage />
+          </FormItem>
+        )}
         />
-        <Button type="submit">Submit</Button>
+      <FormField
+        control={form.control}
+        name="description"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>About the {calendarType}</FormLabel>
+            <FormControl>
+              <Textarea
+                placeholder={"Short description of " + calendarType}
+                className="resize-none"
+                {...field}
+              />
+            </FormControl>
+            <FormDescription>
+              The description of the {calendarType}.
+            </FormDescription>
+            <FormMessage />
+          </FormItem>
+        )}
+        />
+        <Button type="submit">Upload {calendarType}</Button>
       </form>
     </Form>
   )
 }
-
-export default CalendarForm;

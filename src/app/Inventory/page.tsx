@@ -4,9 +4,9 @@ import SideBar from "@/widgets/SideBar";
 import TopBar from "@/widgets/TopBar";
 import FullInventory from "@/widgets/FullInventory";
 
-export default function Sales() {
+export default function Inventory() {
   return (
-    <main>
+    <main >
       <ResizablePanelGroup direction="horizontal">
         <SidebarPanel />
         <MainContentPanel />
@@ -29,7 +29,6 @@ const MainContentPanel = () => (
   <ResizablePanel defaultSize={90}>
     <ResizablePanelGroup direction="vertical">
       <TopContentPanel />
-      <ResizableHandle />
       <BottomContentPanel />
     </ResizablePanelGroup>
   </ResizablePanel>
