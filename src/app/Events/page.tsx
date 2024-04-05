@@ -1,5 +1,5 @@
 "use client"
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
+import { ResizablePanel } from "@/components/ui/resizable";
 
 import {
   Card,
@@ -12,7 +12,6 @@ import {
 import { Calendars } from "@/widgets/Calendars";
 import { useState } from "react";
 import { AddToCalendarForm } from "@/components/CalendarForm";
-import { Separator } from "@/components/ui/separator";
 import PageBaseDesign from "@/widgets/SoftwareDesign";
 
 const currentPanelName: string = "Events";

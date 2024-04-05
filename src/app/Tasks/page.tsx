@@ -1,75 +1,46 @@
 "use client"
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
-
-import SideBar from "@/widgets/SideBar";
-import TopBar from "@/widgets/TopBar";
+import { ResizablePanel } from "@/components/ui/resizable";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
 import { Calendars } from "@/widgets/Calendars";
 import { useState } from "react";
 import { AddToCalendarForm } from "@/components/CalendarForm";
+import PageBaseDesign from "@/widgets/SoftwareDesign";
 
-// base panel
-export default function Tasks() {
-  const [date, setDate] = useState<Date | undefined>(new Date());
-  return (
-    <main>
-      <ResizablePanelGroup direction="horizontal">
-        <SidebarPanel />
-        <MainContentPanel date={date} setDate={setDate} />
-      </ResizablePanelGroup>
-    </main>
-  );
-}
-
-// same side bar panel
-const SidebarPanel = () => (
-    <ResizablePanel defaultSize={10}>
-      <div className="flex h-screen justify-center py-4 pl-4">
-        <SideBar />
-      </div>
-    </ResizablePanel>
-);
+const currentPanelName: string = "Tasks";
 
 interface PanelProps {
   date: Date | undefined;
   setDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
 }
 
-// main content next to the sidebar
-const MainContentPanel: React.FC<PanelProps> = ({ date, setDate }) => (
-  <ResizablePanel defaultSize={90}>
-    <ResizablePanelGroup direction="vertical">
-      <TopContentPanel />
-      <ResizableHandle />
-      <BottomContentPanel date={date} setDate={setDate} />
-    </ResizablePanelGroup>
-  </ResizablePanel>
-);
-
-// top panel for user
-const TopContentPanel = () => (
-  <ResizablePanel defaultSize={10}>
-    {TopBar("Tasks")}
-  </ResizablePanel>
-);
+// base panel
+export default function Tasks() {
+  const [date, setDate] = useState<Date | undefined>(new Date());
+  return (
+    <main>
+      <PageBaseDesign panelName={currentPanelName}>
+        <BottomContentPanel date={date} setDate={setDate}/>
+      </PageBaseDesign>
+    </main>
+  );
+}
 
 // space for Tasks
 const BottomContentPanel: React.FC<PanelProps> = ({ date, setDate }) => (
-  <ResizablePanel defaultSize={90} className="flex p-4">
+  <ResizablePanel defaultSize={90} className="flex h-full">
     <div className="flex-1 pr-4 ">
       <CalendarCard date={date} setDate={setDate} />
     </div>
     <div className="flex-1 pr-4">
       <UpcomingEvent />
     </div>
-    <div className="flex-1 pr-4">
+    <div className="flex-1">
       <AddEvent />
     </div>
   </ResizablePanel>
