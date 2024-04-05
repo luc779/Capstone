@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
     Card,
@@ -169,9 +169,16 @@ function InventorySnapshot() {
   const [startIndex, setStartIndex] = useState(0);
   const [endIndex, setEndIndex] = useState(rowsPerPage);
 
+  useEffect(() => {
+    const newStartIndex = currentPage * rowsPerPage;
+    const newEndIndex = Math.min((currentPage + 1) * rowsPerPage, totalDataitems);
+    setStartIndex(newStartIndex);
+    setEndIndex(newEndIndex);
+  }, [currentPage, rowsPerPage, totalDataitems]);
+
   return (
     <Card className='overflow-auto h-full'>
-      <CardContent>
+      <CardContent >
       <div className="p-6">
           <Table>
             <TableCaption>A list of your recent items.</TableCaption>
@@ -207,19 +214,19 @@ function InventorySnapshot() {
                 <p>Total Inventory: {totalDataitems}</p>
               </div>
               <div className="flex justify-end items-center ">
+                <p className='pr-4'>Rows per Page</p>
                 <div className='flex justify-end items-center pr-4'>
-                  <p className='pr-4'>Rows per Page</p>
-                  <Select>
+                  <Select onValueChange={(newValue) => setRowsPerPage(parseInt(newValue))}>
                     <SelectTrigger>
                       <SelectValue placeholder={rowsPerPage} />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
-                        <SelectItem onClick={() => setRowsPerPage(rowsPerPage - 2)} value="page">{rowsPerPage - 2}</SelectItem>
-                        <SelectItem value="banana">{rowsPerPage}</SelectItem>
-                        <SelectItem value="blueberry">{rowsPerPage + 2}</SelectItem>
-                        <SelectItem value="grapes">{rowsPerPage + 4}</SelectItem>
-                        <SelectItem value="pineapple">{rowsPerPage + 8}</SelectItem>
+                        <SelectItem value={String(6)}> {6} </SelectItem>
+                        <SelectItem value={String(8)}>{8}</SelectItem>
+                        <SelectItem value={String(10)}>{10}</SelectItem>
+                        <SelectItem value={String(12)}>{12}</SelectItem>
+                        <SelectItem value={String(14)}>{14}</SelectItem>
                       </SelectGroup>
                     </SelectContent>
                   </Select>
