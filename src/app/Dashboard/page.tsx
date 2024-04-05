@@ -27,48 +27,25 @@ import { AddToCalendar } from "@/components/AddToCalendar";
 import FullInventory from "@/widgets/FullInventory";
 import { Separator } from "@/components/ui/separator";
 import { useState } from "react";
+import PageBaseDesign from "@/widgets/SoftwareDesign";
 
+const currentPanelName: string = "Dashboard";
+
+interface PanelProps {
+  date: Date | undefined;
+  setDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
+}
 
 export default function Dashboard() {
   const [date, setDate] = useState<Date | undefined>(new Date());
   return (
     <main>
-      <ResizablePanelGroup direction="horizontal">
-        <SidebarPanel />
-        <MainContentPanel date={date} setDate={setDate}/>
-      </ResizablePanelGroup>
+      <PageBaseDesign panelName={currentPanelName}>
+        <BottomContentPanel date={date} setDate={setDate}/>
+      </PageBaseDesign>
     </main>
   );
 };
-
-// content fo the sidebar panel
-const SidebarPanel = () => (
-  <ResizablePanel defaultSize={10}>
-    <div className="flex h-screen justify-center py-4 pl-4">
-      <SideBar />
-    </div>
-  </ResizablePanel>
-);
-
-// main overview
-const MainContentPanel : React.FC<PanelProps> = ({ date, setDate }) => (
-  <ResizablePanel defaultSize={90}>
-    <ResizablePanelGroup direction="vertical">
-      <TopContentPanel />
-      <div className="pl-4">
-        <Separator />
-      </div>
-      <BottomContentPanel date={date} setDate={setDate} />
-    </ResizablePanelGroup>
-  </ResizablePanel>
-);
-
-// top of th page content
-const TopContentPanel = () => (
-  <ResizablePanel defaultSize={10}>
-    {TopBar("Dashboard")}
-  </ResizablePanel>
-);
 
 // bottom section will be split again
 const BottomContentPanel : React.FC<PanelProps> = ({ date, setDate }) => (
@@ -130,10 +107,7 @@ const EmployeesPanel = () => (
   </ResizablePanel>
 );
 
-interface PanelProps {
-  date: Date | undefined;
-  setDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
-}
+
 
 // panel to display inventory
 const InventorySnapshotPanel = () => (
