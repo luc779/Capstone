@@ -1,18 +1,14 @@
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
-
-import SideBar from "@/widgets/SideBar";
-import TopBar from "@/widgets/TopBar";
 import FullInventory from "@/widgets/FullInventory";
-import InventoryTest from "@/widgets/Design";
+import PageBaseDesign from "@/widgets/Design";
 
 const currentPanelName: string = "Inventory";
 
 export default function Inventory() {
   return (
     <main >
-      <InventoryTest panelName={currentPanelName}>
+      <PageBaseDesign panelName={currentPanelName}>
         <BottomContentPanel />
-      </InventoryTest>
+      </PageBaseDesign>
     </main>
   );
 }

@@ -2,7 +2,6 @@ import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/componen
 
 import SideBar from "@/widgets/SideBar";
 import TopBar from "@/widgets/TopBar";
-import FullInventory from "@/widgets/FullInventory";
 import { ReactNode } from "react";
 import { Separator } from "@/components/ui/separator";
 
@@ -11,7 +10,7 @@ interface PanelProps {
     panelName: string;
 }
 
-export default function Inventory({ children, panelName }: PanelProps) {
+export default function PageBaseDesign({ children, panelName }: PanelProps) {
   return (
     <main >
       <ResizablePanelGroup direction="horizontal">
