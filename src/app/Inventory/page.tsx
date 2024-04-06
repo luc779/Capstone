@@ -1,19 +1,24 @@
-import FullInventory from "@/widgets/FullInventory";
-import PageBaseDesign from "@/widgets/SoftwareDesign";
+import InventoryTest from "@/components/SoftwareDesign";
+import FullInventoryShow from "@/app/Inventory/widgets/FullInventory";
 
+// adding async makes the card weird
 const currentPanelName: string = "Inventory";
 
-export default function Inventory() {
+export default async function Inventory() {
   return (
     <main >
-      <PageBaseDesign panelName={currentPanelName}>
-        <BottomContentPanel />
-      </PageBaseDesign>
+      <InventoryTest panelName={currentPanelName}>
+        <div className="h-full">
+          {await BottomContentPanel()} 
+        </div>
+      </InventoryTest>
     </main>
   );
 }
 
-// bottom panel will hold the full Inventory
-const BottomContentPanel = () => (
-    <FullInventory />
+// space for inventory
+const BottomContentPanel = async () => (
+  <div className="h-full">
+    {await FullInventoryShow()} 
+  </div>  
 );

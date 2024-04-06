@@ -16,18 +16,19 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-import Weather from '@/widgets/Weather';
-import SalesPreformance from "@/widgets/SalesPreformance";
-import Employees from "@/widgets/Employees";
-import InventorySnapshot from "@/widgets/InventorySnapshot";
-import SideBar from "@/widgets/SideBar";
-import { TopBar } from "@/widgets/TopBar";
-import { Calendars } from "@/widgets/Calendars";
+import Weather from '@/app/Dashboard/widgets/Weather';
+import SalesPreformance from "@/app/Dashboard/widgets/SalesPreformance";
+import Employees from "@/app/Dashboard/widgets/Employees";
+import InventorySnapshot from "@/app/Dashboard/widgets/InventorySnapshot";
+import SideBar from "@/components/SideBar";
+import { TopBar } from "@/components/TopBar";
+import { Calendars } from "@/components/Calendars";
 import { AddToCalendar } from "@/components/AddToCalendar";
-import FullInventory from "@/widgets/FullInventory";
+import FullInventory from "@/components/FallBackInventory";
 import { Separator } from "@/components/ui/separator";
 import { useState } from "react";
-import PageBaseDesign from "@/widgets/SoftwareDesign";
+import PageBaseDesign from "@/components/SoftwareDesign";
+import FullInventoryShow from "@/app/Inventory/widgets/FullInventory";
 
 const currentPanelName: string = "Dashboard";
 
@@ -40,12 +41,42 @@ export default function Dashboard() {
   const [date, setDate] = useState<Date | undefined>(new Date());
   return (
     <main>
-      <PageBaseDesign panelName={currentPanelName}>
-        <BottomContentPanel date={date} setDate={setDate}/>
-      </PageBaseDesign>
+      <ResizablePanelGroup direction="horizontal">
+        <SidebarPanel />
+        <MainContentPanel date={date} setDate={setDate}/>
+      </ResizablePanelGroup>
     </main>
   );
 };
+
+// content fo the sidebar panel
+const SidebarPanel = () => (
+  <ResizablePanel defaultSize={10}>
+    <div className="flex h-screen justify-center py-4 pl-4">
+      <SideBar />
+    </div>
+  </ResizablePanel>
+);
+
+// main overview
+const MainContentPanel : React.FC<PanelProps> = ({ date, setDate }) => (
+  <ResizablePanel defaultSize={90}>
+    <ResizablePanelGroup direction="vertical">
+      <TopContentPanel />
+      <div className="pl-4">
+        <Separator />
+      </div>
+      <BottomContentPanel date={date} setDate={setDate} />
+    </ResizablePanelGroup>
+  </ResizablePanel>
+);
+
+// top of th page content
+const TopContentPanel = () => (
+  <ResizablePanel defaultSize={10}>
+    {TopBar("Dashboard")}
+  </ResizablePanel>
+);
 
 // bottom section will be split again
 const BottomContentPanel : React.FC<PanelProps> = ({ date, setDate }) => (
@@ -62,7 +93,9 @@ const LeftMainPanel = () => (
   <ResizablePanel defaultSize={70}>
     <ResizablePanelGroup direction="vertical">
       <SalesAndWeatherPanel />
+      <ResizableHandle />
       <EmployeeAndInventoryPanel />
+      <ResizableHandle />
     </ResizablePanelGroup>
   </ResizablePanel>
 );

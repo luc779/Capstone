@@ -9,10 +9,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Calendars } from "@/widgets/Calendars";
+import { Calendars } from "@/components/Calendars";
 import { useState } from "react";
-import { AddToCalendarForm } from "@/components/CalendarForm";
-import PageBaseDesign from "@/widgets/SoftwareDesign";
+import { AddToCalendarForm } from "@/app/Dashboard/widgets/CalendarForm";
+import PageBaseDesign from "@/components/SoftwareDesign";
 
 const currentPanelName: string = "Events";
 

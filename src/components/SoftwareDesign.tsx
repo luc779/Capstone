@@ -1,7 +1,7 @@
 import { ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 
-import SideBar from "@/widgets/SideBar";
-import TopBar from "@/widgets/TopBar";
+import SideBar from "@/components/SideBar";
+import TopBar from "@/components/TopBar";
 import { ReactNode } from "react";
 import { Separator } from "@/components/ui/separator";
 
@@ -15,7 +15,9 @@ export default function PageBaseDesign({ children, panelName }: PanelProps) {
     <main >
       <ResizablePanelGroup direction="horizontal">
         <SidebarPanel />
-        <MainContentPanel children={children} panelName={panelName}/>
+        <MainContentPanel panelName={panelName}>
+          {children}
+        </MainContentPanel>
       </ResizablePanelGroup>
     </main>
   );
@@ -31,14 +33,17 @@ const SidebarPanel = () => (
 );
 
 // main content next to sideBar
-const MainContentPanel: React.FC<PanelProps> = ({ children, panelName }) => (
+const MainContentPanel: React.FC<{ children: ReactNode, panelName: string }> = ({ children, panelName }) => (
   <ResizablePanel defaultSize={90}>
     <ResizablePanelGroup direction="vertical">
       <TopContentPanel panelName={panelName}/>
       <div className="pl-4">
         <Separator />
       </div>
-      <BottomContentPanel children={children} panelName={panelName}/>
+      <BottomContentPanel panelName={panelName}>
+          {children}
+      </BottomContentPanel>
+      {/* <BottomContentPanel children={children} panelName={panelName}/> */}
     </ResizablePanelGroup>
   </ResizablePanel>
 );
