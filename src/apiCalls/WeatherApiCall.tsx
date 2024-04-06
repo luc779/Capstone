@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from 'react';
+import Image from "next/image"
 
 interface WeatherData {
   forecast: {
@@ -58,7 +59,7 @@ function WeatherApiCall() {
             {weatherData.forecast.forecastday.map((day: ForecastDay) => ( 
             <div className="inline-block text-center" key={day.date}>
                 <p>{formatDate(day.date)}</p>
-                <img src={'https:' + day.day.condition.icon} alt="Weather Icon" />
+                <Image src={'https:' + day.day.condition.icon} alt="Weather Icon" />
             </div>
             ))}
         </div>

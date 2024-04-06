@@ -1,5 +1,5 @@
 import { ResizablePanel } from "@/components/ui/resizable";
-import PageBaseDesign from "@/widgets/SoftwareDesign";
+import PageBaseDesign from "@/components/SoftwareDesign";
 
 const currentPanelName: string = "Sales";
 

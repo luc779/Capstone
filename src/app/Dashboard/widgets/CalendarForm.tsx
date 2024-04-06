@@ -18,8 +18,8 @@ import {
 } from "@/components/ui/form"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/use-toast"
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
-import { Calendar } from "./ui/calendar"
+import { Popover, PopoverContent, PopoverTrigger } from "../../../components/ui/popover"
+import { Calendar } from "../../../components/ui/calendar"
 import { format } from "date-fns"
 
 const profileFormSchema = z.object({

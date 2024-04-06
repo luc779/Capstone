@@ -3,11 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 import {
     Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
+    CardContent
 } from "@/components/ui/card"
 
 import {
@@ -27,7 +23,6 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination"
-import Link from 'next/link';
 import {
   Select,
   SelectContent,
