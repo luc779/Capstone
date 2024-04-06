@@ -1,0 +1,142 @@
+[
+  {
+    "VIN": "WBA4A9C58HGL10992",
+    "make": "Lamborghini",
+    "model": "Aventador LP 750-4 Superveloce Roadster",
+    "year": "2018",
+    "color": "Nero Aldebaran"
+  },
+  {
+    "VIN": "1G6DE5E52CF100588",
+    "make": "Ford",
+    "model": "Fusion",
+    "year": "2015",
+    "color": "Black"
+  },
+  {
+    "VIN": "WBA4Z3C59JEA47449",
+    "make": "Toyota",
+    "model": "Camry",
+    "year": "2019",
+    "color": "White"
+  },
+  {
+    "VIN": "1G6DH5E50C0167178",
+    "make": "Honda",
+    "model": "Accord",
+    "year": "2016",
+    "color": "Red"
+  },
+  {
+    "VIN": "WBA3B3C59FJ549373",
+    "make": "Chevrolet",
+    "model": "Malibu",
+    "year": "2015",
+    "color": "Silver"
+  },
+  {
+    "VIN": "1G6AG5RX6E0021381",
+    "make": "Hyundai",
+    "model": "Sonata",
+    "year": "2014",
+    "color": "Gray"
+  },
+  {
+    "VIN": "WBA3B5C51EP319070",
+    "make": "Kia",
+    "model": "Optima",
+    "year": "2017",
+    "color": "White"
+  },
+  {
+    "VIN": "1G6DA5E54F0268754",
+    "make": "Subaru",
+    "model": "Legacy",
+    "year": "2016",
+    "color": "Black"
+  },
+  {
+    "VIN": "WBA3A5C51DF157372",
+    "make": "Volkswagen",
+    "model": "Passat",
+    "year": "2013",
+    "color": "Blue"
+  },
+  {
+    "VIN": "1G6DG5E53D0165930",
+    "make": "Mazda",
+    "model": "Mazda6",
+    "year": "2014",
+    "color": "Red"
+  },
+  {
+    "VIN": "WBA3C3C52EK672198",
+    "make": "Buick",
+    "model": "Regal",
+    "year": "2014",
+    "color": "Silver"
+  },
+  {
+    "VIN": "1G6AB5RX9E0017135",
+    "make": "Audi",
+    "model": "A4",
+    "year": "2014",
+    "color": "Gray"
+  },
+  {
+    "VIN": "WBA3B9C51DF496587",
+    "make": "Mercedes-Benz",
+    "model": "E-Class",
+    "year": "2015",
+    "color": "White"
+  },
+  {
+    "VIN": "1G6AG5RX7E0257691",
+    "make": "BMW",
+    "model": "5 Series",
+    "year": "2013",
+    "color": "Black"
+  },
+  {
+    "VIN": "WBA3A5C58EK399884",
+    "make": "Lexus",
+    "model": "ES",
+    "year": "2015",
+    "color": "Red"
+  },
+  {
+    "VIN": "1G6AB5RX1E0378965",
+    "make": "Infiniti",
+    "model": "Q50",
+    "year": "2014",
+    "color": "Blue"
+  },
+  {
+    "VIN": "WBA3B5C57FP313439",
+    "make": "Acura",
+    "model": "TLX",
+    "year": "2015",
+    "color": "White"
+  },
+  {
+    "VIN": "1G6DG5E51F0853521",
+    "make": "Cadillac",
+    "model": "CTS",
+    "year": "2015",
+    "color": "Black"
+  },
+  {
+    "VIN": "WBA4A9C51FG272618",
+    "make": "Tesla",
+    "model": "Model S",
+    "year": "2015",
+    "color": "Silver"
+  },
+  {
+    "VIN": "1G6DA5E53D0147918",
+    "make": "Volvo",
+    "model": "S60",
+    "year": "2013",
+    "color": "Gray"
+  }
+]
