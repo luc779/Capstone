@@ -51,9 +51,9 @@ export default function SignUp() {
           <div className="relative z-20 mt-auto">
             <blockquote className="space-y-2">
               <p className="text-lg">
-                "This car management software is a game-changer! 
-                It's a time-saver that helps me deliver 
-                top-notch service to my clients faster than ever.";
+                &ldquo;This car management software is a game-changer! 
+                It&apos;s a time-saver that helps me deliver 
+                top-notch service to my clients faster than ever.&rdquo;
               </p>
               <footer className="text-sm">Sofia Davis</footer>
             </blockquote>
