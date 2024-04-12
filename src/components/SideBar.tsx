@@ -46,32 +46,32 @@ export const works: Links[] = [
     {
         link: "/Dashboard",
         name: "Dashboard",
-        icon: <LayoutDashboard className='text-primary'/>
+        icon: <LayoutDashboard className='text-primary' size="30"/>
     }, 
     {
         link: "/Sales",
         name: "Sales",
-        icon: <AreaChart className='text-primary'/>
+        icon: <AreaChart className='text-primary' size="30"/>
     },
     {
         link: "/Inventory",
         name: "Inventory",
-        icon: <Car className='text-primary'/>
+        icon: <Car className='text-primary' size="30"/>
     },
     {
         link: "/Events",
         name: "Events",
-        icon: <Ticket className='text-primary'/>
+        icon: <Ticket className='text-primary' size="30"/>
     },
     {
         link: "/Tasks",
         name: "Tasks",
-        icon: <ClipboardList className='text-primary'/>
+        icon: <ClipboardList className='text-primary' size="30"/>
     },
     {
         link: "/",
         name: "Sign Out",
-        icon: <LogOut className='text-primary'/>
+        icon: <LogOut className='text-primary' size="30"/>
     }
 ]
 
