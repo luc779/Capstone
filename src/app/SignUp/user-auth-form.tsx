@@ -3,8 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useFieldArray, useForm } from "react-hook-form"
 import { z } from "zod"
-import { CalendarIcon } from "@radix-ui/react-icons"
-
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -16,59 +14,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/use-toast"
-import { format } from "date-fns"
-import { Calendar } from "@/components/ui/calendar"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Input } from "@/components/ui/input"
 import { Icons } from "./icons"
 import React, { useState } from "react"
 import { Checkbox } from "@/components/ui/checkbox"
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
-
-// export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
-//   const [isLoading, setIsLoading] = React.useState<boolean>(false)
-
-//   async function onSubmit(event: React.SyntheticEvent) {
-//     event.preventDefault()
-//     setIsLoading(true)
-
-//     setTimeout(() => {
-//       setIsLoading(false)
-//     }, 3000)
-//   }
-
-//   return (
-//     <div className={cn("grid gap-6", className)} {...props}>
-//       <form onSubmit={onSubmit}>
-//         <div className="grid gap-2">
-//           <div className="grid gap-1">
-//             <Label className="sr-only" htmlFor="email">
-//               Email
-//             </Label>
-//             <Input
-//               id="email"
-//               placeholder="name@example.com"
-//               type="email"
-//               autoCapitalize="none"
-//               autoComplete="email"
-//               autoCorrect="off"
-//               disabled={isLoading}
-//             />
-//           </div>
-//           <Button disabled={isLoading}>
-//             {isLoading && (
-//               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-//             )}
-//             Sign Up
-//           </Button>
-//         </div>
-//       </form>
-//     </div>
-//   )
-// }
 
 const profileFormSchema = z.object({
     isAdmin: z.boolean().default(false).optional(),
@@ -126,7 +78,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                     control={form.control}
                     name="isAdmin"
                     render={({ field }) => (
-                        <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                        <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 border-input bg-secondary">
                         <FormControl>
                             {/* @ts-ignore */}
                             <Checkbox checked={field.value} onCheckedChange={field.onChange} {...field}/>
@@ -160,7 +112,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                     render={({ field }) => (
                         <FormItem>
                         <FormControl>
-                            <Input placeholder="Password" type="text" autoCapitalize="none" autoCorrect="off" {...field} />
+                            <Input placeholder="Password" type="password" autoCapitalize="none" autoCorrect="off" {...field} />
                         </FormControl>
                         <FormMessage />
                         </FormItem>

@@ -1,16 +1,16 @@
 import { Metadata } from "next"
-import SignUpForm from "./SignUpForm"
 import AccountPageDesign from "../AccountPageDesign"
+import SignInForm from "./SignInForm"
 
 export const metadata: Metadata = {
   title: "Sign Up",
   description: "Sign Up page.",
 }
 
-export default function SignUp() {
+export default function SignIn() {
   return (
     <>
-      <AccountPageDesign children={<SignUpForm/>} />
+      <AccountPageDesign children={<SignInForm/>} />
     </>
   )
 }
