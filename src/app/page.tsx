@@ -9,6 +9,7 @@ export default function Home() {
         <Link href="/Dashboard">Dashboard
         </Link>
       </Button>
+      
     </main>
   );
 };
