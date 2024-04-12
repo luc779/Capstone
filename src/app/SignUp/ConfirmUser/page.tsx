@@ -10,7 +10,9 @@ export const metadata: Metadata = {
 export default function ConfirmEmail() {
   return (
     <>
-      <AccountPageDesign children={<ConfirmUserForm/>} />
+      <AccountPageDesign>
+        <ConfirmUserForm/>
+      </AccountPageDesign>
     </>
   )
 }

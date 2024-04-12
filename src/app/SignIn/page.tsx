@@ -3,14 +3,16 @@ import AccountPageDesign from "../AccountPageDesign"
 import SignInForm from "./SignInForm"
 
 export const metadata: Metadata = {
-  title: "Sign Up",
-  description: "Sign Up page.",
+  title: "Log In",
+  description: "Log In page.",
 }
 
 export default function SignIn() {
   return (
     <>
-      <AccountPageDesign children={<SignInForm/>} />
+      <AccountPageDesign>
+        <SignInForm/>
+      </AccountPageDesign>
     </>
   )
 }

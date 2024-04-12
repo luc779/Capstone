@@ -10,7 +10,9 @@ export const metadata: Metadata = {
 export default function SignUp() {
   return (
     <>
-      <AccountPageDesign children={<SignUpForm/>} />
+      <AccountPageDesign>
+        <SignUpForm/>
+      </AccountPageDesign>
     </>
   )
 }
