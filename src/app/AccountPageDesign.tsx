@@ -1,12 +1,6 @@
-import { Metadata } from "next"
 import Image from "next/image"
-import Link from "next/link"
 
-import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
-import { UserAuthForm } from "./SignUp/user-auth-form"
 import car from "./car_logo.png"
-import SignUpForm from "./SignUp/SignUpForm"
 import { ReactNode } from "react"
 
 interface SignUpProps {
