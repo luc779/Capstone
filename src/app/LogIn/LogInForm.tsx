@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { UserAuthForm } from "./user-auth-form";
 
-function SignInForm() {
+function LogInForm() {
   return (
     <>
       <div className="flex flex-col space-y-2 text-center">
@@ -34,4 +34,4 @@ function SignInForm() {
   )
 }
 
-export default SignInForm;
+export default LogInForm;

@@ -21,7 +21,7 @@ function Weather() {
           <CardDescription>Next 7 day weather.</CardDescription>
         </CardHeader>
         <CardContent>
-          {/* <WeatherApiCall></WeatherApiCall> */}
+          <WeatherApiCall></WeatherApiCall>
         </CardContent>
       </Card>
   );
