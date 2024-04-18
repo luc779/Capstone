@@ -1,25 +1,22 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useFieldArray, useForm } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form"
 import { toast } from "@/components/ui/use-toast"
 import { Input } from "@/components/ui/input"
 import { Icons } from "../SignUp/icons"
 import React, { useEffect, useState } from "react"
-import loginApiCall from "@/apiCalls/LogInApiCall"
-import Axios from 'axios';
+import { LogInApiCall } from "./LogInApiCall"
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -34,35 +31,6 @@ const profileFormSchema = z.object({
 })
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>
-
-const callAPI = async (passedData: ProfileFormValues) => {
-  const axios = require('axios');
-  let data = JSON.stringify(passedData, null, 0)
-
-  let config = {
-    method: 'post',
-    maxBodyLength: Infinity,
-    url: 'https://ajdg3owxqe.execute-api.us-west-2.amazonaws.com/test/SignIn',
-    headers: { 
-      'x-api-key': '5CKGXHFWSX8pz21XwgJtC1V18Fi6k9Mnb73Yl3E3', 
-      'Content-Type': 'application/json'
-    },
-    data : data
-  };
-
-  return new Promise(async (resolve, reject) => {
-    await axios.request(config)
-      .then((response: { data: any }) => {
-        console.log(JSON.stringify(response.data));
-        resolve(response.data);
-      })
-      .catch((error: any) => {
-        console.log(error);
-        reject('test');
-      });
-  });
-}
-
   
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
@@ -75,7 +43,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     async function onSubmit(data: ProfileFormValues) {
       setIsLoading(true)
       try {
-        const response = await callAPI(data);
+        const response = await LogInApiCall(data);
         console.log("Response from call: " + response)
         const toastPromise = toast({
           title: "Submitted values:",
