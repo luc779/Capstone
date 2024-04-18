@@ -78,12 +78,23 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             console.log("Response from call: " + response.statusCode);
 
             if (response.statusCode === 200) {
-                window.location.href = "/SignUp/ConfirmUser";
+                window.location.href = "/SignUp/ConfirmEmail";
             }
 
             if (response.statusCode === 400) {
                 toast({
                     title: "Error:",
+                    description: (
+                        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                        <code className="text-white">{JSON.stringify(response.body, null, 2)}</code>
+                        </pre>
+                    ),
+                });
+            }
+
+            if (response.statusCode === 500) {
+                toast({
+                    title: "Internal Server Error:",
                     description: (
                         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
                         <code className="text-white">{JSON.stringify(response.body, null, 2)}</code>
