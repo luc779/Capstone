@@ -1,17 +1,17 @@
 import { Metadata } from "next"
 import AccountPageDesign from "../AccountPageDesign"
-import SignInForm from "./SignInForm"
+import LogInForm from "./LogInForm"
 
 export const metadata: Metadata = {
   title: "Log In",
   description: "Log In page.",
 }
 
-export default function SignIn() {
+export default function LogIn() {
   return (
     <>
       <AccountPageDesign>
-        <SignInForm/>
+        <LogInForm/>
       </AccountPageDesign>
     </>
   )

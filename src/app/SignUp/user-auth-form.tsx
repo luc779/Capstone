@@ -19,6 +19,14 @@ import { Input } from "@/components/ui/input"
 import { Icons } from "./icons"
 import React, { useState } from "react"
 import { Checkbox } from "@/components/ui/checkbox"
+import {
+    InputOTP,
+    InputOTPGroup,
+    InputOTPSeparator,
+    InputOTPSlot,
+  } from "@/components/ui/input-otp"
+import { PhoneInput } from "@/components/ui/phone-input"
+import { isValidPhoneNumber } from "react-phone-number-input"
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -34,9 +42,8 @@ const profileFormSchema = z.object({
             message: 'First and last only, separated by a space.'
         }),
     phone_number: z.string()
-        .refine(value => /^\+\d{11}$/.test(value), {
-        message: 'Phone number must start with "+Country Code" followed by 10 digits.',
-      }),
+        .refine(isValidPhoneNumber, { message: "Invalid phone number" })
+        .or(z.literal("")),
     password: z.string()
         .min(8, 'Password must be at least 8 characters long.')
         .regex(/[0-9]/, 'Password must contain at least 1 number.')
@@ -59,15 +66,25 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       }
     })
   
-    function onSubmit(data: ProfileFormValues) {
-      toast({
-        title: "Submitted values:",
-        description: (
-          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-          </pre>
-        ),
-      })
+    async function onSubmit(data: ProfileFormValues) {
+        setIsLoading(true);
+        try {
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            toast({
+                title: "Submitted values:",
+                description: (
+                    <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                    <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+                    </pre>
+                ),
+            })
+        } catch (error) {
+            toast({
+                title: 'An error occurred'
+              });
+        } finally {
+            setIsLoading(false);
+        }
     }
   
     return (
@@ -148,10 +165,11 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                     render={({ field }) => (
                         <FormItem>
                         <FormControl>
-                            <Input placeholder="+1xxxXXXxxxx" type="tel" autoCapitalize="none" autoCorrect="off" {...field} />
+                            <PhoneInput placeholder="Enter phone number" {...field} />
                         </FormControl>
                         <FormMessage />
                         </FormItem>
+
                     )}
                 />
                 <FormField
