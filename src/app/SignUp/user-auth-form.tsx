@@ -27,6 +27,7 @@ import {
   } from "@/components/ui/input-otp"
 import { PhoneInput } from "@/components/ui/phone-input"
 import { isValidPhoneNumber } from "react-phone-number-input"
+import { SignUpApiCall } from "@/apiCalls/authentication/SignUpApiCall"
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -50,7 +51,8 @@ const profileFormSchema = z.object({
         .regex(/[!@#$%^&*(),.?":{}|<>]/, 'Password must contain at least 1 special character.')
         .regex(/[A-Z]/, 'Password must contain at least 1 uppercase letter.')
         .regex(/[a-z]/, 'Password must contain at least 1 lowercase letter.'),
-    museum_name: z.string().max(160).min(4),
+    museum_name: z.string().max(160).min(4)
+        .regex(/^\S*$/, 'Museum name cannot contain spaces'),
 })
   
 type ProfileFormValues = z.infer<typeof profileFormSchema>
@@ -67,24 +69,32 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     })
   
     async function onSubmit(data: ProfileFormValues) {
-        setIsLoading(true);
+        setIsLoading(true)
         try {
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            toast({
-                title: "Submitted values:",
-                description: (
-                    <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                    <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-                    </pre>
-                ),
-            })
+            console.log(data)
+            {/* @ts-ignore */}
+            const response = await SignUpApiCall(data) as { statusCode: number, body: string };
+            console.log("Response from call: " + response);
+            console.log("Response from call: " + response.statusCode);
+
+            if (response.statusCode === 200) {
+                window.location.href = "/SignUp/ConfirmUser";
+            }
+
+            if (response.statusCode === 400) {
+                toast({
+                    title: "Error:",
+                    description: (
+                        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                        <code className="text-white">{JSON.stringify(response.body, null, 2)}</code>
+                        </pre>
+                    ),
+                });
+            }
         } catch (error) {
-            toast({
-                title: 'An error occurred'
-              });
-        } finally {
-            setIsLoading(false);
+            console.error(error);
         }
+        setIsLoading(false)
     }
   
     return (
