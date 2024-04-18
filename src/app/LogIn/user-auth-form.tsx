@@ -16,7 +16,7 @@ import { toast } from "@/components/ui/use-toast"
 import { Input } from "@/components/ui/input"
 import { Icons } from "../SignUp/icons"
 import React, { useEffect, useState } from "react"
-import { LogInApiCall } from "./LogInApiCall"
+import { LogInApiCall } from "@/apiCalls/authentication/LogInApiCall"
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
