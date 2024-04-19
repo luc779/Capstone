@@ -46,24 +46,8 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           console.log("Response from call: " + response);
           console.log("Response from call: " + response.statusCode);
 
-          toast({
-              title: "Internal Server Error:",
-              description: (
-                  <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                  <code className="text-white">{JSON.stringify(response, null, 2)}</code>
-                  </pre>
-              ),
-          });
-
           if (response.statusCode === 200) {
-            toast({
-              title: "Error:",
-              description: (
-                  <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                  <code className="text-white">{JSON.stringify(response.body, null, 2)}</code>
-                  </pre>
-              ),
-          });
+            window.location.href = "/LogIn";
           }
 
           // 401 = not found, 404 = need new code
