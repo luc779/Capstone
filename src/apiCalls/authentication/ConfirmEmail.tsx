@@ -1,0 +1,36 @@
+import { z } from "zod"
+
+type ProfileFormValues = z.infer<typeof profileFormSchema>
+
+const profileFormSchema = z.object({
+    username: z.string(),
+    password: z.string()
+})
+
+export const ConfirmEmailApiCall = async (passedData: ProfileFormValues) => {
+    const axios = require('axios');
+    let data = JSON.stringify(passedData, null, 0)
+
+    let config = {
+    method: 'post',
+    maxBodyLength: Infinity,
+    url: 'https://ajdg3owxqe.execute-api.us-west-2.amazonaws.com/test/SignUp/ConfirmEmail',
+    headers: { 
+        'x-api-key': '5CKGXHFWSX8pz21XwgJtC1V18Fi6k9Mnb73Yl3E3', 
+        'Content-Type': 'application/json'
+    },
+    data : data
+    };
+
+    return new Promise(async (resolve, reject) => {
+        await axios.request(config)
+        .then((response: { data: any }) => {
+            console.log(JSON.stringify(response.data));
+            resolve(response.data);
+        })
+        .catch((error: any) => {
+            console.log(error);
+            reject('test');
+        });
+    });
+}
