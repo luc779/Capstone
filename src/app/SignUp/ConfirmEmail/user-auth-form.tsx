@@ -18,12 +18,13 @@ import { toast } from "@/components/ui/use-toast"
 import { Input } from "@/components/ui/input"
 import { Icons } from "../icons"
 import React, { useState } from "react"
+import { ConfirmEmailApiCall } from "@/apiCalls/authentication/ConfirmEmail"
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 const profileFormSchema = z.object({
     username: z.string().max(160).min(4),
-    confrimation_code: z.string()
+    confirmation_code: z.string()
 })
   
 type ProfileFormValues = z.infer<typeof profileFormSchema>
@@ -36,15 +37,46 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       resolver: zodResolver(profileFormSchema)
     })
   
-    function onSubmit(data: ProfileFormValues) {
-      toast({
-        title: "Submitted values:",
-        description: (
-          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-          </pre>
-        ),
-      })
+    async function onSubmit(data: ProfileFormValues) {
+      setIsLoading(true)
+      try {
+          console.log(data)
+          {/* @ts-ignore */}
+          const response = await ConfirmEmailApiCall(data) as { statusCode: number, body: string };
+          console.log("Response from call: " + response);
+          console.log("Response from call: " + response.statusCode);
+
+          if (response.statusCode === 200) {
+            window.location.href = "/LogIn";
+          }
+
+          // 401 = not found, 404 = need new code
+          if (response.statusCode === 401 || response.statusCode === 404) {
+              toast({
+                  title: "Error:",
+                  description: (
+                      <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                      <code className="text-white">{JSON.stringify(response.body, null, 2)}</code>
+                      </pre>
+                  ),
+              });
+          }
+
+          if (response.statusCode === 500) {
+            toast({
+                title: "Internal Server Error:",
+                description: (
+                    <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                    <code className="text-white">{JSON.stringify(response.body, null, 2)}</code>
+                    </pre>
+                ),
+            });
+          }
+          
+      } catch (error) {
+          console.error(error);
+      }
+      setIsLoading(false)
     }
   
     return (
@@ -65,7 +97,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                 />
                 <FormField
                     control={form.control}
-                    name="confrimation_code"
+                    name="confirmation_code"
                     render={({ field }) => (
                         <FormItem>
                         <FormControl>

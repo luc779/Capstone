@@ -22,12 +22,7 @@ interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 const profileFormSchema = z.object({
     username: z.string().max(160).min(4),
-    password: z.string()
-        // .min(8, 'Password must be at least 8 characters long.')
-        // .regex(/[0-9]/, 'Password must contain at least 1 number.')
-        // .regex(/[!@#$%^&*(),.?":{}|<>]/, 'Password must contain at least 1 special character.')
-        // .regex(/[A-Z]/, 'Password must contain at least 1 uppercase letter.')
-        // .regex(/[a-z]/, 'Password must contain at least 1 lowercase letter.')
+    password: z.string(),
 })
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>
@@ -42,17 +37,55 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
     async function onSubmit(data: ProfileFormValues) {
       setIsLoading(true)
+      console.log("test")
       try {
-        const response = await LogInApiCall(data);
+        const response = await LogInApiCall(data) as { statusCode: number, body: string, accessToken: string, idToken: string, userSub: string  };
         console.log("Response from call: " + response)
-        const toastPromise = toast({
-          title: "Submitted values:",
-          description: (
-            <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-              <code className="text-white">{JSON.stringify(response, null, 2)}</code>
-            </pre>
-          ),
-        });
+
+        if (response.statusCode === 200) {
+            toast({
+                title: "Worked:",
+                description: (
+                    <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                    <code className="text-white">{JSON.stringify(response, null, 2)}</code>
+                    </pre>
+                ),
+            });
+        }
+        
+        // to-DO with resend confitmation code if needed
+        if (response.statusCode === 403) {
+            toast({
+                title: "Need to confirm Email:",
+                description: (
+                    <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                    <code className="text-white">{JSON.stringify(response, null, 2)}</code>
+                    </pre>
+                ),
+            });
+        }
+
+        if (response.statusCode === 404 || response.statusCode === 401) {
+            toast({
+                title: "Error:",
+                description: (
+                    <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                    <code className="text-white">{JSON.stringify(response, null, 2)}</code>
+                    </pre>
+                ),
+            });
+        }
+
+        if (response.statusCode === 500) {
+          toast({
+              title: "Internal Server Error:",
+              description: (
+                  <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                  <code className="text-white">{JSON.stringify(response, null, 2)}</code>
+                  </pre>
+              ),
+          });
+      }
       } catch (error) {
         console.error(error);
       }
