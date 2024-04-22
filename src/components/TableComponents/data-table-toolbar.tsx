@@ -2,6 +2,8 @@
 
 import { Cross2Icon } from "@radix-ui/react-icons"
 import { Table } from "@tanstack/react-table"
+import { PlusIcon } from "@radix-ui/react-icons"
+import Link from 'next/link';
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -38,7 +40,21 @@ export function DataTableToolbar<TData>({
           </Button>
         )}
       </div>
-      <DataTableViewOptions table={table} />
+      <div className="flex space-x-2">
+        <Link href="/Inventory/AddItem">
+          
+          <Button
+              variant="outline"
+              size="sm"
+              className="ml-auto hidden h-8 lg:flex"
+            >
+                <PlusIcon className="mr-2 h-4 w-4" />
+                Add Item
+            </Button>
+
+        </Link>
+        <DataTableViewOptions table={table} />
+      </div>
     </div>
   )
 }
