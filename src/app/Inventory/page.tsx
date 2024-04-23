@@ -2,9 +2,6 @@
 
 import InventoryTest from "@/components/SoftwareDesign";
 import FullInventoryShow from "@/app/Inventory/widgets/FullInventory";
-import { useAuth } from "@/apiCalls/authentication/UseAuth";
-import { Progress } from "@/components/ui/progress";
-import LoadingIndicator from "@/components/LoadingIndicator";
 
 // adding async makes the card weird
 const currentPanelName: string = "Inventory";

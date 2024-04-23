@@ -6,16 +6,13 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable"
-
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-
 import Weather from '@/app/Dashboard/widgets/Weather';
 import SalesPreformance from "@/app/Dashboard/widgets/SalesPreformance";
 import Employees from "@/app/Dashboard/widgets/Employees";
@@ -24,14 +21,8 @@ import SideBar from "@/components/SideBar";
 import { TopBar } from "@/components/TopBar";
 import { Calendars } from "@/components/Calendars";
 import { AddToCalendar } from "@/components/AddToCalendar";
-import FullInventory from "@/components/FallBackInventory";
 import { Separator } from "@/components/ui/separator";
-import { useEffect, useState } from "react";
-import PageBaseDesign from "@/components/SoftwareDesign";
-import FullInventoryShow from "@/app/Inventory/widgets/FullInventory";
-import { IsAuthenticated } from "@/apiCalls/authentication/IsAuthenticated";
-import { useRouter } from "next/navigation";
-import { Progress } from "@/components/ui/progress";
+import { useState } from "react";
 import { useAuth } from "@/apiCalls/authentication/UseAuth";
 import LoadingIndicator from "@/components/LoadingIndicator";
 
