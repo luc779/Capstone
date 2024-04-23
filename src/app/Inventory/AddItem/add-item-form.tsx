@@ -23,19 +23,21 @@ interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 const profileFormSchema = z.object({
     make: z.string().max(160).min(4),
     model: z.string(),
-    year: z.string(),
+    year: z.string()
+        .regex(/^\d{4}$/, { message: 'Year must be a four-digit number.' }),
     image: z
-      .any()
-      .refine((file) => file?.length == 1, 'File is required.')
-      .refine((file) => {
-        if (!file) return true; // If file is not provided, let other validations handle it
-        const acceptedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']; // Add more image MIME types if needed
-        return acceptedTypes.includes(file[0]?.type);
+        .any()
+        .refine((file) => file?.length == 1, 'File is required.')
+        .refine((file) => {
+            if (!file) return true; // If file is not provided, let other validations handle it
+            const acceptedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']; // accepted file types
+            return acceptedTypes.includes(file[0]?.type);
       }, 'Only image files are allowed.'),
     color: z.string(),
     vin: z.string(),
     location: z.string(),
-    insurance: z.string(),
+    insurance_company: z.string(),
+    policy_number: z.string(),
     value: z.string(),
 })
 
@@ -44,8 +46,6 @@ type ProfileFormValues = z.infer<typeof profileFormSchema>
 export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
 
     const [isLoading, setIsLoading] = React.useState<boolean>(false)
-
-    // const fileRef = form.register('file', { required: true });
 
     const form = useForm<ProfileFormValues>({
       resolver: zodResolver(profileFormSchema)
@@ -60,7 +60,7 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
         reader.onload = function () {
             if (reader.result != null) {
                 const base64String = reader.result.toString().split(",")[1]; // base 64 of the inputted image
-                console.log(base64String);
+                // console.log(base64String);
             }
         };
         console.log(file_name)
@@ -78,7 +78,7 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
     return (
         <div className={cn("grid gap-6", className)} {...props}>
             <Form {...form}>
-                <form  className="space-y-8">
+                <form  className="grid grid-cols-2 gap-6">
                 <FormField
                     control={form.control}
                     name="make"
@@ -109,7 +109,7 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
                     render={({ field }) => (
                         <FormItem>
                         <FormControl>
-                            <Input placeholder="Year" type="text" autoCapitalize="none" autoCorrect="off" {...field} />
+                            <Input placeholder="Year" type="number" {...field} />
                         </FormControl>
                         <FormMessage />
                         </FormItem>
@@ -170,7 +170,7 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
 
                 <FormField
                     control={form.control}
-                    name="insurance"
+                    name="insurance_company"
                     render={({ field }) => (
                         <FormItem>
                         <FormControl>
@@ -183,11 +183,24 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
 
                 <FormField
                     control={form.control}
+                    name="policy_number"
+                    render={({ field }) => (
+                        <FormItem>
+                        <FormControl>
+                            <Input placeholder="Insurance Information" type="text" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                        </FormItem>
+                    )}
+                />      
+
+                <FormField
+                    control={form.control}
                     name="value"
                     render={({ field }) => (
                         <FormItem>
                         <FormControl>
-                            <Input placeholder="Value" type="text" {...field} />
+                            <Input placeholder="Value" type="number" {...field} />
                         </FormControl>
                         <FormMessage />
                         </FormItem>
@@ -203,7 +216,7 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
                 {isLoading && (    
                 <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                 )}
-                Log In
+                Add Item
             </Button> 
         </Form>
       </div>
