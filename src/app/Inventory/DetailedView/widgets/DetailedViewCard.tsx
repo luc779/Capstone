@@ -28,13 +28,11 @@ export default function DetailedViewCard() {
 // Simulate a database read for inventory.
 // async function getItem(VIN: string | null) {
 //   try {
-//     const response = await axios.get('src/apiCalls/inventoryData/tasks.json')
-//     // const tasks = response.data;
-//     // const parsedTasks = z.array(taskSchema).parse(tasks);
+//     const parsedTasks = z.array(taskSchema).parse(tasks);
 
 //     // Find the task with the matching VIN
-//     // const matchingTask = parsedTasks.find(task => task.VIN === VIN);
-//     console.log(response)
+//     const matchingTask = parsedTasks.find(task => task.VIN === VIN);
+//     console.log(matchingTask)
 //   } catch (error) {
 //     console.error('Error fetching item:', error);
 //     throw error; 

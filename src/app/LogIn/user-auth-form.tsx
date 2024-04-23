@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input"
 import { Icons } from "../SignUp/icons"
 import React, { useEffect, useState } from "react"
 import { LogInApiCall } from "@/apiCalls/authentication/LogInApiCall"
+import { setCookies } from "./Cookies"
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -43,6 +44,10 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         console.log("Response from call: " + response)
 
         if (response.statusCode === 200) {
+
+            setCookies('userSub', response.userSub);
+            setCookies('accessToken', response.accessToken);
+
             toast({
                 title: "Worked:",
                 description: (

@@ -138,24 +138,24 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
                         <FormMessage />
                         </FormItem>
                     )}
-                    />
+                />
 
-                    <FormField
-                        control={form.control}
-                        name="image"
-                        render={({ field }) => {
-                            return (
-                            <FormItem>
-                            <FormControl>
-                                <Input type="file" placeholder="" onChange={(e) => field.onChange(e.target.files)} />
-                            </FormControl>
-                            <FormMessage />
-                            </FormItem>
-                            );
-                        }} 
-                    />
+                <FormField
+                    control={form.control}
+                    name="image"
+                    render={({ field }) => {
+                        return (
+                        <FormItem>
+                        <FormControl>
+                            <Input type="file" placeholder="" onChange={(e) => field.onChange(e.target.files)} />
+                        </FormControl>
+                        <FormMessage />
+                        </FormItem>
+                        );
+                    }} 
+                />
 
-                    <FormField
+                <FormField
                     control={form.control}
                     name="location"
                     render={({ field }) => (
@@ -166,9 +166,9 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
                         <FormMessage />
                         </FormItem>
                     )}
-                    />
+                />
 
-                    <FormField
+                <FormField
                     control={form.control}
                     name="insurance"
                     render={({ field }) => (
@@ -179,9 +179,9 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
                         <FormMessage />
                         </FormItem>
                     )}
-                    />
+                />
 
-                    <FormField
+                <FormField
                     control={form.control}
                     name="value"
                     render={({ field }) => (
@@ -192,7 +192,7 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
                         <FormMessage />
                         </FormItem>
                     )}
-                    />
+                />
             </form>
             <Button disabled={isLoading}
                 onClick={() => {
