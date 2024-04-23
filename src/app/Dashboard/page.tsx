@@ -32,6 +32,8 @@ import FullInventoryShow from "@/app/Inventory/widgets/FullInventory";
 import { IsAuthenticated } from "@/apiCalls/authentication/IsAuthenticated";
 import { useRouter } from "next/navigation";
 import { Progress } from "@/components/ui/progress";
+import { useAuth } from "@/apiCalls/authentication/UseAuth";
+import LoadingIndicator from "@/components/LoadingIndicator";
 
 
 const currentPanelName: string = "Dashboard";
@@ -43,44 +45,12 @@ interface PanelProps {
 
 export default function Dashboard() {
   const [date, setDate] = useState<Date | undefined>(new Date());
-  const [loading, setLoading] = useState(true);
-  const [progressValue, setProgressValue] = useState(10);
-  const router = useRouter();
-
-  useEffect(() => {
-    const checkAuthentication = async () => {
-      if (!(await IsAuthenticated())) {
-        console.log('push attempt');
-        router.push('/LogIn'); // Redirect to login page if not authenticated
-      } else {
-        setLoading(false);
-      }
-    };
-
-    checkAuthentication();
-  }, [IsAuthenticated])
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setProgressValue((prevValue) => {
-        if (prevValue < 90) {
-          return prevValue + 10;
-        } else {
-          clearInterval(interval);
-          return 100;
-        }
-      });
-    }, 10); // Adjust the interval time as needed
-
-    return () => clearInterval(interval);
-  }, []);
+  const { loading, progressValue } = useAuth();
 
   if (loading) {
-    return  (
-      <div className="flex items-center justify-center h-screen">
-        <Progress value={progressValue} className="w-[60%]" />
-      </div>
-    )
+    return (
+      <LoadingIndicator progressValue={progressValue} />
+    );
   }
 
   return (

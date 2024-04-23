@@ -11,6 +11,9 @@ import { Calendars } from "@/components/Calendars";
 import { useState } from "react";
 import { AddToCalendarForm } from "@/app/Dashboard/widgets/CalendarForm";
 import PageBaseDesign from "@/components/SoftwareDesign";
+import { useAuth } from "@/apiCalls/authentication/UseAuth";
+import { Progress } from "@/components/ui/progress";
+import LoadingIndicator from "@/components/LoadingIndicator";
 
 const currentPanelName: string = "Tasks";
 
@@ -22,6 +25,15 @@ interface PanelProps {
 // base panel
 export default function Tasks() {
   const [date, setDate] = useState<Date | undefined>(new Date());
+  const { loading, progressValue } = useAuth();
+
+  if (loading) {
+    return (
+      <LoadingIndicator progressValue={progressValue} />
+    );
+  }
+  
+
   return (
     <main>
       <PageBaseDesign panelName={currentPanelName}>

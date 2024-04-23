@@ -10,9 +10,14 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Calendars } from "@/components/Calendars";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AddToCalendarForm } from "@/app/Dashboard/widgets/CalendarForm";
 import PageBaseDesign from "@/components/SoftwareDesign";
+import { IsAuthenticated } from "@/apiCalls/authentication/IsAuthenticated";
+import { Progress } from "@/components/ui/progress";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/apiCalls/authentication/UseAuth";
+import LoadingIndicator from "@/components/LoadingIndicator";
 
 const currentPanelName: string = "Events";
 
@@ -24,6 +29,14 @@ interface PanelProps {
 // base panel
 export default function Events() {
   const [date, setDate] = useState<Date | undefined>(new Date());
+  const { loading, progressValue } = useAuth();
+
+  if (loading) {
+    return (
+      <LoadingIndicator progressValue={progressValue} />
+    );
+  }
+  
   return (
     <main>
       <PageBaseDesign panelName={currentPanelName}>
