@@ -1,8 +1,8 @@
 import InventoryTest from "@/components/SoftwareDesign";
-import FullInventoryShow from "@/app/Inventory/widgets/FullInventory";
+import AddItemForm from "./AddItemForm";
 
 // adding async makes the card weird
-const currentPanelName: string = "Inventory -> AddItem";
+const currentPanelName: string = "Inventory -> Add Item";
 
 export default function AddItem() {
   return (
@@ -19,6 +19,6 @@ export default function AddItem() {
 // space for inventory
 const BottomContentPanel = () => (
   <div className="h-full">
-    <p>test</p>
+    <AddItemForm />
   </div>  
 );

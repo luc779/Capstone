@@ -28,7 +28,7 @@ export default function DetailedViewCard() {
 // Simulate a database read for inventory.
 // async function getItem(VIN: string | null) {
 //   try {
-//     const response = await axios.get('/src/apiCalls/inventoryData/tasks.json')
+//     const response = await axios.get('src/apiCalls/inventoryData/tasks.json')
 //     // const tasks = response.data;
 //     // const parsedTasks = z.array(taskSchema).parse(tasks);
 
