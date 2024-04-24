@@ -15,12 +15,13 @@ import {
 import { toast } from "@/components/ui/use-toast"
 import { Input } from "@/components/ui/input"
 import React, { useEffect, useState } from "react"
-import { LogInApiCall } from "@/apiCalls/authentication/LogInApiCall"
 import { Icons } from "@/app/SignUp/icons"
+import { AddItemApiCall } from "@/apiCalls/inventory/AddItem"
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 const profileFormSchema = z.object({
+    museum_name: z.string().default("TestMuseum"),
     make: z.string().max(160).min(4),
     model: z.string(),
     year: z.string()
@@ -52,28 +53,53 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
     })
 
     async function onSubmit(data: ProfileFormValues) {
-        console.log(data.image[0])
+        setIsLoading(true)
+        // console.log(data.image[0])
         const file = data.image[0];
-        const file_name = file['name'];
         let reader = new FileReader();
         reader.readAsDataURL(file);
-        reader.onload = function () {
+        var image_base64 = ''
+        reader.onload = async function () {
             if (reader.result != null) {
-                const base64String = reader.result.toString().split(",")[1]; // base 64 of the inputted image
-                // console.log(base64String);
-            }
-        };
-        console.log(file_name)
+                image_base64 = reader.result.toString().split(",")[1]; // base 64 of the inputted image
+                console.log("happened")
+                data.image = image_base64;
+                try {
+                    console.log(data)
+                    {/* @ts-ignore */}
+                    const response = await AddItemApiCall(data) as { statusCode: number, body: string };
+                    console.log("Response from call: " + response);
+                    console.log("Response from call: " + response.statusCode);
+        
+                        toast({
+                            title: "Success:",
+                            description: (
+                                <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                                <code className="text-white">{JSON.stringify(response, null, 2)}</code>
+                                </pre>
+                            ),
+                        });
+                } catch (error) {
+                    console.error(error);
+                }
 
-        toast({
-            title: "Input:",
-            description: (
-                <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-                </pre>
-            ),
-        });
+            } else {
+                toast({
+                    title: "Image Error:",
+                    description: (
+                        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                        <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+                        </pre>
+                    ),
+                });
+            }
+            setIsLoading(false) 
+        }; 
     }
+
+
+
+            
   
     return (
         <div className={cn("grid gap-6", className)} {...props}>
@@ -187,7 +213,7 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
                     render={({ field }) => (
                         <FormItem>
                         <FormControl>
-                            <Input placeholder="Insurance Information" type="text" {...field} />
+                            <Input placeholder="Policy Number" type="text" {...field} />
                         </FormControl>
                         <FormMessage />
                         </FormItem>
