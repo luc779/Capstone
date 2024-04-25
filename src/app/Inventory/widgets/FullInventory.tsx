@@ -10,7 +10,7 @@ import { Card, CardContent } from "@/components/ui/card"
 // Simulate a database read for inventory.
 async function getInventory() {
   const data = await fs.readFile(
-    path.join(process.cwd(), "./src/apiCalls/inventoryData/tasks.json")
+    path.join(process.cwd(), "./src/Api/inventoryData/tasks.json")
   )
 
   const tasks = JSON.parse(data.toString())
