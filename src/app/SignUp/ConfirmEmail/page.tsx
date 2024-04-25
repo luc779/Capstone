@@ -1,5 +1,5 @@
 import { Metadata } from "next"
-import AccountPageDesign from "../../AccountPageDesign"
+import AccountPageDesign from "../../../components/Templates/AccountPageDesign"
 import ConfirmUserForm from "./ConfirmUserForm"
 
 export const metadata: Metadata = {

@@ -18,7 +18,7 @@ import { toast } from "@/components/ui/use-toast"
 import { Input } from "@/components/ui/input"
 import { Icons } from "../icons"
 import React, { useState } from "react"
-import { ConfirmEmailApiCall } from "@/apiCalls/authentication/ConfirmEmail"
+import { ConfirmEmailApiCall } from "@/Api/AWS/authentication/ConfirmEmailApiCall"
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 

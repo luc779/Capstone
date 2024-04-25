@@ -1,7 +1,7 @@
 import { ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 
-import SideBar from "@/components/SideBar";
-import TopBar from "@/components/TopBar";
+import SideBar from "@/components/Templates/SideBar";
+import TopBar from "@/components/Templates/TopBar";
 import { ReactNode } from "react";
 import { Separator } from "@/components/ui/separator";
 

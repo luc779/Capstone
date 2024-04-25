@@ -11,17 +11,22 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-import { taskSchema } from "../../apiCalls/inventoryData/schema"
+import { taskSchema } from "../../Api/inventoryData/schema"
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
 }
 
+const handleDetailedViewClick = (task: string) => {
+  localStorage.setItem('DetailedView', task)
+  window.location.href = "/Inventory/DetailedView";
+};
+
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
   const task = taskSchema.parse(row.original)
-
+  
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -34,9 +39,9 @@ export function DataTableRowActions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
+        <DropdownMenuItem onSelect={() => handleDetailedViewClick(task.VIN)}>Detailed View</DropdownMenuItem>
+        <DropdownMenuItem>Share</DropdownMenuItem>
         <DropdownMenuItem>Edit</DropdownMenuItem>
-        <DropdownMenuItem>Make a copy</DropdownMenuItem>
-        <DropdownMenuItem>Favorite</DropdownMenuItem>
         <DropdownMenuItem>Delete</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

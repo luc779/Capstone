@@ -27,7 +27,7 @@ import {
   } from "@/components/ui/input-otp"
 import { PhoneInput } from "@/components/ui/phone-input"
 import { isValidPhoneNumber } from "react-phone-number-input"
-import { SignUpApiCall } from "@/apiCalls/authentication/SignUpApiCall"
+import { SignUpApiCall } from "@/Api/AWS/authentication/SignUpApiCall"
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 

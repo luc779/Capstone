@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card"
 
 // gets API call
-import { WeatherApiCall } from '@/apiCalls/WeatherApiCall';
+import { WeatherApiCall } from '@/Api/Misc/WeatherApiCall';
 
 // uses a card component to display the recieved upcoming 7 day forcast from weatherAPI
 function Weather() {

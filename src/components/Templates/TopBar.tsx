@@ -1,5 +1,5 @@
 import { Separator } from "@/components/ui/separator";
-import UserSettings from "./UserSettings"
+import UserSettings from "../UserSettings"
 
 export function TopBar(page: string) {
 
