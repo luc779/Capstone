@@ -10,8 +10,8 @@ import {
 import { Calendars } from "@/components/Calendars";
 import { useState } from "react";
 import { AddToCalendarForm } from "@/app/Dashboard/widgets/CalendarForm";
-import PageBaseDesign from "@/components/SoftwareDesign";
-import { useAuth } from "@/apiCalls/authentication/UseAuth";
+import PageBaseDesign from "@/components/Templates/SoftwareDesign";
+import { useAuth } from "@/Api/AWS/authentication/UseAuth";
 import LoadingIndicator from "@/components/LoadingIndicator";
 
 const currentPanelName: string = "Tasks";

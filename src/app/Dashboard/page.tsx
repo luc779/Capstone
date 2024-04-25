@@ -17,13 +17,13 @@ import Weather from '@/app/Dashboard/widgets/Weather';
 import SalesPreformance from "@/app/Dashboard/widgets/SalesPreformance";
 import Employees from "@/app/Dashboard/widgets/Employees";
 import InventorySnapshot from "@/app/Dashboard/widgets/InventorySnapshot";
-import SideBar from "@/components/SideBar";
-import { TopBar } from "@/components/TopBar";
+import SideBar from "@/components/Templates/SideBar";
+import { TopBar } from "@/components/Templates/TopBar";
 import { Calendars } from "@/components/Calendars";
 import { AddToCalendar } from "@/components/AddToCalendar";
 import { Separator } from "@/components/ui/separator";
 import { useState } from "react";
-import { useAuth } from "@/apiCalls/authentication/UseAuth";
+import { useAuth } from "@/Api/AWS/authentication/UseAuth";
 import LoadingIndicator from "@/components/LoadingIndicator";
 
 

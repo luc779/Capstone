@@ -16,8 +16,8 @@ import { toast } from "@/components/ui/use-toast"
 import { Input } from "@/components/ui/input"
 import { Icons } from "../SignUp/icons"
 import React, { useEffect, useState } from "react"
-import { LogInApiCall } from "@/apiCalls/authentication/LogInApiCall"
-import { setCookies } from "./Cookies"
+import { LogInApiCall } from "@/Api/AWS/authentication/LogInApiCall"
+import { setCookie } from "../../Security/SetCookie"
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -40,13 +40,12 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       setIsLoading(true)
       console.log("test")
       try {
-        const response = await LogInApiCall(data) as { statusCode: number, body: string, accessToken: string, idToken: string, userSub: string  };
+        const response = await LogInApiCall(data) as { statusCode: number, body: string, accessToken: string, idToken: string  };
         console.log("Response from call: " + response)
 
         if (response.statusCode === 200) {
 
-            setCookies('userSub', response.userSub);
-            setCookies('accessToken', response.accessToken);
+            setCookie('accessToken', response.accessToken);
 
             toast({
                 title: "Worked:",

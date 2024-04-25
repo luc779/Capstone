@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-import { taskSchema } from "../../apiCalls/inventoryData/schema"
+import { taskSchema } from "../../Api/inventoryData/schema"
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>

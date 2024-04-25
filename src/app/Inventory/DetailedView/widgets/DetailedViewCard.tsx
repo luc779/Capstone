@@ -1,6 +1,6 @@
 'use client'
 
-import { taskSchema } from "@/apiCalls/inventoryData/schema";
+import { taskSchema } from "@/Api/inventoryData/schema";
 import { Card, CardContent } from "@/components/ui/card"
 import axios from "axios";
 import { useEffect, useState } from "react";

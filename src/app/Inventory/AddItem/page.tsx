@@ -1,4 +1,4 @@
-import InventoryTest from "@/components/SoftwareDesign";
+import InventoryTest from "@/components/Templates/SoftwareDesign";
 import AddItemForm from "./AddItemForm";
 
 // adding async makes the card weird

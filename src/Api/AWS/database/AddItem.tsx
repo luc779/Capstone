@@ -24,7 +24,7 @@ export const AddItemApiCall = async (passedData: ItemFormValues) => {
     maxBodyLength: Infinity,
     url: 'https://ajdg3owxqe.execute-api.us-west-2.amazonaws.com/test/AddItemToInventory',
     headers: { 
-        'x-api-key': '5CKGXHFWSX8pz21XwgJtC1V18Fi6k9Mnb73Yl3E3', 
+        'x-api-key': process.env.NEXT_PUBLIC_AWS_API_KEY, 
         'Content-Type': 'application/json'
     },
     data : data

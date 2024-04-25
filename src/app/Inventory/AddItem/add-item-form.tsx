@@ -16,7 +16,7 @@ import { toast } from "@/components/ui/use-toast"
 import { Input } from "@/components/ui/input"
 import React, { useEffect, useState } from "react"
 import { Icons } from "@/app/SignUp/icons"
-import { AddItemApiCall } from "@/apiCalls/inventory/AddItem"
+import { AddItemApiCall } from "@/Api/AWS/database/AddItem"
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -24,7 +24,7 @@ const profileFormSchema = z.object({
     museum_name: z.string().default("TestMuseum"),
     make: z.string().max(160).min(4),
     model: z.string(),
-    year: z.string()
+    car_year: z.string()
         .regex(/^\d{4}$/, { message: 'Year must be a four-digit number.' }),
     image: z
         .any()
@@ -131,7 +131,7 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
                 />
                 <FormField
                     control={form.control}
-                    name="year"
+                    name="car_year"
                     render={({ field }) => (
                         <FormItem>
                         <FormControl>

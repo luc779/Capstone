@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from "react";
-import { IsAuthenticated } from "@/apiCalls/authentication/IsAuthenticated";
+import { IsAuthenticated } from "@/Security/IsAuthenticated";
 import { useRouter } from "next/navigation";
 
 export const useAuth = () => {

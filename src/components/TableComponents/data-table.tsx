@@ -67,6 +67,8 @@ export function DataTable<TData, TValue>({
     getFacetedUniqueValues: getFacetedUniqueValues(),
   })
 
+  console.log(table.getRowModel().rows?.length)
+
   return (
     <div className="space-y-4">
       <DataTableToolbar table={table} />

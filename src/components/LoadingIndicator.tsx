@@ -1,4 +1,4 @@
-import { useAuth } from "@/apiCalls/authentication/UseAuth";
+import { useAuth } from "@/Api/AWS/authentication/UseAuth";
 import { Progress } from "./ui/progress";
 
 

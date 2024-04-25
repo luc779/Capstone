@@ -1,6 +1,6 @@
 // 'use client'
 
-import InventoryTest from "@/components/SoftwareDesign";
+import InventoryTest from "@/components/Templates/SoftwareDesign";
 import { useEffect } from "react";
 import DetailedViewCard from "./widgets/DetailedViewCard";
 import GetVin from "./widgets/GetVin";
