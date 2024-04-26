@@ -6,30 +6,26 @@ import { columns } from "@/components/TableComponents/columns"
 import { DataTable } from "@/components/TableComponents/data-table"
 import { taskSchema } from "@/Api/inventoryData/schema"
 import { Card, CardContent } from "@/components/ui/card"
+import { getCookie } from "@/Security/GetCookie"
+import { GetInventoryApiCall } from "@/Api/AWS/database/GetInventory"
 
 // Simulate a database read for inventory.
 async function getInventory() {
-  const data = await fs.readFile(
-    path.join(process.cwd(), "./src/Api/inventoryData/tasks.json")
-  )
-
-  const tasks = JSON.parse(data.toString())
-
-  // let tasks: unknown[] = [];
-  // getCookie("accessToken")
-  //   .then(async response => {
-  //       const test = await GetInventoryApiCall({ accessToken: response}) as { statusCode: number, body: string};
-  //       console.log('response api' , test.body)
-  //       // tasks = test;
-  //       console.log('worked');
-  //       return z.array(taskSchema).parse(tasks.toString());
-  //   })
-  //   .catch(error => {
-  //       console.error(error);
-  //       return z.array(taskSchema).parse(tasks.toString());
-  //   });
-
-  return z.array(taskSchema).parse(tasks)
+  
+  return getCookie("accessToken")
+    .then(async response => {
+        if (response == undefined) {
+          throw Error;
+        }
+        const test = await GetInventoryApiCall({ accessToken: response}) as { statusCode: number, body: string};
+        // console.log('response api: ' , test.body)
+        // console.log('worked');
+       return z.array(taskSchema).parse(test.body)
+    })
+    .catch(error => {
+        console.error(error);
+        return z.array(taskSchema).parse(JSON.parse("[]"))
+    });
 }
 
 export default async function FullInventoryShow() {
