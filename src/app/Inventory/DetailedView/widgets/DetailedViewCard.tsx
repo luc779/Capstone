@@ -42,7 +42,7 @@ async function getInventoryItem() {
       if (response == undefined) {
         throw Error;
       }
-      const test = await GetInventoryItemApiCall({ accessToken: response, VIN: vin}) as ApiResponse;
+      const test = await GetInventoryItemApiCall({ accessToken: response, VIN: vin || ""}) as ApiResponse;
       // console.log(test.body)
       return(test)
     })
