@@ -25,19 +25,29 @@ interface ApiResponse {
 }
 
 async function getInventoryItem() {
-  console.log("running")
+
+  const vin = await getCookie("DetailedView")
+    .then(async response => {
+      console.log(response);
+      return response;
+    })
+    .catch(error => {
+      console.error(error);
+    });
+
+  console.log("running with: " + vin)
 
   return getCookie("accessToken")
     .then(async response => {
-        if (response == undefined) {
-          throw Error;
-        }
-        const test = await GetInventoryItemApiCall({ accessToken: response, VIN: "1HGCM82633A004352"}) as ApiResponse;
-        // console.log(test.body)
-        return(test)
+      if (response == undefined) {
+        throw Error;
+      }
+      const test = await GetInventoryItemApiCall({ accessToken: response, VIN: vin}) as ApiResponse;
+      // console.log(test.body)
+      return(test)
     })
     .catch(error => {
-        console.error(error);
+      console.error(error);
     });
 }
 

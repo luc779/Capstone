@@ -12,13 +12,16 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 import { taskSchema } from "../../Api/inventoryData/schema"
+import { setCookie } from "@/Security/SetCookie"
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
 }
 
-const handleDetailedViewClick = (task: string) => {
+const handleDetailedViewClick = async (task: string) => {
   localStorage.setItem('DetailedView', task)
+  console.log("clicked on: ", task)
+  await setCookie('DetailedView', task)
   window.location.href = "/Inventory/DetailedView";
 };
 
