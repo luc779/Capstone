@@ -18,8 +18,6 @@ async function getInventory() {
           throw Error;
         }
         const test = await GetInventoryApiCall({ accessToken: response}) as { statusCode: number, body: string};
-        // console.log('response api: ' , test.body)
-        // console.log('worked');
        return z.array(taskSchema).parse(test.body)
     })
     .catch(error => {
