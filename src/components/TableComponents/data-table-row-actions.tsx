@@ -25,6 +25,14 @@ const handleDetailedViewClick = async (task: string) => {
   window.location.href = "/Inventory/DetailedView";
 };
 
+const handleEditClick = async (task: string) => {
+  window.location.href = "/Inventory/EditItem";
+};
+
+const handleDeleteClick = async (task: string) => {
+  window.location.href = "/Inventory/DetailedView";
+};
+
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
@@ -44,8 +52,8 @@ export function DataTableRowActions<TData>({
       <DropdownMenuContent align="end" className="w-[160px]">
         <DropdownMenuItem onSelect={() => handleDetailedViewClick(task.VIN)}>Detailed View</DropdownMenuItem>
         <DropdownMenuItem>Share</DropdownMenuItem>
-        <DropdownMenuItem>Edit</DropdownMenuItem>
-        <DropdownMenuItem>Delete</DropdownMenuItem>
+        <DropdownMenuItem onSelect={() => handleEditClick(task.VIN)}>Edit</DropdownMenuItem>
+        <DropdownMenuItem onSelect={() => handleDeleteClick(task.VIN)}>Delete</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )

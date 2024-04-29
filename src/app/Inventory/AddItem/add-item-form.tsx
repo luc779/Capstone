@@ -10,6 +10,7 @@ import {
   FormControl,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "@/components/ui/form"
 import { toast } from "@/components/ui/use-toast"
@@ -110,6 +111,7 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
                     name="make"
                     render={({ field }) => (
                         <FormItem>
+                        <FormLabel>Make</FormLabel>
                         <FormControl>
                             <Input placeholder="Make" type="text" autoCapitalize="none" autoCorrect="off" {...field} />
                         </FormControl>
@@ -122,6 +124,7 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
                     name="model"
                     render={({ field }) => (
                         <FormItem>
+                            <FormLabel>Model</FormLabel>
                         <FormControl>
                             <Input placeholder="Model" type="text" autoCapitalize="none" autoCorrect="off" {...field} />
                         </FormControl>
@@ -134,6 +137,7 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
                     name="car_year"
                     render={({ field }) => (
                         <FormItem>
+                            <FormLabel>Year</FormLabel>
                         <FormControl>
                             <Input placeholder="Year" type="number" {...field} />
                         </FormControl>
@@ -146,6 +150,7 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
                     name="color"
                     render={({ field }) => (
                         <FormItem>
+                            <FormLabel>Color</FormLabel>
                         <FormControl>
                             <Input placeholder="Color" type="text" autoCapitalize="none" autoCorrect="off" {...field} />
                         </FormControl>
@@ -158,6 +163,7 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
                     name="vin"
                     render={({ field }) => (
                         <FormItem>
+                            <FormLabel>VIN</FormLabel>
                         <FormControl>
                             <Input placeholder="VIN" type="text" {...field} />
                         </FormControl>
@@ -172,6 +178,7 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
                     render={({ field }) => {
                         return (
                         <FormItem>
+                            <FormLabel>Picture of Car</FormLabel>
                         <FormControl>
                             <Input type="file" placeholder="" onChange={(e) => field.onChange(e.target.files)} />
                         </FormControl>
@@ -186,6 +193,7 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
                     name="location"
                     render={({ field }) => (
                         <FormItem>
+                            <FormLabel>Location in Museum</FormLabel>
                         <FormControl>
                             <Input placeholder="Location in Museum" type="text" {...field} />
                         </FormControl>
@@ -199,6 +207,7 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
                     name="insurance_company"
                     render={({ field }) => (
                         <FormItem>
+                            <FormLabel>Insurance Company</FormLabel>
                         <FormControl>
                             <Input placeholder="Insurance Information" type="text" {...field} />
                         </FormControl>
@@ -212,6 +221,7 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
                     name="policy_number"
                     render={({ field }) => (
                         <FormItem>
+                            <FormLabel>Policy Number</FormLabel>
                         <FormControl>
                             <Input placeholder="Policy Number" type="text" {...field} />
                         </FormControl>
@@ -225,6 +235,7 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
                     name="value"
                     render={({ field }) => (
                         <FormItem>
+                            <FormLabel>Estimated Car Value</FormLabel>
                         <FormControl>
                             <Input placeholder="Value" type="number" {...field} />
                         </FormControl>
