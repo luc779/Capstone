@@ -22,6 +22,8 @@ export const LogInApiCall = async (passedData: ProfileFormValues) => {
         data : data
     };
 
+    console.log(config);
+
     return new Promise(async (resolve, reject) => {
         await axios.request(config)
         .then((response: { data: any }) => {
