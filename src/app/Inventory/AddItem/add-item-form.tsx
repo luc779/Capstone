@@ -69,9 +69,7 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
                     console.log(data)
                     {/* @ts-ignore */}
                     const response = await AddItemApiCall(data) as { statusCode: number, body: string };
-                    console.log("Response from call: " + response);
-                    console.log("Response from call: " + response.statusCode);
-        
+                    form.reset();
                         toast({
                             title: "Success:",
                             description: (
@@ -96,11 +94,7 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
             }
             setIsLoading(false) 
         }; 
-    }
-
-
-
-            
+    } 
   
     return (
         <div className={cn("grid gap-6", className)} {...props}>
@@ -237,7 +231,7 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
                         <FormItem>
                             <FormLabel>Estimated Car Value</FormLabel>
                         <FormControl>
-                            <Input placeholder="Value" type="number" {...field} />
+                            <Input placeholder="Value" type="text" {...field} />
                         </FormControl>
                         <FormMessage />
                         </FormItem>

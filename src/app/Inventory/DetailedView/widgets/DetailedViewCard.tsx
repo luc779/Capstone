@@ -62,7 +62,7 @@ export default async function DetailedViewCard() {
           {response.body.car_year} {response.body.make} {response.body.model}
         </h1>
         <br></br>
-        <div className="border border-blue overflow-hidden" style={{  height: "325px", padding: "4px" }}>
+        <div className="overflow-hidden" style={{  height: "364px"}}>
           {CardVersion(response)}
         </div>
         <div className="flex pt-4 space-x-4">
@@ -109,8 +109,12 @@ export function CardVersion(response: ApiResponse) {
         <Image
           src={`data:image/png;base64, ${response.base64_image}`}
           alt="Base64 Image"
-          width={500} 
-          height={400}
+          width="500"
+          height="364"
+          style = {{
+            aspectRatio: "500/364",
+            objectFit: "cover",
+          }}
           className="rounded-lg"
         />
       </div>
