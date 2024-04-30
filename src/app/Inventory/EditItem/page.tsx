@@ -1,4 +1,5 @@
 import InventoryTest from "@/components/Templates/SoftwareDesign";
+import EditItemForm from "./EditItemForm";
 
 // adding async makes the card weird
 const currentPanelName: string = "Inventory -> Edit Item";
@@ -18,6 +19,6 @@ export default function AddItem() {
 // space for inventory
 const BottomContentPanel = () => (
   <div className="h-full">
-    test
+    <EditItemForm />
   </div>  
 );

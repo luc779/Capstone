@@ -40,6 +40,7 @@ const handleDetailedViewClick = async (task: string) => {
 };
 
 const handleEditClick = async (task: string) => {
+  await setCookie('EditItem', task)
   window.location.href = "/Inventory/EditItem";
 };
 
