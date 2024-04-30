@@ -7,9 +7,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-
-import { DataTablePagination } from "./data-table-pagination"
-import { DataTableToolbar } from "./data-table-toolbar"
 import { columns } from "./columns"
 
 export function DataTableSkeleton() {
@@ -48,15 +45,15 @@ export function DataTableSkeleton() {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                {skeletonRows.map((_, index) => (
-                    <TableRow key={index}>
-                    {columns.map((column) => (
-                        <TableCell>
+                    {skeletonRows.map((_, rowIndex) => (
+                        <TableRow key={rowIndex}>
+                        {columns.map((_, colIndex) => (
+                            <TableCell key={`${rowIndex}-${skeletonColumns[colIndex].key}`}>
                             <div className="animate-pulse h-8 bg-gray-200 rounded-md"></div>
-                        </TableCell>
+                            </TableCell>
+                        ))}
+                        </TableRow>
                     ))}
-                    </TableRow>
-                ))}
                 </TableBody>
             </Table>
             </div>
