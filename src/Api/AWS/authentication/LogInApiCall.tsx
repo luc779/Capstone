@@ -21,7 +21,8 @@ export const LogInApiCall = async (passedData: ProfileFormValues) => {
         },
         data : data
     };
-    conosle.log(process.env.NEXT_PUBLIC_AWS_API_KEY)
+    console.log(process.env.NEXT_PUBLIC_AWS_API_KEY)
+    console.log(NEXT_PUBLIC_AWS_API_KEY)
     console.log(config);
 
     return new Promise(async (resolve, reject) => {
