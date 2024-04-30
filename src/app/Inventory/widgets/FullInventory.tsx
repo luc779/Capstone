@@ -1,5 +1,5 @@
-import { promises as fs } from "fs"
-import path from "path"
+'use client'
+
 import { z } from "zod"
 
 import { columns } from "@/components/TableComponents/columns"
@@ -8,26 +8,45 @@ import { taskSchema } from "@/Api/inventoryData/schema"
 import { Card, CardContent } from "@/components/ui/card"
 import { getCookie } from "@/Security/GetCookie"
 import { GetInventoryApiCall } from "@/Api/AWS/database/GetInventory"
+import { useEffect, useState } from "react"
 
-// Simulate a database read for inventory.
-async function getInventory() {
-  
-  return getCookie("accessToken")
-    .then(async response => {
-        if (response == undefined) {
-          throw Error;
-        }
-        const test = await GetInventoryApiCall({ accessToken: response}) as { statusCode: number, body: string};
-       return z.array(taskSchema).parse(test.body)
-    })
-    .catch(error => {
-        console.error(error);
-        return z.array(taskSchema).parse(JSON.parse("[]"))
-    });
+interface ApiResponse {
+  statusCode: number;
+  body: string;
 }
 
-export default async function FullInventoryShow() {
-  const tasks = await getInventory()
+interface InventoryItem {
+  VIN: string;
+  make: string;
+  model: string;
+  year: string;
+  color: string;
+}
+
+export default function FullInventoryShow() {
+  const [tasks, setTasks] = useState<InventoryItem[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+
+      try {
+        const accessToken = await getCookie("accessToken");
+  
+        if (!accessToken) {
+          setTasks(z.array(taskSchema).parse(JSON.parse("[]")))
+          return;
+        }
+  
+        const data = await GetInventoryApiCall({ accessToken: accessToken}) as ApiResponse;
+        const post = z.array(taskSchema).parse(data.body)
+        setTasks(post);
+      } catch (error) {
+        console.error("Error fetching inventory item:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <Card className="overflow-auto h-full pt-4">

@@ -4,12 +4,13 @@ import DetailedViewCard from "./widgets/DetailedViewCard";
 // Define currentPanelName
 const currentPanelName: string = "Inventory -> Detailed View";
 
-export default async function DetailedView() {
+export default function DetailedView() {
   return (
     <main>
       <InventoryTest panelName={currentPanelName}>
         <div className="h-full">
-          {await BottomContentPanel()} 
+          {/* {await BottomContentPanel()}  */}
+          <BottomContentPanel />
         </div>
       </InventoryTest>
     </main>
@@ -17,10 +18,11 @@ export default async function DetailedView() {
 }
 
 // Define BottomContentPanel as a separate component
-const BottomContentPanel = async () => {
+const BottomContentPanel = () => {
   return (
     <div className="h-full">
-      {await DetailedViewCard()}
+      {/* {await DetailedViewCard()} */}
+      <DetailedViewCard />
     </div>  
   );
 };
