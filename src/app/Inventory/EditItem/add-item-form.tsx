@@ -18,82 +18,112 @@ import { Input } from "@/components/ui/input"
 import React, { useEffect, useState } from "react"
 import { Icons } from "@/app/SignUp/icons"
 import { AddItemApiCall } from "@/Api/AWS/database/AddItem"
+import { GetInventoryItemApiCall } from "@/Api/AWS/database/GetInventoryItem"
+import { getCookie } from "@/Security/GetCookie"
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 const profileFormSchema = z.object({
     museum_name: z.string().default("TestMuseum"),
-    make: z.string().max(160).min(4),
-    model: z.string(),
-    car_year: z.string()
-        .regex(/^\d{4}$/, { message: 'Year must be a four-digit number.' }),
-    image: z
-        .any()
-        .refine((file) => file?.length == 1, 'File is required.')
-        .refine((file) => {
-            if (!file) return true; // If file is not provided, let other validations handle it
-            const acceptedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']; // accepted file types
-            return acceptedTypes.includes(file[0]?.type);
-      }, 'Only image files are allowed.'),
-    color: z.string(),
-    vin: z.string(),
-    location: z.string(),
-    insurance_company: z.string(),
-    policy_number: z.string(),
-    value: z.string(),
+    make: z.string().max(160).min(4).optional(),
+    model: z.string().optional(),
+    car_year: z.string().optional(),
+    image: z.any().optional(),
+    color: z.string().optional(),
+    VIN: z.string().optional(),
+    location: z.string().optional(),
+    insurance_company: z.string().optional(),
+    policy_number: z.string().optional(),
+    car_value: z.string().optional(),
 })
+
+interface InventoryItem {
+    model: string;
+    location: string;
+    image_location: string;
+    insurance_company: string;
+    car_value: string;
+    policy_number: string;
+    car_year: string;
+    museum_name: string;
+    VIN: string;
+    color: string;
+    make: string;
+}
+
+interface ApiResponse {
+    statusCode: number;
+    body: InventoryItem;
+    base64_image: string;
+}
+
+async function getInventoryItem() {
+
+    const vin = await getCookie("EditItem")
+      .then(async response => {
+        console.log(response);
+        return response;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  
+    console.log("running with: " + vin)
+  
+    return getCookie("accessToken")
+      .then(async response => {
+        if (response == undefined) {
+          throw Error;
+        }
+        const test = await GetInventoryItemApiCall({ accessToken: response, VIN: vin || ""}) as ApiResponse;
+        console.log(test.body)
+        return(test)
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>
 
-export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
+export function ItemEditForm({ className, ...props }: UserAuthFormProps) {
 
     const [isLoading, setIsLoading] = React.useState<boolean>(false)
+    const [carData, setCarData] = useState<ApiResponse | null>(null);
+
+
+    useEffect(() => {
+        async function fetchInventoryItem() {
+          try {
+            const data = await getInventoryItem() as ApiResponse;
+            setCarData(data);
+          } catch (error) {
+            console.error(error);
+          }
+        }
+        fetchInventoryItem();
+      }, []);
 
     const form = useForm<ProfileFormValues>({
       resolver: zodResolver(profileFormSchema)
     })
 
     async function onSubmit(data: ProfileFormValues) {
-        setIsLoading(true)
-        // console.log(data.image[0])
-        const file = data.image[0];
-        let reader = new FileReader();
-        reader.readAsDataURL(file);
-        var image_base64 = ''
-        reader.onload = async function () {
-            if (reader.result != null) {
-                image_base64 = reader.result.toString().split(",")[1]; // base 64 of the inputted image
-                console.log("happened")
-                data.image = image_base64;
-                try {
-                    console.log(data)
-                    {/* @ts-ignore */}
-                    const response = await AddItemApiCall(data) as { statusCode: number, body: string };
-                    form.reset();
-                        toast({
-                            title: "Success:",
-                            description: (
-                                <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                                <code className="text-white">{JSON.stringify(response, null, 2)}</code>
-                                </pre>
-                            ),
-                        });
-                } catch (error) {
-                    console.error(error);
-                }
+        // setIsLoading(true)
+        console.log(data);
 
-            } else {
-                toast({
-                    title: "Image Error:",
-                    description: (
-                        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                        <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-                        </pre>
-                    ),
-                });
+        for (let key in data) {
+            //@ts-ignore
+            if (data[key] == undefined) {
+                //@ts-ignore
+                console.log(data[key] + " " + key);
+                //@ts-ignore
+                data[key] = carData.body[key];
             }
-            setIsLoading(false) 
-        }; 
+        }
+
+        console.log(data);
+
     } 
   
     return (
@@ -107,7 +137,7 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
                         <FormItem>
                         <FormLabel>Make</FormLabel>
                         <FormControl>
-                            <Input placeholder="Make" type="text" autoCapitalize="none" autoCorrect="off" {...field} />
+                            <Input  type="text" autoCapitalize="none" autoCorrect="off" defaultValue={carData?.body.make} {...field} />
                         </FormControl>
                         <FormMessage />
                         </FormItem>
@@ -120,7 +150,7 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
                         <FormItem>
                             <FormLabel>Model</FormLabel>
                         <FormControl>
-                            <Input placeholder="Model" type="text" autoCapitalize="none" autoCorrect="off" {...field} />
+                            <Input placeholder="Model" type="text" autoCapitalize="none" autoCorrect="off" defaultValue={carData?.body.model} {...field} />
                         </FormControl>
                         <FormMessage />
                         </FormItem>
@@ -133,7 +163,7 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
                         <FormItem>
                             <FormLabel>Year</FormLabel>
                         <FormControl>
-                            <Input placeholder="Year" type="number" {...field} />
+                            <Input placeholder="Year" type="number" defaultValue={carData?.body.car_year} {...field} />
                         </FormControl>
                         <FormMessage />
                         </FormItem>
@@ -146,7 +176,7 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
                         <FormItem>
                             <FormLabel>Color</FormLabel>
                         <FormControl>
-                            <Input placeholder="Color" type="text" autoCapitalize="none" autoCorrect="off" {...field} />
+                            <Input placeholder="Color" type="text" autoCapitalize="none" autoCorrect="off" defaultValue={carData?.body.color} {...field} />
                         </FormControl>
                         <FormMessage />
                         </FormItem>
@@ -154,12 +184,12 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
                 />
                 <FormField
                     control={form.control}
-                    name="vin"
+                    name="VIN"
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>VIN</FormLabel>
                         <FormControl>
-                            <Input placeholder="VIN" type="text" {...field} />
+                            <Input placeholder="VIN" type="text" defaultValue={carData?.body.VIN} {...field} />
                         </FormControl>
                         <FormMessage />
                         </FormItem>
@@ -174,7 +204,7 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
                         <FormItem>
                             <FormLabel>Picture of Car</FormLabel>
                         <FormControl>
-                            <Input type="file" placeholder="" onChange={(e) => field.onChange(e.target.files)} />
+                            <Input type="file" placeholder="" defaultValue={carData?.base64_image} onChange={(e) => field.onChange(e.target.files)} />
                         </FormControl>
                         <FormMessage />
                         </FormItem>
@@ -189,7 +219,7 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
                         <FormItem>
                             <FormLabel>Location in Museum</FormLabel>
                         <FormControl>
-                            <Input placeholder="Location in Museum" type="text" {...field} />
+                            <Input placeholder="Location in Museum" type="text" defaultValue={carData?.body.location} {...field} />
                         </FormControl>
                         <FormMessage />
                         </FormItem>
@@ -203,7 +233,7 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
                         <FormItem>
                             <FormLabel>Insurance Company</FormLabel>
                         <FormControl>
-                            <Input placeholder="Insurance Information" type="text" {...field} />
+                            <Input placeholder="Insurance Information" type="text" defaultValue={carData?.body.insurance_company} {...field} />
                         </FormControl>
                         <FormMessage />
                         </FormItem>
@@ -217,7 +247,7 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
                         <FormItem>
                             <FormLabel>Policy Number</FormLabel>
                         <FormControl>
-                            <Input placeholder="Policy Number" type="text" {...field} />
+                            <Input placeholder="Policy Number" type="text" defaultValue={carData?.body.policy_number} {...field} />
                         </FormControl>
                         <FormMessage />
                         </FormItem>
@@ -226,12 +256,12 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
 
                 <FormField
                     control={form.control}
-                    name="value"
+                    name="car_value"
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Estimated Car Value</FormLabel>
                         <FormControl>
-                            <Input placeholder="Value" type="text" {...field} />
+                            <Input placeholder="Value" type="text" defaultValue={carData?.body.car_value} {...field} />
                         </FormControl>
                         <FormMessage />
                         </FormItem>
@@ -247,7 +277,7 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
                 {isLoading && (    
                 <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                 )}
-                Add Item
+                Edit Item
             </Button> 
         </Form>
       </div>

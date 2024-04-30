@@ -62,59 +62,8 @@ export default async function DetailedViewCard() {
           {response.body.car_year} {response.body.make} {response.body.model}
         </h1>
         <br></br>
-        <div className="flex">
-          <div className="mr-4 flex-shrink-0">
-            <Image
-              src={`data:image/png;base64, ${response.base64_image}`}
-              alt="Base64 Image"
-              width={500} 
-              height={400}
-              className="rounded-lg"
-            />
-          </div>
-          <div className="flex-grow">
-            <div className="flex pb-4 space-x-4">
-              <Card className="w-[280px]">
-                <CardHeader>
-                Color:
-                </CardHeader>
-                <CardContent>
-                  <div className="flex whitespace-no-wrap overflow-x-auto">
-                    <div
-                      className="w-6 h-6 mr-2 flex items-center justify-center border border-white"
-                      style={{ backgroundColor: response.body.color, borderRadius: '50%' }}
-                    >
-                      ?
-                    </div>
-                    <h4 className="scroll-m-20 text-xl font-semibold tracking-tight whitespace-no-wrap overflow-x-auto">
-                      {response.body.color}
-                    </h4>
-                  </div>
-                </CardContent>
-              </Card>
-              
-              <Card className="w-[150px]">
-                <CardHeader>
-                  Car Value:
-                </CardHeader>
-                <CardContent>
-                    <h4 className="scroll-m-20 text-xl font-semibold tracking-tight whitespace-no-wrap">
-                      {'$' + Number(response.body.car_value).toLocaleString()}
-                    </h4>
-                </CardContent>
-              </Card>
-            </div>
-            <Card className="w-[280px]">
-              <CardHeader>
-              VIN:
-              </CardHeader>
-              <CardContent>
-                <h4 className="scroll-m-20 text-xl font-semibold tracking-tight truncate">
-                  {response.body.VIN}
-                </h4>
-              </CardContent>
-            </Card>
-          </div>
+        <div className="overflow-hidden" style={{  height: "364px"}}>
+          {CardVersion(response)}
         </div>
         <div className="flex pt-4 space-x-4">
           <Card className="w-[280px]">
@@ -152,25 +101,66 @@ export default async function DetailedViewCard() {
     </Card>
   )
 }
-// export function TypographyH4() {
-//   return (
-//     <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
-//       People stopped telling jokes
-//     </h4>
-//   )
-// }
 
-
-// Simulate a database read for inventory.
-// async function getItem(VIN: string | null) {
-//   try {
-//     const parsedTasks = z.array(taskSchema).parse(tasks);
-
-//     // Find the task with the matching VIN
-//     const matchingTask = parsedTasks.find(task => task.VIN === VIN);
-//     console.log(matchingTask)
-//   } catch (error) {
-//     console.error('Error fetching item:', error);
-//     throw error; 
-//   }
-// }
+export function CardVersion(response: ApiResponse) {
+  return (
+    <div className="flex">
+      <div className="mr-4 flex-shrink-0">
+        <Image
+          src={`data:image/png;base64, ${response.base64_image}`}
+          alt="Base64 Image"
+          width="500"
+          height="364"
+          style = {{
+            aspectRatio: "500/364",
+            objectFit: "cover",
+          }}
+          className="rounded-lg"
+        />
+      </div>
+      <div className="flex-grow">
+        <div className="flex pb-4 space-x-4">
+          <Card className="w-[280px]">
+            <CardHeader>
+            Color:
+            </CardHeader>
+            <CardContent>
+              <div className="flex whitespace-no-wrap overflow-x-auto">
+                <div
+                  className="w-6 h-6 mr-2 flex items-center justify-center border border-white"
+                  style={{ backgroundColor: response.body.color, borderRadius: '50%' }}
+                >
+                  ?
+                </div>
+                <h4 className="scroll-m-20 text-xl font-semibold tracking-tight whitespace-no-wrap overflow-x-auto">
+                  {response.body.color}
+                </h4>
+              </div>
+            </CardContent>
+          </Card>
+          
+          <Card className="w-[150px]">
+            <CardHeader>
+              Car Value:
+            </CardHeader>
+            <CardContent>
+                <h4 className="scroll-m-20 text-xl font-semibold tracking-tight whitespace-no-wrap">
+                  {'$' + Number(response.body.car_value).toLocaleString()}
+                </h4>
+            </CardContent>
+          </Card>
+        </div>
+        <Card className="w-[280px]">
+          <CardHeader>
+          VIN:
+          </CardHeader>
+          <CardContent>
+            <h4 className="scroll-m-20 text-xl font-semibold tracking-tight truncate">
+              {response.body.VIN}
+            </h4>
+          </CardContent>
+        </Card>
+      </div>
+    </div>  
+  )
+}

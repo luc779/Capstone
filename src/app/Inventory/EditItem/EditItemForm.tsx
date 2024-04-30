@@ -11,19 +11,19 @@ import {
     CardTitle,
   } from "@/components/ui/card"
 import Link from 'next/link';
-import { InventoryAddForm } from './add-item-form';
+import { ItemEditForm } from './add-item-form';
 
 // uses a card component 
-function AddItemForm() {
+function EditItemForm() {
   return (
     <Card className="h-full overflow-auto">
         <CardContent className="grid gap-6 pt-6">
           <div className="flex flex-col space-y-2 ">
-            <InventoryAddForm />
+            <ItemEditForm />
           </div>
         </CardContent>
     </Card>
   );
 }
 
-export default AddItemForm;
+export default EditItemForm;

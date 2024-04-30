@@ -1,27 +1,15 @@
-// 'use client'
-
 import InventoryTest from "@/components/Templates/SoftwareDesign";
-import { useEffect } from "react";
 import DetailedViewCard from "./widgets/DetailedViewCard";
-import GetVin from "./widgets/GetVin";
 
 // Define currentPanelName
 const currentPanelName: string = "Inventory -> Detailed View";
 
-export default function DetailedView() {
-
-  // const { content } = GetVin()
-
-  // useEffect(() => {
-  //   console.log(content);
-  // }, [content]);
-
-  // const content = 'test'
+export default async function DetailedView() {
   return (
     <main>
       <InventoryTest panelName={currentPanelName}>
         <div className="h-full">
-          <BottomContentPanel />
+          {await BottomContentPanel()} 
         </div>
       </InventoryTest>
     </main>
@@ -29,10 +17,10 @@ export default function DetailedView() {
 }
 
 // Define BottomContentPanel as a separate component
-const BottomContentPanel = () => {
+const BottomContentPanel = async () => {
   return (
     <div className="h-full">
-      <DetailedViewCard />
+      {await DetailedViewCard()}
     </div>  
   );
 };
