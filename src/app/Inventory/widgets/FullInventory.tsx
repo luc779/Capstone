@@ -9,6 +9,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { getCookie } from "@/Security/GetCookie"
 import { GetInventoryApiCall } from "@/Api/AWS/database/GetInventory"
 import { useEffect, useState } from "react"
+import { DataTableSkeleton } from "@/components/TableComponents/data-table-skeleton"
 
 interface ApiResponse {
   statusCode: number;
@@ -25,6 +26,7 @@ interface InventoryItem {
 
 export default function FullInventoryShow() {
   const [tasks, setTasks] = useState<InventoryItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true); // Add loading state
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,14 +36,17 @@ export default function FullInventoryShow() {
   
         if (!accessToken) {
           setTasks(z.array(taskSchema).parse(JSON.parse("[]")))
+          setIsLoading(false);
           return;
         }
   
         const data = await GetInventoryApiCall({ accessToken: accessToken}) as ApiResponse;
         const post = z.array(taskSchema).parse(data.body)
         setTasks(post);
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching inventory item:", error);
+        setIsLoading(false);
       }
     };
 
@@ -51,7 +56,11 @@ export default function FullInventoryShow() {
   return (
     <Card className="overflow-auto h-full pt-4">
       <CardContent>
-        <DataTable data={tasks} columns={columns} />
+        {isLoading ? (
+          <DataTableSkeleton />
+        ) : (
+          <DataTable data={tasks} columns={columns} />
+        )}
       </CardContent>
     </Card>
   )

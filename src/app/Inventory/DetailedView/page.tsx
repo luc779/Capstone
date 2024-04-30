@@ -9,7 +9,6 @@ export default function DetailedView() {
     <main>
       <InventoryTest panelName={currentPanelName}>
         <div className="h-full">
-          {/* {await BottomContentPanel()}  */}
           <BottomContentPanel />
         </div>
       </InventoryTest>
@@ -21,7 +20,6 @@ export default function DetailedView() {
 const BottomContentPanel = () => {
   return (
     <div className="h-full">
-      {/* {await DetailedViewCard()} */}
       <DetailedViewCard />
     </div>  
   );

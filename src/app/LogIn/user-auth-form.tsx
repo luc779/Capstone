@@ -18,6 +18,7 @@ import { Icons } from "../SignUp/icons"
 import React, { useEffect, useState } from "react"
 import { LogInApiCall } from "@/Api/AWS/authentication/LogInApiCall"
 import { setCookie } from "../../Security/SetCookie"
+import { useRouter } from "next/navigation";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -31,30 +32,25 @@ type ProfileFormValues = z.infer<typeof profileFormSchema>
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
     const [isLoading, setIsLoading] = React.useState<boolean>(false)
+    const router = useRouter();
 
     const form = useForm<ProfileFormValues>({
       resolver: zodResolver(profileFormSchema)
     })
 
     async function onSubmit(data: ProfileFormValues) {
-      setIsLoading(true)
-      console.log("test")
-      try {
-        const response = await LogInApiCall(data) as { statusCode: number, body: string, accessToken: string, idToken: string  };
-        console.log("Response from call: " + response)
+        
+        setIsLoading(true)
+        console.log("test")
+        try {
+            const response = await LogInApiCall(data) as { statusCode: number, body: string, accessToken: string, idToken: string  };
+            console.log("Response from call: " + response)
 
         if (response.statusCode === 200) {
 
             setCookie('accessToken', response.accessToken);
 
-            toast({
-                title: "Worked:",
-                description: (
-                    <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                    <code className="text-white">{JSON.stringify(response, null, 2)}</code>
-                    </pre>
-                ),
-            });
+            router.push('/Dashboard');
         }
         
         // to-DO with resend confitmation code if needed

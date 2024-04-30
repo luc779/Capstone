@@ -21,8 +21,6 @@ export const LogInApiCall = async (passedData: ProfileFormValues) => {
         },
         data : data
     };
-    console.log(process.env.NEXT_PUBLIC_AWS_API_KEY)
-    console.log(config);
 
     return new Promise(async (resolve, reject) => {
         await axios.request(config)
