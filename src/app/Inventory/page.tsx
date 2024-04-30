@@ -17,7 +17,6 @@ export default function Inventory() {
     <main >
       <InventoryTest panelName={currentPanelName}>
         <div className="h-full">
-          {/* {await BottomContentPanel()}  */}
           <BottomContentPanel />
         </div>
       </InventoryTest>
@@ -28,7 +27,6 @@ export default function Inventory() {
 // space for inventory
 const BottomContentPanel = () => (
   <div className="h-full">
-    {/* {await FullInventoryShow()}  */}
     <FullInventoryShow />
   </div>  
 );
