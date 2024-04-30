@@ -1,4 +1,5 @@
 
+
 import { GetInventoryItemApiCall } from "@/Api/AWS/database/GetInventoryItem";
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { getCookie } from "@/Security/GetCookie";
@@ -25,7 +26,7 @@ interface ApiResponse {
 }
 
 async function getInventoryItem() {
-
+  
   const vin = await getCookie("DetailedView")
     .then(async response => {
       console.log(response);
@@ -37,18 +38,20 @@ async function getInventoryItem() {
 
   console.log("running with: " + vin)
 
-  return getCookie("accessToken")
+  const response_accessToken = await getCookie("accessToken")
     .then(async response => {
       if (response == undefined) {
         throw Error;
       }
-      const test = await GetInventoryItemApiCall({ accessToken: response, VIN: vin || ""}) as ApiResponse;
-      // console.log(test.body)
-      return(test)
+      return(response)
     })
     .catch(error => {
       console.error(error);
     });
+
+    const test = await GetInventoryItemApiCall({ accessToken: response_accessToken || "", VIN: vin || ""}) as ApiResponse;
+
+    return test;
 }
 
 export default async function DetailedViewCard() {
