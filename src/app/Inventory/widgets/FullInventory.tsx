@@ -10,6 +10,7 @@ import { getCookie } from "@/Security/GetCookie"
 import { GetInventoryApiCall } from "@/Api/AWS/database/GetInventory"
 import { useEffect, useState } from "react"
 import { DataTableSkeleton } from "@/components/TableComponents/data-table-skeleton"
+import { ErrorToast } from "@/components/ErrorToast"
 
 interface ApiResponse {
   statusCode: number;
@@ -35,6 +36,7 @@ export default function FullInventoryShow() {
         const accessToken = await getCookie("accessToken");
   
         if (!accessToken) {
+          ErrorToast("Account not signed in.");
           setTasks(z.array(taskSchema).parse(JSON.parse("[]")))
           setIsLoading(false);
           return;
@@ -46,6 +48,7 @@ export default function FullInventoryShow() {
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching inventory item:", error);
+        ErrorToast("Server ran into an issue.");
         setIsLoading(false);
       }
     };

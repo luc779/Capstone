@@ -11,6 +11,7 @@ export const useAuth = () => {
 
   useEffect(() => {
     const checkAuthentication = async () => {
+      console.log('Attempting auth')
       if (!(await IsAuthenticated())) {
         console.log('push attempt');
         router.push('/LogIn'); // Redirect to login page if not authenticated
