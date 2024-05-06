@@ -20,7 +20,7 @@ import InventorySnapshot from "@/app/Dashboard/widgets/InventorySnapshot";
 import SideBar from "@/components/Templates/SideBar";
 import { TopBar } from "@/components/Templates/TopBar";
 import { Calendars } from "@/components/Calendars";
-import { AddToCalendar } from "@/components/AddToCalendar";
+import { AddToCalendar } from "@/app/Events/widgets/AddToCalendar";
 import { Separator } from "@/components/ui/separator";
 import { useState } from "react";
 import { useAuth } from "@/Api/AWS/authentication/UseAuth";

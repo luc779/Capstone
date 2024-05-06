@@ -22,7 +22,7 @@ import { AddItemApiCall } from "@/Api/AWS/database/AddItem"
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 const profileFormSchema = z.object({
-    museum_name: z.string().default("TestMuseum"),
+    museum_name: z.string().default("TestMuseum"), // to change
     make: z.string().max(160).min(4),
     model: z.string(),
     car_year: z.string()
