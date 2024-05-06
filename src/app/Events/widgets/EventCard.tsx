@@ -2,31 +2,61 @@ import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { PopoverTrigger, PopoverContent, Popover } from "@/components/ui/popover"
- 
-export default function EventCard() {
-   return (
-     <div className="w-full max-w-md">
+import { EventInterface } from "../Interfaces/Event";
+
+const formatTimestamp = (timestamp: string) => {
+  const date = new Date(parseInt(timestamp) * 1000);
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  return `${monthNames[date.getMonth()]} ${date.getDate()}`;
+};
+
+const formatTime = (timestamp: string) => {
+  const date = new Date(parseInt(timestamp) * 1000);
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  return `${hours}:${minutes < 10 ? '0' : ''}${minutes}`;
+};
+
+const getBadgeColor = (priority: string) => {
+  switch (priority) {
+    case 'High':
+      return 'bg-red-500 text-black';
+    case 'Medium':
+      return 'bg-yellow-500 text-black';
+    case 'Low':
+      return 'bg-green-500 text-black';
+    default:
+      return 'bg-gray-500';
+  }
+};
+
+export default function EventCard({ event, index }: { event: EventInterface; index: number; }) {
+  return (
+     <div key={index} className="w-full max-w-md">
        <Card>
-         <CardHeader className="flex items-center justify-between">
-           <CardTitle>Van Gogh Exhibit</CardTitle>
-           <Badge className="bg-yellow-500 text-white" variant="outline">
-             High Priority
+         <CardHeader className="flex items-center text-center">
+           <CardTitle>{event.title}</CardTitle>
+           <Badge className={getBadgeColor(event.priority)} variant="outline">
+             {event.priority} Priority
            </Badge>
          </CardHeader>
-         <CardContent className="space-y-2 md:grid md:grid-cols-2 md:gap-4">
+         <CardContent className=" md:grid md:grid-cols-2 md:gap-4">
            <div className="space-y-1">
              <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Location</p>
-             <p>New York, NY</p>
+             <p>{event.location}</p>
            </div>
            <div className="space-y-1">
              <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Dates</p>
-             <p>May 1 - Aug 31 (10AM - 6PM)</p>
+             <p>
+                {formatTimestamp(event.start_date)} - {formatTimestamp(event.end_date)} (
+                {formatTime(event.start_date)} - {formatTime(event.end_date)})
+             </p>
            </div>
-           <div className="space-y-2 md:col-span-2 md:flex md:justify-between">
+           <div className="md:col-span-2 md:flex md:justify-between">
              <Popover>
                <PopoverTrigger asChild>
                  <Button size="sm" variant="outline">
-                   More Info
+                   Description
                  </Button>
                </PopoverTrigger>
                <PopoverContent className="w-full max-w-md p-6">
@@ -34,24 +64,8 @@ export default function EventCard() {
                    <div className="space-y-1">
                      <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Description</p>
                      <p>
-                       Experience the captivating world of Van Gogh's masterpieces at this must-see exhibit. Immerse
-                       yourself in the vibrant colors and captivating brushstrokes that defined the artist's iconic
-                       style.
+                       {event.description}
                      </p>
-                   </div>
-                   <div className="grid grid-cols-2 gap-4">
-                     <div className="space-y-1">
-                       <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Museum</p>
-                       <p>The Metropolitan Museum of Art</p>
-                     </div>
-                     <div className="space-y-1">
-                       <p className="text-sm font-medium text-gray-500 dark:text-gray-400">ID</p>
-                       <p>12345</p>
-                     </div>
-                     <div className="space-y-1">
-                       <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Item Type</p>
-                       <p>Exhibit</p>
-                     </div>
                    </div>
                  </div>
                </PopoverContent>

@@ -4,7 +4,6 @@ type ProfileFormValues = z.infer<typeof profileFormSchema>
 
 const profileFormSchema = z.object({
     accessToken: z.string(),
-    ID: z.string(),
     item_type: z.string(),
 })
 
