@@ -5,16 +5,17 @@ import { PopoverTrigger, PopoverContent, Popover } from "@/components/ui/popover
 import { EventInterface } from "../Interfaces/Event";
 
 const formatTimestamp = (timestamp: string) => {
-  const date = new Date(parseInt(timestamp) * 1000);
-  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  return `${monthNames[date.getMonth()]} ${date.getDate()}`;
+  const date = new Date(timestamp);
+  const month = date.toLocaleString('default', { month: 'short' });
+  const day = date.getDate();
+  return `${month} ${day}`;
 };
 
 const formatTime = (timestamp: string) => {
-  const date = new Date(parseInt(timestamp) * 1000);
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-  return `${hours}:${minutes < 10 ? '0' : ''}${minutes}`;
+  const date = new Date(timestamp);
+  const hours = date.getHours().toString().padStart(2, '0');
+  const minutes = date.getMinutes().toString().padStart(2, '0');
+  return `${hours}:${minutes}`;
 };
 
 const getBadgeColor = (priority: string) => {

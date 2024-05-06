@@ -60,7 +60,7 @@ export default function Events() {
 const BottomContentPanel: React.FC<PanelProps> = ({ date, setDate, event }) => (
   <ResizablePanel defaultSize={90} className="flex h-full">
     <div className="flex-1 pr-4">
-      <CalendarCard date={date} setDate={setDate} />
+      <CalendarCard date={date} setDate={setDate} event={event}/>
     </div>
     <div className="flex-1 pr-4">
       <UpcomingEvent event={event}/>

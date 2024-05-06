@@ -3,7 +3,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import EventCard from './EventCard';
 import { EventInterface } from '../Interfaces/Event';
 
-const UpcomingEvent: React.FC<{ event: EventInterface[] }> = ({ event }) => (
+const UpcomingEvent: React.FC<{ event: EventInterface[] }> = ({ event }) => {
+  const sortedEvents = event.sort((a, b) => new Date(a.start_date).getTime() - new Date(b.start_date).getTime());
+  
+  return (
   <Card className="p-4 h-full">
     <CardHeader>
       <CardTitle>Upcoming Events</CardTitle>
@@ -12,13 +15,14 @@ const UpcomingEvent: React.FC<{ event: EventInterface[] }> = ({ event }) => (
     <CardContent>
       <div className="overflow-auto h-[600px] w-full">
         <div className="space-y-4">
-          {event.map((event, index) => (
+          {sortedEvents.map((event, index) => (
             <EventCard key={index} event={event} index={index}/>
           ))}
         </div>
       </div>
     </CardContent>
   </Card>
-);
+  );
+}
 
 export default UpcomingEvent;

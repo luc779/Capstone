@@ -24,15 +24,19 @@ import { format } from "date-fns"
 import { Input } from "@/components/ui/input"
 import { TimePicker } from "@/components/TimePicker/time-picker"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Checkbox } from "@/components/ui/checkbox"
+import { AddToCalendarApiCall } from "@/Api/AWS/calendar/AddToCalendarApiCall"
+
+
 
 const profileFormSchema = z.object({
   title: z.string(),
-  startTime: z.date(),
-  endTime: z.date(),
-  priority: z.date(),
+  start_date: z.date(),
+  end_date: z.date(),
+  priority: z.string(),
   location: z.string(),
+  item_type: z.string().default("TASK"),
   description: z.string().max(160).min(4),
+  cars: z.array(z.string()).default([]),
 })
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>
@@ -42,15 +46,31 @@ export function AddToCalendarForm({ calendarType }: { calendarType: string }) {
     resolver: zodResolver(profileFormSchema),
   })
 
-  function onSubmit(data: ProfileFormValues) {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    })
+  async function onSubmit(data: ProfileFormValues) {
+    try {
+      const response = await AddToCalendarApiCall(data) as {statusCode: string, body: string};
+
+      if (response.statusCode == "200") {
+        toast({
+          title: "Sucessful:",
+          description: (
+            <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+              <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+            </pre>
+          ),
+        })
+      }
+      
+    } catch (error) {
+      toast({
+        title: "Error:",
+        description: (
+          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+            <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+          </pre>
+        ),
+      })
+    }
   }
 
   return (
@@ -114,7 +134,7 @@ export function AddToCalendarForm({ calendarType }: { calendarType: string }) {
         />
         <FormField
           control={form.control}
-          name="startTime"
+          name="start_date"
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel className="text-left">Start Date</FormLabel>
@@ -157,7 +177,7 @@ export function AddToCalendarForm({ calendarType }: { calendarType: string }) {
         />
         <FormField
           control={form.control}
-          name="endTime"
+          name="end_date"
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel className="text-left">End Date</FormLabel>
