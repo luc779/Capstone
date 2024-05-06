@@ -78,7 +78,7 @@ export default function EventCard({ event, index }: { event: EventInterface; ind
                </PopoverTrigger>
                <PopoverContent className="w-full max-w-md p-6">
                  <div className="space-y-1">
-                   <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Featured Cars</p>
+                   <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Featured Cars (Comming soon)</p>
                    <ul className="list-disc pl-4 space-y-1">
                      <li>1962 Chevrolet Corvette</li>
                      <li>1967 Ford Mustang</li>
