@@ -2,7 +2,7 @@ import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { PopoverTrigger, PopoverContent, Popover } from "@/components/ui/popover"
-import { EventInterface } from "../Interfaces/Event";
+import { CalendarInterface } from "@/components/CalendarPages/Interface/CalendarInterfaces";
 
 const formatTimestamp = (timestamp: string) => {
   const date = new Date(timestamp);
@@ -31,7 +31,7 @@ const getBadgeColor = (priority: string) => {
   }
 };
 
-export default function EventCard({ event, index }: { event: EventInterface; index: number; }) {
+export default function EventCard({ event, index }: { event: CalendarInterface; index: number; }) {
   return (
      <div key={index} className="w-full max-w-md">
        <Card>
