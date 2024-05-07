@@ -7,9 +7,9 @@ import { useEffect, useState } from "react";
 import { getCookie } from "@/Security/GetCookie";
 import { ErrorToast } from "@/components/ErrorToast";
 import { GetCalendarApiCall } from "@/Api/AWS/calendar/GetCalendarApiCall";
-import AddEvent from "./widgets/AddEvent";
-import UpcomingEvent from "./widgets/UpcomingEvent";
-import CalendarCard from "./widgets/CalendarCard";
+import AddEvent from "./tabs/AddEvent";
+import UpcomingEvent from "./tabs/UpcomingEvent";
+import CalendarCard from "./tabs/CalendarCard";
 import { ApiResponse, EventInterface, PanelProps } from "./Interfaces/Event";
 
 const currentPanelName: string = "Events";
