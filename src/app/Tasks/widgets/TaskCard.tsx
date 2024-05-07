@@ -2,7 +2,7 @@ import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { PopoverTrigger, PopoverContent, Popover } from "@/components/ui/popover"
-import { EventInterface } from "../Interfaces/Event";
+import { CalendarInterface } from "../../../components/CalendarPages/Interface/CalendarInterfaces";
 
 const formatTimestamp = (timestamp: string) => {
   const date = new Date(timestamp);
@@ -31,26 +31,26 @@ const getBadgeColor = (priority: string) => {
   }
 };
 
-export default function EventCard({ event, index }: { event: EventInterface; index: number; }) {
+export default function TaskCard({ task, index }: { task: CalendarInterface; index: number; }) {
   return (
      <div key={index} className="w-full max-w-md">
        <Card>
          <CardHeader className="flex items-center text-center">
-           <CardTitle>{event.title}</CardTitle>
-           <Badge className={getBadgeColor(event.priority)} variant="outline">
-             {event.priority} Priority Event
+           <CardTitle>{task.title}</CardTitle>
+           <Badge className={getBadgeColor(task.priority)} variant="outline">
+             {task.priority} Priority
            </Badge>
          </CardHeader>
          <CardContent className=" md:grid md:grid-cols-2 md:gap-4">
            <div className="space-y-1">
              <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Location</p>
-             <p>{event.location}</p>
+             <p>{task.location}</p>
            </div>
            <div className="space-y-1">
              <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Dates</p>
              <p>
-                {formatTimestamp(event.start_date)} - {formatTimestamp(event.end_date)} (
-                {formatTime(event.start_date)} - {formatTime(event.end_date)})
+                {formatTimestamp(task.start_date)} - {formatTimestamp(task.end_date)} (
+                {formatTime(task.start_date)} - {formatTime(task.end_date)})
              </p>
            </div>
            <div className="md:col-span-2 md:flex md:justify-between">
@@ -65,7 +65,7 @@ export default function EventCard({ event, index }: { event: EventInterface; ind
                    <div className="space-y-1">
                      <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Description</p>
                      <p>
-                       {event.description}
+                       {task.description}
                      </p>
                    </div>
                  </div>

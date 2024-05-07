@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { DatePickerWithRange } from "../../../components/DatePickerWithRange"
 
-export function AddToCalendar() {
+export function AddEventToCalendar() {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -33,4 +33,4 @@ export function AddToCalendar() {
   )
 }
 
-export default AddToCalendar;
+export default AddEventToCalendar;

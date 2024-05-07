@@ -1,30 +1,45 @@
 "use client"
 import { ResizablePanel } from "@/components/ui/resizable";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { Calendars } from "@/components/Calendars";
-import { useState } from "react";
 import PageBaseDesign from "@/components/Templates/SoftwareDesign";
 import { useAuth } from "@/Api/AWS/authentication/UseAuth";
 import LoadingIndicator from "@/components/LoadingIndicator";
-import { AddToCalendarForm } from "../Events/widgets/CalendarForm";
+import { useEffect, useState } from "react";
+import { getCookie } from "@/Security/GetCookie";
+import { ErrorToast } from "@/components/ErrorToast";
+import { GetCalendarApiCall } from "@/Api/AWS/calendar/GetCalendarApiCall";
+import { ApiResponse, CalendarInterface, PanelProps } from "../../components/CalendarPages/Interface/CalendarInterfaces";
+import TaskOrEventCalendarCard from "../../components/CalendarPages/TaskOrEventCalendarCard";
+import UpcomingTaskOrEvent from "../../components/CalendarPages/UpcomingTaskOrEvent";
+import AddTaskOrEvent from "../../components/CalendarPages/AddTaskOrEvent";
 
 const currentPanelName: string = "Tasks";
-
-interface PanelProps {
-  date: Date | undefined;
-  setDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
-}
 
 // base panel
 export default function Tasks() {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const { loading, progressValue } = useAuth();
+  const [response, setResponse] = useState<CalendarInterface[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response_accessToken = await getCookie("accessToken");
+  
+        if (!response_accessToken) {
+          ErrorToast("Account not signed in.");
+          throw new Error("Access token is missing");
+        }
+  
+        const data = await GetCalendarApiCall({ accessToken: response_accessToken, item_type: "TASK" }) as ApiResponse;
+        setResponse(data.body);
+        console.log(response)
+      } catch (error) {
+        console.error("Error fetching inventory item:", error);
+      }
+    };
+  
+    fetchData();
+  }, []);
 
   if (loading) {
     return (
@@ -32,68 +47,26 @@ export default function Tasks() {
     );
   }
   
-
   return (
     <main>
       <PageBaseDesign panelName={currentPanelName}>
-        <BottomContentPanel date={date} setDate={setDate}/>
+        <BottomContentPanel date={date} setDate={setDate} items={response} currentPanelName={currentPanelName}/>
       </PageBaseDesign>
     </main>
   );
 }
 
-// space for Tasks
-const BottomContentPanel: React.FC<PanelProps> = ({ date, setDate }) => (
+// space for events
+const BottomContentPanel: React.FC<PanelProps> = ({ date, setDate, items, currentPanelName }) => (
   <ResizablePanel defaultSize={90} className="flex h-full">
-    <div className="flex-1 pr-4 ">
-      <CalendarCard date={date} setDate={setDate} />
+    <div className="flex-1 pr-4">
+      <TaskOrEventCalendarCard date={date} setDate={setDate} items={items} currentPanelName={currentPanelName}/>
     </div>
     <div className="flex-1 pr-4">
-      <UpcomingEvent />
+      <UpcomingTaskOrEvent items={items} currentPanelName={currentPanelName}/>
     </div>
     <div className="flex-1">
-      <AddEvent />
+      <AddTaskOrEvent currentPanelName={currentPanelName}/>
     </div>
   </ResizablePanel>
-);
-
-
-const CalendarCard: React.FC<PanelProps> = ({ date, setDate }) => (
-  <Card className="overflow-auto border p-4 h-full">
-    <CardHeader>
-      <CardTitle>Tasks Calendars</CardTitle>
-      <CardDescription>A place to organize tasks.</CardDescription>
-    </CardHeader>
-    <CardContent className="inline-block">
-      <div className="pb-4"> 
-        <Calendars date={date} setDate={setDate} />
-      </div>
-      <p>Tasks on {date ? date.toLocaleDateString() : 'No date selected'}</p>
-    </CardContent>
-  </Card>
-);
-
-const UpcomingEvent = () => (
-  <Card className=" overflow-auto border p-4 h-full">
-    <CardHeader>
-      <CardTitle>UpComing Tasks</CardTitle>
-      <CardDescription>A place to see upcomming tasks.</CardDescription>
-    </CardHeader>
-    <CardContent className="inline-block">
-      <div className="pb-4"> 
-      </div>
-    </CardContent>
-  </Card>
-);
-
-const AddEvent = () => (
-  <Card className="overflow-auto border p-4 h-full">
-    <CardHeader>
-      <CardTitle>Add Task</CardTitle>
-      <CardDescription>A place to add tasks.</CardDescription>
-    </CardHeader>
-    <CardContent className="inline-block">
-      <AddToCalendarForm calendarType="Task" />
-    </CardContent>
-  </Card>
 );
