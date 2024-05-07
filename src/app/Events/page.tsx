@@ -7,10 +7,10 @@ import { useEffect, useState } from "react";
 import { getCookie } from "@/Security/GetCookie";
 import { ErrorToast } from "@/components/ErrorToast";
 import { GetCalendarApiCall } from "@/Api/AWS/calendar/GetCalendarApiCall";
-import AddEvent from "./tabs/AddEvent";
-import UpcomingEvent from "./tabs/UpcomingEvent";
-import CalendarCard from "./tabs/CalendarCard";
-import { ApiResponse, EventInterface, PanelProps } from "./Interfaces/Event";
+import { ApiResponse, CalendarInterface, PanelProps } from "../../components/CalendarPages/Interface/CalendarInterfaces";
+import TaskOrEventCalendarCard from "../../components/CalendarPages/TaskOrEventCalendarCard";
+import UpcomingTaskOrEvent from "../../components/CalendarPages/UpcomingTaskOrEvent";
+import AddTaskOrEvent from "../../components/CalendarPages/AddTaskOrEvent";
 
 const currentPanelName: string = "Events";
 
@@ -18,7 +18,7 @@ const currentPanelName: string = "Events";
 export default function Events() {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const { loading, progressValue } = useAuth();
-  const [response, setResponse] = useState<EventInterface[]>([]);
+  const [response, setResponse] = useState<CalendarInterface[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,7 +30,7 @@ export default function Events() {
           throw new Error("Access token is missing");
         }
   
-        const data = await GetCalendarApiCall({ accessToken: response_accessToken, item_type: "TASK" }) as ApiResponse;
+        const data = await GetCalendarApiCall({ accessToken: response_accessToken, item_type: "EVENT" }) as ApiResponse;
         setResponse(data.body);
         console.log(response)
       } catch (error) {
@@ -41,32 +41,32 @@ export default function Events() {
     fetchData();
   }, []);
 
-  // if (loading) {
-  //   return (
-  //     <LoadingIndicator progressValue={progressValue} />
-  //   );
-  // }
+  if (loading) {
+    return (
+      <LoadingIndicator progressValue={progressValue} />
+    );
+  }
   
   return (
     <main>
       <PageBaseDesign panelName={currentPanelName}>
-        <BottomContentPanel date={date} setDate={setDate} event={response}/>
+        <BottomContentPanel date={date} setDate={setDate} items={response} currentPanelName={currentPanelName}/>
       </PageBaseDesign>
     </main>
   );
 }
 
 // space for events
-const BottomContentPanel: React.FC<PanelProps> = ({ date, setDate, event }) => (
+const BottomContentPanel: React.FC<PanelProps> = ({ date, setDate, items, currentPanelName }) => (
   <ResizablePanel defaultSize={90} className="flex h-full">
     <div className="flex-1 pr-4">
-      <CalendarCard date={date} setDate={setDate} event={event}/>
+      <TaskOrEventCalendarCard date={date} setDate={setDate} items={items} currentPanelName={currentPanelName}/>
     </div>
     <div className="flex-1 pr-4">
-      <UpcomingEvent event={event}/>
+      <UpcomingTaskOrEvent items={items} currentPanelName={currentPanelName}/>
     </div>
     <div className="flex-1">
-      <AddEvent />
+      <AddTaskOrEvent currentPanelName={currentPanelName}/>
     </div>
   </ResizablePanel>
 );

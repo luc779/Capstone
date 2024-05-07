@@ -20,7 +20,6 @@ import InventorySnapshot from "@/app/Dashboard/widgets/InventorySnapshot";
 import SideBar from "@/components/Templates/SideBar";
 import { TopBar } from "@/components/Templates/TopBar";
 import { Calendars } from "@/components/Calendars";
-import { AddToCalendar } from "@/app/Events/widgets/AddToCalendar";
 import { Separator } from "@/components/ui/separator";
 import { useState } from "react";
 import { useAuth } from "@/Api/AWS/authentication/UseAuth";
@@ -166,8 +165,6 @@ const CalendarPanel : React.FC<PanelProps> = ({ date, setDate }) => (
         <div className="pb-4"> 
           <Calendars date={date} setDate={setDate} />
         </div>
-        {/* <CalendarForm /> */}
-        <AddToCalendar />
       </CardContent>
       <CardHeader>
         <CardTitle>Tasks Calendars</CardTitle>
@@ -177,7 +174,6 @@ const CalendarPanel : React.FC<PanelProps> = ({ date, setDate }) => (
         <div className="pb-4"> 
           <Calendars date={date} setDate={setDate} />
         </div>
-        <AddToCalendar />
       </CardContent>
     </Card>
 )

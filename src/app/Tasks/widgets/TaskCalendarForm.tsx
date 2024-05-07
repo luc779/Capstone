@@ -26,31 +26,29 @@ import { TimePicker } from "@/components/TimePicker/time-picker"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { AddToCalendarApiCall } from "@/Api/AWS/calendar/AddToCalendarApiCall"
 
-
-
 const profileFormSchema = z.object({
   title: z.string(),
   start_date: z.date(),
   end_date: z.date(),
   priority: z.string(),
   location: z.string(),
-  item_type: z.string().default("EVENT"),
+  item_type: z.string().default("TASK"),
   description: z.string().max(160).min(4),
   cars: z.array(z.string()).default([]),
 })
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>
 
-export function AddEventToCalendarForm({ calendarType }: { calendarType: string }) {
+export function AddTaskToCalendarForm({ calendarType }: { calendarType: string }) {
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
   })
 
   async function onSubmit(data: ProfileFormValues) {
     try {
-      const response = await AddToCalendarApiCall(data) as {statusCode: string, body: string};
+      // const response = await AddToCalendarApiCall(data) as {statusCode: string, body: string};
 
-      if (response.statusCode == "200") {
+      // if (response.statusCode == "200") {
         toast({
           title: "Sucessful:",
           description: (
@@ -59,7 +57,7 @@ export function AddEventToCalendarForm({ calendarType }: { calendarType: string 
             </pre>
           ),
         })
-      }
+      // }
       
     } catch (error) {
       toast({
