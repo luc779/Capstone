@@ -19,9 +19,9 @@ const UpcomingTaskOrEvent: React.FC<{ items: CalendarInterface[], currentPanelNa
           <div className="pb-1.5 space-y-4">
             {sortedEvents.map((items, index) => (
               currentPanelName === "Tasks" ? (
-                <TaskCard task={items} index={index}/>
+                <TaskCard key={items.ID} task={items} index={index}/>
               ) : (
-                <EventCard event={items} index={index}/>
+                <EventCard key={items.ID} event={items} index={index}/>
               )
             ))}
           </div>
