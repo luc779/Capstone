@@ -39,7 +39,7 @@ export default function Tasks() {
     };
   
     fetchData();
-  }, [response]);
+  }, []);
 
   if (loading) {
     return (
