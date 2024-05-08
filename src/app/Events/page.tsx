@@ -39,7 +39,7 @@ export default function Events() {
     };
   
     fetchData();
-  }, [response]);
+  }, []);
 
   if (loading) {
     return (
