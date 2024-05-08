@@ -1,7 +1,7 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useFieldArray, useForm } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -19,14 +19,6 @@ import { Input } from "@/components/ui/input"
 import { Icons } from "./icons"
 import React, { useState } from "react"
 import { Checkbox } from "@/components/ui/checkbox"
-import {
-    InputOTP,
-    InputOTPGroup,
-    InputOTPSeparator,
-    InputOTPSlot,
-  } from "@/components/ui/input-otp"
-import { PhoneInput } from "@/components/ui/phone-input"
-import { isValidPhoneNumber } from "react-phone-number-input"
 import { SignUpApiCall } from "@/Api/AWS/authentication/SignUpApiCall"
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
