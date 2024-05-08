@@ -34,25 +34,25 @@ interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 const profileFormSchema = z.object({
     isAdmin: z.boolean().default(false).optional(),
     email: z.string().email(),
-    username: z.string().max(160).min(4),
-    full_name: z.string().max(160).min(4)
-        .refine(value => {
-            const names = value.split(' ');
-            return names.length === 2 && names[1].trim() !== '';
-        }, {
-            message: 'First and last only, separated by a space.'
-        }),
-    phone_number: z.string()
-        .refine(isValidPhoneNumber, { message: "Invalid phone number" })
-        .or(z.literal("")),
+    username: z.string().max(160).min(4, {
+        message: "Username must be at least 4 characters long"
+    }),
+    first_name: z.string().max(160).min(2)
+        .regex(/^[^0-9]+$/, 'Can only contain letters')
+        .regex(/^[^\s]+$/, "Can't contain spaces"),
+    last_name: z.string().max(160).min(2)
+        .regex(/^[^0-9]+$/, 'Can only contain letters')
+        .regex(/^[^\s]+$/, "Can't contain spaces"),
+    phone_number: z.string(),
     password: z.string()
         .min(8, 'Password must be at least 8 characters long.')
         .regex(/[0-9]/, 'Password must contain at least 1 number.')
         .regex(/[!@#$%^&*(),.?":{}|<>]/, 'Password must contain at least 1 special character.')
         .regex(/[A-Z]/, 'Password must contain at least 1 uppercase letter.')
         .regex(/[a-z]/, 'Password must contain at least 1 lowercase letter.'),
-    museum_name: z.string().max(160).min(4)
-        .regex(/^\S*$/, 'Museum name cannot contain spaces'),
+    museum_name: z.string().max(128).min(4)
+        .regex(/^[^\s]+$/, "Can't contain spaces")
+        .transform(value => value.replace(/\s+/g, '')),
 })
   
 type ProfileFormValues = z.infer<typeof profileFormSchema>
@@ -65,6 +65,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       resolver: zodResolver(profileFormSchema),
       defaultValues: {
           isAdmin: false,
+          phone_number: "+15555555555",
       }
     })
   
@@ -74,10 +75,12 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             console.log(data)
             {/* @ts-ignore */}
             const response = await SignUpApiCall(data) as { statusCode: number, body: string };
-            console.log("Response from call: " + response);
-            console.log("Response from call: " + response.statusCode);
 
             if (response.statusCode === 200) {
+                toast({
+                    title: "Successful Sign Up:",
+                    description: "Check email to confirm account",
+                });
                 window.location.href = "/SignUp/ConfirmEmail";
             }
 
@@ -86,7 +89,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                     title: "Error:",
                     description: (
                         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                        <code className="text-white">{JSON.stringify(response.body, null, 2)}</code>
+                            <code className="text-white">{response.body.replace('"', '')}</code>
                         </pre>
                     ),
                 });
@@ -97,7 +100,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                     title: "Internal Server Error:",
                     description: (
                         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                        <code className="text-white">{JSON.stringify(response.body, null, 2)}</code>
+                            <code className="text-white">{response.body.replace('"', '')}</code>
                         </pre>
                     ),
                 });
@@ -111,7 +114,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     return (
         <div className={cn("grid gap-6", className)} {...props}>
             <Form {...form}>
-                <form  className="space-y-8">
+                <form  className="space-y-6"> 
                 <FormField
                     control={form.control}
                     name="isAdmin"
@@ -132,79 +135,98 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                         </FormItem>
                     )}
                 />
-                <FormField
-                    control={form.control}
-                    name="username"
-                    render={({ field }) => (
-                        <FormItem>
-                        <FormControl>
-                            <Input placeholder="Username" type="text" autoCapitalize="none" autoCorrect="off" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="password"
-                    render={({ field }) => (
-                        <FormItem>
-                        <FormControl>
-                            <Input placeholder="Password" type="password" autoCapitalize="none" autoCorrect="off" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="full_name"
-                    render={({ field }) => (
-                        <FormItem>
-                        <FormControl>
-                            <Input placeholder="John Doe" type="text" autoCapitalize="none" autoCorrect="off" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                        <FormItem>
-                        <FormControl>
-                            <Input placeholder="name@exmaple.com" autoCapitalize="none" autoComplete="email" autoCorrect="off" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="phone_number"
-                    render={({ field }) => (
-                        <FormItem>
-                        <FormControl>
-                            <PhoneInput placeholder="Enter phone number" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                        </FormItem>
-
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="museum_name"
-                    render={({ field }) => (
-                        <FormItem>
-                        <FormControl>
-                            <Input placeholder="Museum Name" type="text" autoCapitalize="none" autoCorrect="off" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                        </FormItem>
-                    )}
-                />
+                <div className="grid grid-cols-2 gap-6">
+                    <FormField
+                        control={form.control}
+                        name="username"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>
+                                    Username
+                                </FormLabel>
+                            <FormControl>
+                                <Input placeholder="Username" type="text" autoCapitalize="none" autoCorrect="off" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="password"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>
+                                    Username
+                                </FormLabel>
+                            <FormControl>
+                                <Input placeholder="Password" type="password" autoCapitalize="none" autoCorrect="off" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="first_name"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>
+                                    First Name
+                                </FormLabel>
+                            <FormControl>
+                                <Input placeholder="John" type="text" autoCapitalize="none" autoCorrect="off" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="last_name"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>
+                                    Last Name
+                                </FormLabel>
+                            <FormControl>
+                                <Input placeholder="Doe" type="text" autoCapitalize="none" autoCorrect="off" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>
+                                    Email
+                                </FormLabel>
+                            <FormControl>
+                                <Input placeholder="name@exmaple.com" autoCapitalize="none" autoComplete="email" autoCorrect="off" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="museum_name"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>
+                                    Museum Name
+                                </FormLabel>
+                            <FormControl>
+                                <Input placeholder="Museum Name" type="text" autoCapitalize="none" autoCorrect="off" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                </div>
             </form>
             <Button disabled={isLoading}
                 onClick={() => {

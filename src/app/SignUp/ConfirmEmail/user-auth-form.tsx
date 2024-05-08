@@ -19,12 +19,20 @@ import { Input } from "@/components/ui/input"
 import { Icons } from "../icons"
 import React, { useState } from "react"
 import { ConfirmEmailApiCall } from "@/Api/AWS/authentication/ConfirmEmailApiCall"
+import { 
+    InputOTP, 
+    InputOTPGroup, 
+    InputOTPSeparator, 
+    InputOTPSlot 
+} from "@/components/ui/input-otp"
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 const profileFormSchema = z.object({
     username: z.string().max(160).min(4),
-    confirmation_code: z.string()
+    confirmation_code: z.string().min(6, {
+        message: "Your one-time password must be 6 characters.",
+    }),
 })
   
 type ProfileFormValues = z.infer<typeof profileFormSchema>
@@ -47,6 +55,10 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           console.log("Response from call: " + response.statusCode);
 
           if (response.statusCode === 200) {
+            toast({
+                title: "Email verified:",
+                description: "Log in to start using web app",
+            });
             window.location.href = "/LogIn";
           }
 
@@ -56,7 +68,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                   title: "Error:",
                   description: (
                       <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                      <code className="text-white">{JSON.stringify(response.body, null, 2)}</code>
+                        <code className="text-white">{response.body.replace('"', '')}</code>
                       </pre>
                   ),
               });
@@ -67,7 +79,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                 title: "Internal Server Error:",
                 description: (
                     <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                    <code className="text-white">{JSON.stringify(response.body, null, 2)}</code>
+                    <code className="text-white">{response.body.replace('"', '')}</code>
                     </pre>
                 ),
             });
@@ -88,6 +100,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                     name="username"
                     render={({ field }) => (
                         <FormItem>
+                            <FormLabel>Username</FormLabel>
                         <FormControl>
                             <Input placeholder="Username" type="text" autoCapitalize="none" autoCorrect="off" {...field} />
                         </FormControl>
@@ -96,16 +109,30 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                     )}
                 />
                 <FormField
-                    control={form.control}
-                    name="confirmation_code"
-                    render={({ field }) => (
-                        <FormItem>
-                        <FormControl>
-                            <Input placeholder="Confirmation Code" type="text" autoCapitalize="none" autoCorrect="off" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                        </FormItem>
-                    )}
+                control={form.control}
+                name="confirmation_code"
+                
+                render={({ field }) => (
+                    <FormItem>
+                    <FormLabel>One-Time Password</FormLabel>
+                    <FormControl>
+                        <InputOTP className="w-full" maxLength={6} {...field}>
+                        <InputOTPGroup>
+                            <InputOTPSlot index={0} />
+                            <InputOTPSlot index={1} />
+                            <InputOTPSlot index={2} />
+                            <InputOTPSlot index={3} />
+                            <InputOTPSlot index={4} />
+                            <InputOTPSlot index={5} />
+                        </InputOTPGroup>
+                        </InputOTP>
+                    </FormControl>
+                    <FormDescription>
+                        Please enter the one-time password sent to your email.
+                    </FormDescription>
+                    <FormMessage />
+                    </FormItem>
+                )}
                 />
             </form>
             <Button disabled={isLoading}
