@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {
     Card,
     CardContent,
@@ -8,9 +7,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
-
 import { Button } from '@/components/ui/button';
-
 import {
   Table,
   TableBody,
@@ -22,7 +19,6 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import Link from 'next/link';
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 // TODO: get museum inventory
 const RecentInventory = [

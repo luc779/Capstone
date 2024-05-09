@@ -1,5 +1,4 @@
 import Image from "next/image"
-
 import car from "./car_logo.png"
 import { ReactNode } from "react"
 import Link from "next/link";

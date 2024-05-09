@@ -1,7 +1,6 @@
 
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { CardHeader, CardContent, Card } from "@/components/ui/card"
 import car from "./car_logo.png"
 import Image from "next/image"
 import { DarkModeToggle } from "@/components/ui/DarkModeToggle"

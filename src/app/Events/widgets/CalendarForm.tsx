@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useFieldArray, useForm } from "react-hook-form"
 import { z } from "zod"
 import { CalendarIcon } from "@radix-ui/react-icons"
-
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -25,8 +24,6 @@ import { Input } from "@/components/ui/input"
 import { TimePicker } from "@/components/TimePicker/time-picker"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { AddToCalendarApiCall } from "@/Api/AWS/calendar/AddToCalendarApiCall"
-
-
 
 const profileFormSchema = z.object({
   title: z.string(),
