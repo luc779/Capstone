@@ -28,7 +28,7 @@ import { setCookie } from "@/Security/SetCookie"
 import { Copy } from "lucide-react"
 import { useState } from "react"
 import { DeleteItem } from "@/app/Inventory/DeleteItem/DeleteItem"
-import { Icons } from "@/app/SignUp/icons"
+import { Icons } from "@/components/icons"
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
