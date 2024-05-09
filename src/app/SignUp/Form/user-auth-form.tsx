@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/form"
 import { toast } from "@/components/ui/use-toast"
 import { Input } from "@/components/ui/input"
-import { Icons } from "./icons"
+import { Icons } from "../../../components/icons"
 import React, { useState } from "react"
 import { Checkbox } from "@/components/ui/checkbox"
 import { SignUpApiCall } from "@/Api/AWS/authentication/SignUpApiCall"
@@ -35,7 +35,6 @@ const profileFormSchema = z.object({
     last_name: z.string().max(160).min(2)
         .regex(/^[^0-9]+$/, 'Can only contain letters')
         .regex(/^[^\s]+$/, "Can't contain spaces"),
-    phone_number: z.string(),
     password: z.string()
         .min(8, 'Password must be at least 8 characters long.')
         .regex(/[0-9]/, 'Password must contain at least 1 number.')
@@ -57,7 +56,6 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       resolver: zodResolver(profileFormSchema),
       defaultValues: {
           isAdmin: false,
-          phone_number: "+15555555555",
       }
     })
   

@@ -54,6 +54,13 @@ export const works: People[] = [
     }
 ]
 
+function getInitials(name: string) {
+    return name
+        .split(" ")
+        .map((word) => word.charAt(0))
+        .join("");
+}
+
 import {
     Card,
     CardContent,
@@ -69,20 +76,28 @@ function Employees() {
     <Card className="h-full overflow-auto">
         <CardHeader>
             <CardTitle>Team Members</CardTitle>
+            <CardDescription>View of all Employees.</CardDescription>
         </CardHeader>
         <CardContent>
             <ScrollArea className="whitespace-nowrap rounded-md">
                 <div className="flex w-max space-x-6">
                     {works.map((people) => (
-                    <figure key={people.initials}>
-                        <span>
+                        // <figure key={people.initials} className="flex flex-col items-center justify-center">
+                        //     <Avatar>
+                        //         <AvatarImage src="https://github.com/shadcn" />
+                        //         <AvatarFallback>{people.initials}</AvatarFallback>
+                        //     </Avatar>
+                        //     <span className="ml-1">{people.initials}</span>
+                        // </figure>
+                        <div className="flex flex-col items-center gap-3">
                             <Avatar>
-                                <AvatarImage src="https://github.com/shadcn.png" />
+                                <AvatarImage alt="John Doe" src="/avatars/01.png" />
                                 <AvatarFallback>{people.initials}</AvatarFallback>
                             </Avatar>
-                            {people.initials}
-                        </span>
-                    </figure>
+                            <div className="text-center">
+                                <p className="font-medium">John Doe</p>
+                            </div>
+                        </div>
                     ))}
                 </div>
                 <ScrollBar orientation="horizontal" />

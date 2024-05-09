@@ -1,5 +1,5 @@
 import { Metadata } from "next"
-import SignUpForm from "./SignUpForm"
+import SignUpForm from "./Form/SignUpForm"
 import AccountPageDesign from "../AccountPageDesign"
 
 export const metadata: Metadata = {

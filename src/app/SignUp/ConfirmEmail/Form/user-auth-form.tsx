@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/form"
 import { toast } from "@/components/ui/use-toast"
 import { Input } from "@/components/ui/input"
-import { Icons } from "../icons"
+import { Icons } from "../../../../components/icons"
 import React, { useState } from "react"
 import { ConfirmEmailApiCall } from "@/Api/AWS/authentication/ConfirmEmailApiCall"
 import { 

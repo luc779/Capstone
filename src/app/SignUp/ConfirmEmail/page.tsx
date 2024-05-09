@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 import AccountPageDesign from "../../AccountPageDesign"
-import ConfirmUserForm from "./ConfirmUserForm"
+import ConfirmUserForm from "./Form/ConfirmUserForm"
 
 export const metadata: Metadata = {
   title: "Confirm Email",

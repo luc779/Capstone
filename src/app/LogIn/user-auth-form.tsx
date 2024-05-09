@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/form"
 import { toast } from "@/components/ui/use-toast"
 import { Input } from "@/components/ui/input"
-import { Icons } from "../SignUp/icons"
+import { Icons } from "../../components/icons"
 import React, { useEffect, useState } from "react"
 import { LogInApiCall } from "@/Api/AWS/authentication/LogInApiCall"
 import { setCookie } from "../../Security/SetCookie"
