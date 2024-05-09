@@ -5,6 +5,7 @@ import { CardHeader, CardContent, Card } from "@/components/ui/card"
 import car from "./car_logo.png"
 import Image from "next/image"
 import { DarkModeToggle } from "@/components/ui/DarkModeToggle"
+import { BoxIcon, CalendarIcon, ClipboardIcon, DownloadIcon, GaugeIcon, ShieldIcon } from "lucide-react"
 
 export default function Home() {
   return (
@@ -16,15 +17,18 @@ export default function Home() {
         </Link>
         <span className="inline-flex items-center mr-4"><DarkModeToggle /></span>
         <div className="ml-auto flex flex-row gap-2">
-          <Button>
+          <Button variant="link">
             <Link href="/LogIn">Log In</Link>
           </Button>
-          <Button>
+          <Button variant="link">
             <Link href="/SignUp">Sign Up</Link>
+          </Button>
+          <Button variant="link">
+            <Link href="/SignUp/ConfirmEmail">Confirm Email</Link>
           </Button>
         </div>
       </header>
-      {/* background color */}
+      {/* Title for page */}
       <section className="w-full py-12 md:py-24 lg:py-32 bg-accent"> 
         <div className="container grid items-center justify-center gap-4 px-4 text-center md:px-6 lg:gap-10">
           <div className="space-y-3">
@@ -45,48 +49,80 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="w-full py-12 md:py-24 lg:py-32">
-        <div className="container grid items-center justify-center gap-4 px-4 text-center md:px-6 lg:gap-10">
-          <div className="space-y-3">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Our Features</h2>
-            <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-              Designed to help your team deliver more projects faster and with better results.
-            </p>
+      {/* Features */}
+      <section className="w-full py-12 md:py-24 lg:py-32" id="features">
+          <div className="container px-4 md:px-6">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+              <div className="space-y-2">
+                <div className="inline-block rounded-lg  px-3 py-1 text-sm ">
+                  Key Features
+                </div>
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Everything you need in one place</h2>
+                <p className="mx-auto max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+                  Acme Software is packed with powerful features to help your business succeed.
+                </p>
+              </div>
+              <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-12">
+                <div className="flex flex-col items-center justify-center space-y-4">
+                  <GaugeIcon className="h-12 w-12 text-gray-500 dark:text-gray-400" />
+                  <div className="space-y-1 text-center">
+                    <h3 className="text-xl font-bold">Fast and Reliable</h3>
+                    <p className="text-gray-500 dark:text-gray-400">
+                      Acme Software is built to be fast and reliable, so you can focus on your business.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex flex-col items-center justify-center space-y-4">
+                  <ShieldIcon className="h-12 w-12 text-gray-500 dark:text-gray-400" />
+                  <div className="space-y-1 text-center">
+                    <h3 className="text-xl font-bold">Secure and Compliant</h3>
+                    <p className="text-gray-500 dark:text-gray-400">
+                      Acme Software is built with security and compliance in mind, so you can trust your data is safe.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex flex-col items-center justify-center space-y-4">
+                  <CalendarIcon className="h-12 w-12 text-gray-500 dark:text-gray-400" />
+                  <div className="space-y-1 text-center">
+                    <h3 className="text-xl font-bold">Event Management</h3>
+                    <p className="text-gray-500 dark:text-gray-400">
+                      Acme Software includes powerful event management tools to help you plan and execute your events.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex flex-col items-center justify-center space-y-4">
+                  <ClipboardIcon className="h-12 w-12 text-gray-500 dark:text-gray-400" />
+                  <div className="space-y-1 text-center">
+                    <h3 className="text-xl font-bold">Task Management</h3>
+                    <p className="text-gray-500 dark:text-gray-400">
+                      Acme Software includes a robust task management system to help you stay organized and on top of
+                      your projects.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex flex-col items-center justify-center space-y-4">
+                  <BoxIcon className="h-12 w-12 text-gray-500 dark:text-gray-400" />
+                  <div className="space-y-1 text-center">
+                    <h3 className="text-xl font-bold">Inventory Management</h3>
+                    <p className="text-gray-500 dark:text-gray-400">
+                      Acme Software includes a powerful inventory management system to help you track and manage your
+                      products.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex flex-col items-center justify-center space-y-4">
+                  <DownloadIcon className="h-12 w-12 text-gray-500 dark:text-gray-400" />
+                  <div className="space-y-1 text-center">
+                    <h3 className="text-xl font-bold">Export</h3>
+                    <p className="text-gray-500 dark:text-gray-400">
+                      Acme Software allows you to export your data in various formats for easy sharing and analysis.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="grid w-full grid-cols-3 items-stretch justify-center divide-x md:grid-cols-3">
-            <div className="mx-auto flex w-full items-center justify-center p-4 sm:p-8">
-              <Card>
-                <CardHeader>
-                  <h3 className="text-xl font-bold">Sales</h3>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-base text-gray-500">Work together with your team on projects, tasks, and more.</p>
-                </CardContent>
-              </Card>
-            </div>
-            <div className="mx-auto flex w-full items-center justify-center p-4 sm:p-8">
-              <Card>
-                <CardHeader>
-                  <h3 className="text-xl font-bold">Task Management</h3>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-base text-gray-500">Track progress and manage tasks with ease.</p>
-                </CardContent>
-              </Card>
-            </div>
-            <div className="mx-auto flex w-full items-center justify-center p-4 sm:p-8">
-              <Card>
-                <CardHeader>
-                  <h3 className="text-xl font-bold">Inventory</h3>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-base text-gray-500">Get detailed information on museum inventory.</p>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </div>
-      </section>
+        </section>
     </main>
   );
 };
