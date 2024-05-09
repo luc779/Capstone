@@ -92,6 +92,12 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       setIsLoading(false)
     }
   
+    const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+          form.handleSubmit(onSubmit)();
+        }
+    };
+
     return (
         <div className={cn("grid gap-6", className)} {...props}>
             <Form {...form}>
@@ -114,7 +120,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                     render={({ field }) => (
                         <FormItem>
                         <FormControl>
-                            <Input placeholder="Password" type="password" autoCapitalize="none" autoCorrect="off" {...field} />
+                            <Input placeholder="Password" type="password" autoCapitalize="none" autoCorrect="off" {...field} onKeyPress={handleKeyPress} />
                         </FormControl>
                         <FormMessage />
                         </FormItem>

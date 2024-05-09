@@ -16,10 +16,10 @@ import {
 } from "@/components/ui/form"
 import { toast } from "@/components/ui/use-toast"
 import { Input } from "@/components/ui/input"
-import { Icons } from "./icons"
-import React, { useState } from "react"
+import React from "react"
 import { Checkbox } from "@/components/ui/checkbox"
 import { SignUpApiCall } from "@/Api/AWS/authentication/SignUpApiCall"
+import { Icons } from "@/components/icons"
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -102,6 +102,12 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         }
         setIsLoading(false)
     }
+
+    const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+          form.handleSubmit(onSubmit)();
+        }
+    };
   
     return (
         <div className={cn("grid gap-6", className)} {...props}>
@@ -212,7 +218,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                                     Museum Name
                                 </FormLabel>
                             <FormControl>
-                                <Input placeholder="Museum Name" type="text" autoCapitalize="none" autoCorrect="off" {...field} />
+                                <Input placeholder="Museum Name" type="text" autoCapitalize="none" autoCorrect="off" {...field} onKeyPress={handleKeyPress}/>
                             </FormControl>
                             <FormMessage />
                             </FormItem>
@@ -227,7 +233,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                 }}
                 >
                 {isLoading && (    
-                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                    <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                 )}
                 Sign Up
             </Button> 
