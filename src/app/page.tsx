@@ -11,11 +11,13 @@ export default function Home() {
   return (
     <main>
       <header className="flex h-20 w-full shrink-0 items-center px-4 md:px-6">
-        <Link className="mr-6" href="/">
-          <Image src={car} alt={"Car Image"} style={{ width: '100px', height: 'auto'}}></Image>
-          <span className="sr-only">Project Management Inc</span>
+        <Link className="mr-6 border border-black rounded-lg bg-black p-4" href="/">
+        {/* {theme === 'dark' ? ( */}
+          <Image src={car} alt={"Dark Car Image"} style={{ width: '100px', height: 'auto'}} />
+        {/* ) : (
+          <Image src={lightCar} alt={"Light Car Image"} style={{ width: '100px', height: 'auto'}} />
+        )} */}
         </Link>
-        <span className="inline-flex items-center mr-4"><DarkModeToggle /></span>
         <div className="ml-auto flex flex-row gap-2">
           <Button variant="link">
             <Link href="/LogIn">Log In</Link>
@@ -26,6 +28,7 @@ export default function Home() {
           <Button variant="link">
             <Link href="/SignUp/ConfirmEmail">Confirm Email</Link>
           </Button>
+          <DarkModeToggle />
         </div>
       </header>
       {/* Title for page */}
