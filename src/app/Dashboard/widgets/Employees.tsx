@@ -9,7 +9,7 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { getCookie } from '@/Security/GetCookie';
-import { AuthenticationErrorToast, ErrorToast } from '@/components/ErrorToast';
+import { ErrorToast } from '@/components/ErrorToast';
 import { z } from 'zod';
 import { GetMembersItemApiCall } from '@/Api/AWS/members/GetMembers';
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
@@ -36,7 +36,6 @@ export interface ApiResponse {
 function Employees() {
     const router = useRouter();
     const [members, setMembers] = useState<People[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -47,7 +46,6 @@ function Employees() {
                 if (!accessToken) {
                     ErrorToast("Account not signed in.");
                     setMembers(z.array(peopleSchema).parse(JSON.parse("[]")))
-                    setLoading(false);
                     return;
                 }
 
@@ -62,11 +60,9 @@ function Employees() {
                     return 0;
                 });
                 setMembers(sortedMembers);
-                setLoading(false);
             } catch (error) {
                 console.log("Error fetching employees:", error);
                 ErrorToast("Server ran into an issue.");
-                setLoading(false);
             }
         };
 
@@ -80,7 +76,7 @@ function Employees() {
             </CardHeader>
             <CardContent>
                 <ScrollArea className="whitespace-nowrap pb-2">
-                    {loading ? (
+                    {/* {loading ? ( */}
                         <div className="flex w-max space-x-6">
                             {members.map((people) => (
                                 <div key={people.given_name + people.family_name} className="flex flex-col items-center gap-2">
@@ -95,7 +91,7 @@ function Employees() {
                                 </div>
                             ))}
                         </div>
-                    ) : (
+                    {/* ) : (
                         <div className="flex w-max space-x-6">
                             <div className="flex flex-col items-center gap-2">
                                 <Avatar className="animate-pulse bg-gray-200">
@@ -110,7 +106,7 @@ function Employees() {
                                 </div>
                             </div>
                         </div>
-                    )}
+                    )} */}
                     <ScrollBar orientation="horizontal" />
                 </ScrollArea>
             </CardContent>

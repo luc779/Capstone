@@ -60,14 +60,12 @@ function InventorySnapshot() {
         }
   
         const data = await GetInventoryApiCall({ accessToken: accessToken}) as ApiResponse;
-        console.log(data.body)
         if (data.statusCode == 401) {
           AuthenticationErrorToast("Please log in to get a new token.");
           router.push('/LogIn');
           return;
       }
         const post = z.array(taskSchema).parse(data.body)
-        console.log(post)
         setTasks(post);
       } catch (error) {
         console.error("Error fetching inventory item:", error);
