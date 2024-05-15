@@ -1,5 +1,5 @@
 "use client"
-import InventoryTest from "@/components/Templates/SoftwareDesign";
+import PageBaseDesign from "@/components/Templates/SoftwareDesign";
 import FullInventoryShow from "@/app/Inventory/widgets/FullInventory";
 import LoadingIndicator from "@/components/LoadingIndicator";
 import { useAuth } from "@/Api/AWS/authentication/UseAuth";
@@ -18,11 +18,11 @@ export default function Inventory() {
 
   return (
     <main >
-      <InventoryTest panelName={currentPanelName}>
+      <PageBaseDesign panelName={currentPanelName}>
         <div className="h-full">
           <BottomContentPanel />
         </div>
-      </InventoryTest>
+      </PageBaseDesign>
     </main>
   );
 }

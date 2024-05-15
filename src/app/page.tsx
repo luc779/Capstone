@@ -11,11 +11,7 @@ export default function Home() {
     <main>
       <header className="flex h-20 w-full shrink-0 items-center px-4 md:px-6">
         <Link className="mr-6 border border-black rounded-lg bg-black p-4" href="/">
-        {/* {theme === 'dark' ? ( */}
           <Image src={car} alt={"Dark Car Image"} style={{ width: '100px', height: 'auto'}} />
-        {/* ) : (
-          <Image src={lightCar} alt={"Light Car Image"} style={{ width: '100px', height: 'auto'}} />
-        )} */}
         </Link>
         <div className="ml-auto flex flex-row gap-2">
           <Button variant="link">
