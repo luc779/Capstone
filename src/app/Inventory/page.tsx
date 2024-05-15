@@ -1,25 +1,28 @@
-import InventoryTest from "@/components/Templates/SoftwareDesign";
+"use client"
+import PageBaseDesign from "@/components/Templates/SoftwareDesign";
 import FullInventoryShow from "@/app/Inventory/widgets/FullInventory";
+import LoadingIndicator from "@/components/LoadingIndicator";
+import { useAuth } from "@/Api/AWS/authentication/UseAuth";
 
 // adding async makes the card weird
 const currentPanelName: string = "Inventory";
 
 export default function Inventory() {
-  // const { loading, progressValue } = useAuth();
+  const { loading, progressValue } = useAuth();
 
-  // if (loading) {
-  //   return (
-  //     <LoadingIndicator progressValue={progressValue} />
-  //   );
-  // }
+  if (loading) {
+    return (
+      <LoadingIndicator progressValue={progressValue} />
+    );
+  }
 
   return (
     <main >
-      <InventoryTest panelName={currentPanelName}>
+      <PageBaseDesign panelName={currentPanelName}>
         <div className="h-full">
           <BottomContentPanel />
         </div>
-      </InventoryTest>
+      </PageBaseDesign>
     </main>
   );
 }

@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useFieldArray, useForm } from "react-hook-form"
 import { z } from "zod"
 import { CalendarIcon } from "@radix-ui/react-icons"
-
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -46,9 +45,9 @@ export function AddTaskToCalendarForm({ calendarType }: { calendarType: string }
 
   async function onSubmit(data: ProfileFormValues) {
     try {
-      // const response = await AddToCalendarApiCall(data) as {statusCode: string, body: string};
+      const response = await AddToCalendarApiCall(data) as {statusCode: string, body: string};
 
-      // if (response.statusCode == "200") {
+      if (response.statusCode == "200") {
         toast({
           title: "Sucessful:",
           description: (
@@ -57,7 +56,7 @@ export function AddTaskToCalendarForm({ calendarType }: { calendarType: string }
             </pre>
           ),
         })
-      // }
+      }
       
     } catch (error) {
       toast({

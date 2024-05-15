@@ -1,5 +1,6 @@
-import React from 'react';
+"use client"
 
+import React, { useEffect, useState } from 'react';
 import {
     Card,
     CardContent,
@@ -8,9 +9,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
-
 import { Button } from '@/components/ui/button';
-
 import {
   Table,
   TableBody,
@@ -22,42 +21,69 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import Link from 'next/link';
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+import { getCookie } from '@/Security/GetCookie';
+import { AuthenticationErrorToast, ErrorToast } from '@/components/ErrorToast';
+import { z } from 'zod';
+import { taskSchema } from '@/Api/inventoryDataSchema/schema';
+import { GetInventoryApiCall } from '@/Api/AWS/database/GetInventory';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { useRouter } from "next/navigation";
 
-// TODO: get museum inventory
-const RecentInventory = [
-  {
-    make: "Ferrari",
-    model: "488",
-    year: "2019",
-    color: "Red",
-    VIN: "328g7f2g"
-  },
-  {
-    make: "Lamborghini",
-    model: "Huracan",
-    year: "2019",
-    color: "Yellow",
-    VIN: "328g7wefewf2g"
-  },
-  {
-    make: "Buggatti",
-    model: "Veyron",
-    year: "2014",
-    color: "Black",
-    VIN: "32d3228g7f2g"
-  }
-]
+interface ApiResponse {
+  statusCode: number;
+  body: string;
+}
+
+interface InventoryItem {
+  VIN: string;
+  make: string;
+  model: string;
+  year: string;
+  color: string;
+}
 
 // creates a card component which holds a table component on a few vehicles, at the bottom of the card contains a button to direct to inventory
 function InventorySnapshot() {
+  const router = useRouter();
+  const [tasks, setTasks] = useState<InventoryItem[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+
+      try {
+        const accessToken = await getCookie("accessToken");
+  
+        if (!accessToken) {
+          ErrorToast("Account not signed in.");
+          setTasks(z.array(taskSchema).parse(JSON.parse("[]")))
+          return;
+        }
+  
+        const data = await GetInventoryApiCall({ accessToken: accessToken}) as ApiResponse;
+        if (data.statusCode == 401) {
+          AuthenticationErrorToast("Please log in to get a new token.");
+          router.push('/LogIn');
+          return;
+      }
+        const post = z.array(taskSchema).parse(data.body)
+        setTasks(post);
+      } catch (error) {
+        console.error("Error fetching inventory item:", error);
+        ErrorToast("Server ran into an issue.");
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
-    <Card className="overflow-auto h-full">
+    <Card className="h-full">
         <CardHeader>
             <CardTitle>Inventory Snapshot</CardTitle>
             <CardDescription>Recent inventory changes.</CardDescription>
         </CardHeader>
-        <CardContent className="">
+        <CardContent className="inline-block h-full w-full items-center">
+          <ScrollArea className="flex flex-col overlflow-y-auto h-full w-full pb-20 pr-2">
             <Table>
               <TableCaption>A list of your recent items.</TableCaption>
               <TableHeader>
@@ -70,7 +96,7 @@ function InventorySnapshot() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {RecentInventory.map((item) => (
+                {tasks.map((item) => (
                   <TableRow key={item.VIN}>
                     <TableCell className="font-medium">{item.make}</TableCell>
                     <TableCell>{item.model}</TableCell>
@@ -86,12 +112,11 @@ function InventorySnapshot() {
                 </TableRow>
               </TableFooter>
             </Table>
+            <Button variant="default">
+              <Link href="/Inventory">Direct to Inventory</Link>
+            </Button>
+          </ScrollArea>
         </CardContent>
-        <CardFooter>
-          <Button variant="default">
-            <Link href="/Inventory">Direct to Inventory</Link>
-          </Button>
-        </CardFooter>
     </Card>
   );
 }

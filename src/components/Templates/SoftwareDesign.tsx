@@ -26,7 +26,7 @@ export default function PageBaseDesign({ children, panelName }: PanelProps) {
 // side bar
 const SidebarPanel = () => (
     <ResizablePanel defaultSize={10}>
-      <div className="flex h-screen justify-center py-4 pl-4">
+      <div className="flex h-screen">
         <SideBar />
       </div>
     </ResizablePanel>
@@ -37,13 +37,10 @@ const MainContentPanel: React.FC<{ children: ReactNode, panelName: string }> = (
   <ResizablePanel defaultSize={90}>
     <ResizablePanelGroup direction="vertical">
       <TopContentPanel panelName={panelName}/>
-      <div className="pl-4">
-        <Separator />
-      </div>
+      <Separator />
       <BottomContentPanel panelName={panelName}>
           {children}
       </BottomContentPanel>
-      {/* <BottomContentPanel children={children} panelName={panelName}/> */}
     </ResizablePanelGroup>
   </ResizablePanel>
 );
@@ -57,7 +54,7 @@ const TopContentPanel: React.FC<{ panelName: string }> = ({ panelName }) => (
 
 // space for inventory
 const BottomContentPanel: React.FC<PanelProps> = ({ children }) => (
-  <ResizablePanel defaultSize={90} className="overflow-auto p-4">
+  <ResizablePanel defaultSize={90} className="overflow-auto">
     {children}
   </ResizablePanel>
 );

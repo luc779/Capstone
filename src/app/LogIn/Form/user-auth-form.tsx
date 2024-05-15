@@ -14,10 +14,10 @@ import {
 } from "@/components/ui/form"
 import { toast } from "@/components/ui/use-toast"
 import { Input } from "@/components/ui/input"
-import { Icons } from "../../components/icons"
+import { Icons } from "../../../components/icons"
 import React, { useEffect, useState } from "react"
 import { LogInApiCall } from "@/Api/AWS/authentication/LogInApiCall"
-import { setCookie } from "../../Security/SetCookie"
+import { setCookie } from "../../../Security/SetCookie"
 import { useRouter } from "next/navigation";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
@@ -92,6 +92,12 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       setIsLoading(false)
     }
   
+    const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+          form.handleSubmit(onSubmit)();
+        }
+    };
+
     return (
         <div className={cn("grid gap-6", className)} {...props}>
             <Form {...form}>
@@ -114,7 +120,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                     render={({ field }) => (
                         <FormItem>
                         <FormControl>
-                            <Input placeholder="Password" type="password" autoCapitalize="none" autoCorrect="off" {...field} />
+                            <Input placeholder="Password" type="password" autoCapitalize="none" autoCorrect="off" {...field} onKeyPress={handleKeyPress} />
                         </FormControl>
                         <FormMessage />
                         </FormItem>
