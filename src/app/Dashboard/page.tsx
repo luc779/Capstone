@@ -96,9 +96,7 @@ const LeftMainPanel = () => (
   <ResizablePanel defaultSize={70}>
     <ResizablePanelGroup direction="vertical">
       <SalesAndWeatherPanel />
-      <ResizableHandle />
       <EmployeeAndInventoryPanel />
-      <ResizableHandle />
     </ResizablePanelGroup>
   </ResizablePanel>
 );

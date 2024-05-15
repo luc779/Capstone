@@ -23,7 +23,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { taskSchema } from "../../Api/inventoryData/schema"
+import { taskSchema } from "../../Api/inventoryDataSchema/schema"
 import { setCookie } from "@/Security/SetCookie"
 import { Copy } from "lucide-react"
 import { useState } from "react"

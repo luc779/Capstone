@@ -3,7 +3,7 @@
 import { z } from "zod"
 import { columns } from "@/components/TableComponents/columns"
 import { DataTable } from "@/components/TableComponents/data-table"
-import { taskSchema } from "@/Api/inventoryData/schema"
+import { taskSchema } from "@/Api/inventoryDataSchema/schema"
 import { Card, CardContent } from "@/components/ui/card"
 import { getCookie } from "@/Security/GetCookie"
 import { GetInventoryApiCall } from "@/Api/AWS/database/GetInventory"

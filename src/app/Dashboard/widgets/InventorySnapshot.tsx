@@ -24,7 +24,7 @@ import Link from 'next/link';
 import { getCookie } from '@/Security/GetCookie';
 import { AuthenticationErrorToast, ErrorToast } from '@/components/ErrorToast';
 import { z } from 'zod';
-import { taskSchema } from '@/Api/inventoryData/schema';
+import { taskSchema } from '@/Api/inventoryDataSchema/schema';
 import { GetInventoryApiCall } from '@/Api/AWS/database/GetInventory';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useRouter } from "next/navigation";
