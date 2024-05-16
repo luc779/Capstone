@@ -15,7 +15,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/use-toast"
 import { Input } from "@/components/ui/input"
 
@@ -56,7 +55,7 @@ export function UserInfoForm({ userInfo }: { userInfo?: UserProfile }) {
               <FormLabel>Email</FormLabel>
               <FormControl>
                 <Input
-                  placeholder={userInfo.email}
+                  placeholder={userInfo?.email}
                   className="resize-none"
                   {...field}
                 />
@@ -73,7 +72,7 @@ export function UserInfoForm({ userInfo }: { userInfo?: UserProfile }) {
               <FormLabel>Family Name</FormLabel>
               <FormControl>
                 <Input
-                  placeholder={userInfo.family_name}
+                  placeholder={userInfo?.family_name}
                   className="resize-none"
                   {...field}
                 />
@@ -90,7 +89,7 @@ export function UserInfoForm({ userInfo }: { userInfo?: UserProfile }) {
               <FormLabel>First Name</FormLabel>
               <FormControl>
                 <Input
-                  placeholder={userInfo.given_name}
+                  placeholder={userInfo?.given_name}
                   className="resize-none"
                   {...field}
                 />
@@ -107,7 +106,7 @@ export function UserInfoForm({ userInfo }: { userInfo?: UserProfile }) {
               <FormLabel>User Type</FormLabel>
               <FormControl>
                 <Input
-                  placeholder={userInfo["custom:user_type"]}
+                  placeholder={userInfo?.["custom:user_type"]}
                   className="resize-none"
                   {...field}
                 />
@@ -124,7 +123,7 @@ export function UserInfoForm({ userInfo }: { userInfo?: UserProfile }) {
               <FormLabel>Museum Name</FormLabel>
               <FormControl>
                 <Input
-                  placeholder={userInfo["custom:museum_name"]}
+                  placeholder={userInfo?.["custom:museum_name"]}
                   className="resize-none"
                   {...field}
                 />
