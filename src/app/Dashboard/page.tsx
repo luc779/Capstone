@@ -24,6 +24,7 @@ import { useState } from "react";
 import { useAuth } from "@/Api/AWS/authentication/UseAuth";
 import LoadingIndicator from "@/components/LoadingIndicator";
 import PageBaseDesign from "@/components/Templates/SoftwareDesign";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const currentPanelName: string = "Dashboard";
 
@@ -53,7 +54,7 @@ export default function Dashboard() {
 
 // bottom section will be split again
 const BottomContentPanel : React.FC<PanelProps> = ({ date, setDate }) => (
-  <ResizablePanel defaultSize={90}>
+  <ResizablePanel defaultSize={90} className='flex h-full p-4'>
     <ResizablePanelGroup direction="horizontal">
       <LeftMainPanel />
       <RightMainPanel date={date} setDate={setDate} />
@@ -73,7 +74,7 @@ const LeftMainPanel = () => (
 
 // where the calendars will go
 const RightMainPanel: React.FC<PanelProps> = ({ date, setDate }) => (
-  <ResizablePanel defaultSize={30} className="pt-4 pb-4 pr-4">
+  <ResizablePanel defaultSize={30}>
     <CalendarPanel date={date} setDate={setDate} />
   </ResizablePanel>
 );
@@ -81,11 +82,11 @@ const RightMainPanel: React.FC<PanelProps> = ({ date, setDate }) => (
 // sales and weather panel
 const SalesAndWeatherPanel = () => (
   <ResizablePanel defaultSize={38}>
-    <div className="flex h-full">
-      <div className="w-1/2 py-4 pl-4">
+    <div className="flex h-full pb-4">
+      <div className="w-1/2">
         <SalesPreformance />
       </div>
-      <div className="w-1/2 p-4">
+      <div className="w-1/2 pr-4 pl-4">
         <Weather />
       </div>
     </div>
@@ -105,42 +106,48 @@ const EmployeeAndInventoryPanel = () => (
 // panel to display employees 
 const EmployeesPanel = () => (
   <ResizablePanel defaultSize={40}>
-    <div className="h-full w-full px-4 pb-4">
+    <div className="h-full w-full pr-4 pb-4">
       <Employees />
     </div>
   </ResizablePanel>
 );
 
-
-
 // panel to display inventory
 const InventorySnapshotPanel = () => (
   <ResizablePanel defaultSize={60}>
-    <div className=" h-full pb-4 px-4">
+    <div className=" h-full pr-4">
       <InventorySnapshot />
     </div>
   </ResizablePanel>
 );
 
 const CalendarPanel : React.FC<PanelProps> = ({ date, setDate }) => (
-  <Card className="h-full overflow-auto">
-      <CardHeader>
-        <CardTitle>Events Calendars</CardTitle>
-        <CardDescription>A place to organize events.</CardDescription>
-      </CardHeader>
-      <CardContent className="inline-block">
-        <div className="pb-4"> 
-          <Calendars date={date} setDate={setDate} />
-        </div>
-      </CardContent>
+  <Card className="h-full">
+    <div className="h-1/2">
+        <CardHeader>
+          <CardTitle>Events Calendars</CardTitle>
+          <CardDescription>A place to organize events.</CardDescription>
+        </CardHeader>
+      <ScrollArea className="flex flex-col overlflow-y-auto h-full w-full pb-20 pr-2">
+        <CardContent className="inline-block">
+          <div className="pb-4"> 
+            <Calendars date={date} setDate={setDate} />
+          </div>
+        </CardContent>
+      </ScrollArea>
+    </div>
+    <div className="h-1/2">
       <CardHeader>
         <CardTitle>Tasks Calendars</CardTitle>
         <CardDescription>A place to list tasks.</CardDescription>
       </CardHeader>
-      <CardContent className="inline-block">
-        <div className="pb-4"> 
-          <Calendars date={date} setDate={setDate} />
-        </div>
-      </CardContent>
-    </Card>
+      <ScrollArea className="flex flex-col overlflow-y-auto h-full w-full pb-20 pr-2">
+        <CardContent className="inline-block">
+          <div className="pb-4"> 
+            <Calendars date={date} setDate={setDate} />
+          </div>
+        </CardContent>
+      </ScrollArea>
+    </div>
+  </Card>
 )
