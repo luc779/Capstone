@@ -25,16 +25,11 @@ import { useAuth } from "@/Api/AWS/authentication/UseAuth";
 import LoadingIndicator from "@/components/LoadingIndicator";
 import PageBaseDesign from "@/components/Templates/SoftwareDesign";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import CalendarSnapshot from "./widgets/Calendars/CalendarSnapshot";
 
 const currentPanelName: string = "Dashboard";
 
-interface PanelProps {
-  date: Date | undefined;
-  setDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
-}
-
 export default function Dashboard() {
-  const [date, setDate] = useState<Date | undefined>(new Date());
   const { loading, progressValue } = useAuth();
 
   if (loading) {
@@ -46,18 +41,18 @@ export default function Dashboard() {
   return (
     <main>
       <PageBaseDesign panelName={currentPanelName}>
-        <BottomContentPanel date={date} setDate={setDate}/>
+        <BottomContentPanel/>
       </PageBaseDesign>
     </main>
   );
 };
 
 // bottom section will be split again
-const BottomContentPanel : React.FC<PanelProps> = ({ date, setDate }) => (
+const BottomContentPanel = () => (
   <ResizablePanel defaultSize={90} className='flex h-full p-4'>
     <ResizablePanelGroup direction="horizontal">
       <LeftMainPanel />
-      <RightMainPanel date={date} setDate={setDate} />
+      <RightMainPanel  />
     </ResizablePanelGroup>
   </ResizablePanel>
 );
@@ -73,9 +68,9 @@ const LeftMainPanel = () => (
 );
 
 // where the calendars will go
-const RightMainPanel: React.FC<PanelProps> = ({ date, setDate }) => (
+const RightMainPanel = () => (
   <ResizablePanel defaultSize={30}>
-    <CalendarPanel date={date} setDate={setDate} />
+    <CalendarSnapshot/>
   </ResizablePanel>
 );
 
@@ -120,34 +115,3 @@ const InventorySnapshotPanel = () => (
     </div>
   </ResizablePanel>
 );
-
-const CalendarPanel : React.FC<PanelProps> = ({ date, setDate }) => (
-  <Card className="h-full">
-    <div className="h-1/2">
-        <CardHeader>
-          <CardTitle>Events Calendars</CardTitle>
-          <CardDescription>A place to organize events.</CardDescription>
-        </CardHeader>
-      <ScrollArea className="flex flex-col overlflow-y-auto h-full w-full pb-20 pr-2">
-        <CardContent className="inline-block">
-          <div className="pb-4"> 
-            <Calendars date={date} setDate={setDate} />
-          </div>
-        </CardContent>
-      </ScrollArea>
-    </div>
-    <div className="h-1/2">
-      <CardHeader>
-        <CardTitle>Tasks Calendars</CardTitle>
-        <CardDescription>A place to list tasks.</CardDescription>
-      </CardHeader>
-      <ScrollArea className="flex flex-col overlflow-y-auto h-full w-full pb-20 pr-2">
-        <CardContent className="inline-block">
-          <div className="pb-4"> 
-            <Calendars date={date} setDate={setDate} />
-          </div>
-        </CardContent>
-      </ScrollArea>
-    </div>
-  </Card>
-)

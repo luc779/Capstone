@@ -18,7 +18,6 @@ export interface Links {
 // get current pathname to change icon color
 export function GetPathname() {
     const pathname = usePathname()
-    console.log("Pathname: " + pathname.toString())
     return <p>{pathname}</p>
 }
 

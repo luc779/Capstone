@@ -11,7 +11,7 @@ import {
 import { getCookie } from '@/Security/GetCookie';
 import { ErrorToast } from '@/components/ErrorToast';
 import { z } from 'zod';
-import { GetMembersItemApiCall } from '@/Api/AWS/members/GetMembers';
+import { GetMembersItemApiCall } from '@/Api/AWS/users/GetMembers';
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import { useRouter } from "next/navigation";
 
@@ -81,7 +81,7 @@ function Employees() {
                             {members.map((people) => (
                                 <div key={people.given_name + people.family_name} className="flex flex-col items-center gap-2">
                                     <Avatar>
-                                        <AvatarImage alt="John Doe" src="/avatars/01.png" />
+                                        <AvatarImage alt={people.given_name.charAt(0) + people.family_name.charAt(0)} src="/avatars/01.png" />
                                         <AvatarFallback>{people.given_name.charAt(0) + people.family_name.charAt(0)}</AvatarFallback>
                                     </Avatar>
                                     <div className="text-center">
