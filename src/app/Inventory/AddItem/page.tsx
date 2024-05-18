@@ -18,7 +18,7 @@ export default function AddItem() {
 
 // space for inventory
 const BottomContentPanel = () => (
-  <div className="h-full">
+  <div className="h-full p-4">
     <AddItemForm />
   </div>  
 );

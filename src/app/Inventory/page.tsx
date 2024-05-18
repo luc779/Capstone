@@ -29,7 +29,7 @@ export default function Inventory() {
 
 // space for inventory
 const BottomContentPanel = () => (
-  <div className="h-full">
+  <div className="h-full p-4">
     <FullInventoryShow />
   </div>  
 );

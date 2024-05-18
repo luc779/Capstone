@@ -86,7 +86,7 @@ function Employees() {
                                     </Avatar>
                                     <div className="text-center">
                                         <p className="font-medium">{people.given_name + " " + people.family_name}</p>
-                                        <p>{people.user_type}</p>
+                                        <p className="text-sm text-gray-500 dark:text-gray-400"> {people.user_type}</p>
                                     </div>
                                 </div>
                             ))}

@@ -85,7 +85,7 @@ function CalendarSnapshot() {
         <div className="h-1/2">
             <CardHeader>
             <CardTitle>Events Calendars</CardTitle>
-            <CardDescription>A place to organize events.</CardDescription>
+            <CardDescription>List of upcoming events.</CardDescription>
             </CardHeader>
             <ScrollArea className="flex flex-col overlflow-y-auto h-full w-full pb-20 pr-2">
                 <CardContent className="inline-block">
@@ -104,7 +104,7 @@ function CalendarSnapshot() {
             <div className="h-1/2">
             <CardHeader>
                 <CardTitle>Tasks Calendars</CardTitle>
-                <CardDescription>A place to list tasks.</CardDescription>
+                <CardDescription>List of upcoming tasks.</CardDescription>
             </CardHeader>
             <ScrollArea className="flex flex-col overlflow-y-auto h-full w-full pb-20 pr-2">
                 <CardContent className="inline-block w-full h-full">
