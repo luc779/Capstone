@@ -5,7 +5,7 @@ import { AddTaskToCalendarForm } from '../../app/Tasks/widgets/TaskCalendarForm'
 import { AddEventToCalendarForm } from '@/app/Events/widgets/CalendarForm';
 
 const AddTaskOrEvent: React.FC<{ currentPanelName: string }> = ({ currentPanelName }) => (
-  <Card className="p-4 h-full">
+  <Card className="h-full">
     <CardHeader>
       <CardTitle>Add {currentPanelName}</CardTitle>
       <CardDescription>A place to add a {currentPanelName.slice(0, -1).toLowerCase()}.</CardDescription>

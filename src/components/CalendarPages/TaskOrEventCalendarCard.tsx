@@ -17,7 +17,7 @@ const TaskOrEventCalendarCard: React.FC<PanelProps> = ({ date, setDate, items, c
   });
 
   return (
-    <Card className="p-4 h-full">
+    <Card className="h-full">
       <CardHeader>
         <CardTitle>{currentPanelName.slice(0, -1)} Calendar</CardTitle>
         <CardDescription>A place to organize {currentPanelName.toLowerCase()}.</CardDescription>

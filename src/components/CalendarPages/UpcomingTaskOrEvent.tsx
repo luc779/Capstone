@@ -9,7 +9,7 @@ const UpcomingTaskOrEvent: React.FC<{ items: CalendarInterface[], currentPanelNa
   const sortedEvents = items.sort((a, b) => new Date(a.start_date).getTime() - new Date(b.start_date).getTime());
   
   return (
-    <Card className="h-full p-4">
+    <Card className="h-full">
       <CardHeader>
         <CardTitle>Upcoming {currentPanelName}</CardTitle>
         <CardDescription>A place to see upcoming {currentPanelName.toLowerCase()}.</CardDescription>
