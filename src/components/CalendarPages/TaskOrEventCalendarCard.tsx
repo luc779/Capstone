@@ -8,13 +8,26 @@ import EventCard from '@/app/Events/widgets/EventCard';
 
 const TaskOrEventCalendarCard: React.FC<PanelProps> = ({ date, setDate, items, currentPanelName }) => {
 
-  const eventsOnSelectedDate = items.filter(e => {
-    const startDate = new Date(e.start_date);
-    const endDate = new Date(e.end_date);
-    const selectedDate = date || new Date();
-
-    return selectedDate >= startDate && selectedDate <= endDate;
-  });
+  const eventsOnSelectedDate = items?.filter(e => {
+    // console.log("Selected Date: " + date!.toLocaleDateString())
+    const parts = date?.toLocaleDateString().split("/");
+    const month = parseInt(parts![0], 10) - 1; // Subtract 1 because months are zero-indexed
+    const day = parseInt(parts![1], 10);
+    const year = parseInt(parts![2], 10);
+    const selectedDate = new Date(year, month, day);
+    // console.log("Datified: " + selectedDate)
+    if (e && e.start_date && e.end_date) {
+        const startDate = new Date(e.start_date);
+        const endDate = new Date(e.end_date);
+        startDate.setHours(0, 0, 0, 0); // Set time to 00:00:00
+        endDate.setHours(23, 59, 59, 999); // Set time to 23:59:59
+        // console.log("Difference smaller: " + selectedDate + ">=" +  startDate)
+        // console.log("Difference bigger: " + selectedDate + "<=" + endDate)
+        return selectedDate >= startDate && selectedDate <= endDate;
+    }
+    return false;
+  }) || [];
+  // console.log("Fiterd event: " + eventsOnSelectedDate.length)
 
   return (
     <Card className="h-full">

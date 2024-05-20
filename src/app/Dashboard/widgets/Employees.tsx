@@ -13,7 +13,6 @@ import { ErrorToast } from '@/components/ErrorToast';
 import { z } from 'zod';
 import { GetMembersItemApiCall } from '@/Api/AWS/users/GetMembers';
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
-import { useRouter } from "next/navigation";
 
 export interface People {
     given_name: string,
@@ -34,7 +33,6 @@ export interface ApiResponse {
 
 // returns a card that displays in a horizontal list the employees, has an avatar icon above and the initials underneath
 function Employees() {
-    const router = useRouter();
     const [members, setMembers] = useState<People[]>([]);
 
     useEffect(() => {

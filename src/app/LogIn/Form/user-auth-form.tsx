@@ -18,7 +18,8 @@ import { Icons } from "../../../components/icons"
 import React, { useEffect, useState } from "react"
 import { LogInApiCall } from "@/Api/AWS/authentication/LogInApiCall"
 import { setCookie } from "../../../Security/SetCookie"
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
+import Router from "next/router"
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -32,7 +33,7 @@ type ProfileFormValues = z.infer<typeof profileFormSchema>
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
     const [isLoading, setIsLoading] = React.useState<boolean>(false)
-    const router = useRouter();
+    // const router = useRouter();
 
     const form = useForm<ProfileFormValues>({
       resolver: zodResolver(profileFormSchema)
@@ -49,8 +50,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         if (response.statusCode === 200) {
 
             setCookie('accessToken', response.accessToken);
-
-            router.push('/Dashboard');
+            Router.push('/Dashboard');
         }
         
         // to-DO with resend confitmation code if needed
