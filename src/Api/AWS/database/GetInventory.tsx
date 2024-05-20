@@ -24,7 +24,6 @@ export const GetInventoryApiCall = async (passedData: ItemFormValues) => {
     return new Promise(async (resolve, reject) => {
         await axios.request(config)
         .then((response: { data: any }) => {
-            // console.log('here' , response.data);
             resolve(response.data);
         })
         .catch((error: any) => {

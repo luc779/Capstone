@@ -45,7 +45,7 @@ interface InventoryItem {
 // creates a card component which holds a table component on a few vehicles, at the bottom of the card contains a button to direct to inventory
 function InventorySnapshot() {
   const router = useRouter();
-  const [tasks, setTasks] = useState<InventoryItem[]>([]);
+  const [inventory, setInventory] = useState<InventoryItem[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,7 +55,7 @@ function InventorySnapshot() {
   
         if (!accessToken) {
           ErrorToast("Account not signed in.");
-          setTasks(z.array(taskSchema).parse(JSON.parse("[]")))
+          setInventory(z.array(taskSchema).parse(JSON.parse("[]")))
           return;
         }
   
@@ -65,10 +65,12 @@ function InventorySnapshot() {
           router.push('/LogIn');
           return;
       }
-        const post = z.array(taskSchema).parse(data.body)
-        setTasks(post);
+        const post = z.array(taskSchema).parse(data.body);
+        console.log("inventory Array: " + post);
+        setInventory(post);
       } catch (error) {
         console.error("Error fetching inventory item:", error);
+        console.log("Error here is the inventory: " + JSON.stringify(inventory));
         ErrorToast("Server ran into an issue.");
       }
     };
@@ -96,7 +98,7 @@ function InventorySnapshot() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {tasks.map((item) => (
+                {inventory.map((item) => (
                   <TableRow key={item.VIN}>
                     <TableCell className="font-medium">{item.make}</TableCell>
                     <TableCell>{item.model}</TableCell>

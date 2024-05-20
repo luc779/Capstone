@@ -33,7 +33,6 @@ export const AddItemApiCall = async (passedData: ItemFormValues) => {
     return new Promise(async (resolve, reject) => {
         await axios.request(config)
         .then((response: { data: any }) => {
-            console.log(JSON.stringify(response.data));
             resolve(response.data);
         })
         .catch((error: any) => {

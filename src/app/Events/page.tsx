@@ -34,12 +34,12 @@ export default function Events() {
         setResponse(data.body);
         console.log(response)
       } catch (error) {
-        console.error("Error fetching inventory item:", error);
+        console.error("Error fetching Events item:", error);
       }
     };
   
     fetchData();
-  });
+  }, []);
 
   if (loading) {
     return (

@@ -32,14 +32,14 @@ export default function Tasks() {
   
         const data = await GetCalendarApiCall({ accessToken: response_accessToken, item_type: "TASK" }) as ApiResponse;
         setResponse(data.body);
-        console.log(response)
+        console.log(data.body);
       } catch (error) {
-        console.error("Error fetching inventory item:", error);
+        console.error("Error fetching Tasks item:", error);
       }
     };
   
     fetchData();
-  });
+  }, []);
 
   if (loading) {
     return (
@@ -58,7 +58,7 @@ export default function Tasks() {
 
 // space for events
 const BottomContentPanel: React.FC<PanelProps> = ({ date, setDate, items, currentPanelName }) => (
-  <ResizablePanel defaultSize={90} className="flex h-full">
+  <ResizablePanel defaultSize={90} className="flex h-full p-4">
     <div className="flex-1 pr-4">
       <TaskOrEventCalendarCard date={date} setDate={setDate} items={items} currentPanelName={currentPanelName}/>
     </div>

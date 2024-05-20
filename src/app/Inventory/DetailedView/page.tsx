@@ -19,7 +19,7 @@ export default function DetailedView() {
 // Define BottomContentPanel as a separate component
 const BottomContentPanel = () => {
   return (
-    <div className="h-full">
+    <div className="h-full p-4">
       <DetailedViewCard />
     </div>  
   );
