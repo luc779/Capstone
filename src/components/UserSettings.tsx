@@ -1,7 +1,7 @@
 "use client"
 
 import { GetCurrentUserItemApiCall } from "@/Api/AWS/users/GetCurrentUser";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { DarkModeToggle } from "@/components/ui/DarkModeToggle"
 import { getCookie } from "@/Security/GetCookie";
 import { useEffect, useState } from "react";
@@ -52,7 +52,7 @@ export function UserSettings() {
                 // covered in inventorySnapshot
                 return;
             }
-            console.log('API RESPONSE USER INFO: ' + JSON.stringify(data.body))
+            console.log('USER INFO: ' + JSON.stringify(data.body))
             setUser(data.body);
         } catch (error) {
             console.log("Error fetching user:", error);
@@ -70,15 +70,15 @@ export function UserSettings() {
         <Sheet>
           <SheetTrigger asChild>
             <Avatar>
-              <AvatarImage src="/avatars/01.png" />
-              <AvatarFallback>{(user === undefined ? "..." : (user?.given_name ?? "...").charAt(0) + user?.family_name.charAt(0))}</AvatarFallback>
-            </Avatar>
+              <AvatarFallback>{user && user.given_name && user.family_name ? 
+                user.given_name.charAt(0) + user.family_name.charAt(0) : 
+                "..."}</AvatarFallback>
+              </Avatar>
           </SheetTrigger>
           <SheetContent className="">
             <div className=" p-6 h-full">
               <div className="flex gap-4">
                 <Avatar className="h-16 w-16">
-                  <AvatarImage alt="@shadcn" src="/placeholder-avatar.jpg" />
                   <AvatarFallback>{(user?.given_name ?? "...").charAt(0) + user?.family_name.charAt(0)}</AvatarFallback>
                 </Avatar>
                 <div className="space-y-1">

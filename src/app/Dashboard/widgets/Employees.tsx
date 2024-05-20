@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useState } from 'react';
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {
     Card,
     CardContent,
@@ -59,6 +59,7 @@ function Employees() {
                     if (a.user_type !== 'Admin' && b.user_type === 'Admin') return 1;
                     return 0;
                 });
+                console.log("members: "  + JSON.stringify(sortedMembers))
                 setMembers(sortedMembers);
             } catch (error) {
                 console.log("Error fetching employees:", error);
@@ -76,12 +77,10 @@ function Employees() {
             </CardHeader>
             <CardContent>
                 <ScrollArea className="whitespace-nowrap pb-2">
-                    {/* {loading ? ( */}
                         <div className="flex w-max space-x-6">
                             {members.map((people) => (
                                 <div key={people.given_name + people.family_name} className="flex flex-col items-center gap-2">
                                     <Avatar>
-                                        <AvatarImage alt={people.given_name.charAt(0) + people.family_name.charAt(0)} src="/avatars/01.png" />
                                         <AvatarFallback>{people.given_name.charAt(0) + people.family_name.charAt(0)}</AvatarFallback>
                                     </Avatar>
                                     <div className="text-center">
@@ -91,11 +90,21 @@ function Employees() {
                                 </div>
                             ))}
                         </div>
-                    {/* ) : (
+                    
+                    <ScrollBar orientation="horizontal" />
+                </ScrollArea>
+            </CardContent>
+        </Card>
+    );
+}
+
+export default Employees;
+
+
+{/* ) : (
                         <div className="flex w-max space-x-6">
                             <div className="flex flex-col items-center gap-2">
                                 <Avatar className="animate-pulse bg-gray-200">
-                                    <AvatarImage alt="John Doe" src="/avatars/01.png" />
                                     <AvatarFallback></AvatarFallback>
                                 </Avatar>
                                 <div className="text-center items-center">
@@ -107,11 +116,3 @@ function Employees() {
                             </div>
                         </div>
                     )} */}
-                    <ScrollBar orientation="horizontal" />
-                </ScrollArea>
-            </CardContent>
-        </Card>
-    );
-}
-
-export default Employees;

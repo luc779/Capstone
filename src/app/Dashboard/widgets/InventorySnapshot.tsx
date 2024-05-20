@@ -66,6 +66,7 @@ function InventorySnapshot() {
           return;
       }
         const post = z.array(taskSchema).parse(data.body)
+        console.log("inventory Array: " + post)
         setTasks(post);
       } catch (error) {
         console.error("Error fetching inventory item:", error);

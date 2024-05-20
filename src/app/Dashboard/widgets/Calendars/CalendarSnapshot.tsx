@@ -12,8 +12,6 @@ import { ApiResponse, CalendarInterface } from '@/components/CalendarPages/Inter
 import { getCookie } from '@/Security/GetCookie';
 import { ErrorToast } from '@/components/ErrorToast';
 import { GetCalendarApiCall } from '@/Api/AWS/calendar/GetCalendarApiCall';
-import UpcomingTaskOrEvent from '@/components/CalendarPages/UpcomingTaskOrEvent';
-import EventCard from '@/app/Events/widgets/EventCard';
 import SimpleEventAndTaskCard from './SimpleEventAndTaskCard';
 import { SearchX } from 'lucide-react';
 
@@ -34,11 +32,9 @@ function CalendarSnapshot() {
             const eventDataPromise = GetCalendarApiCall({ accessToken: response_accessToken, item_type: "EVENT" }) as Promise<ApiResponse>;
             const taskDataPromise = GetCalendarApiCall({ accessToken: response_accessToken, item_type: "TASK" }) as Promise<ApiResponse>;
 
-            const eventData = await eventDataPromise;
-            const taskData = await taskDataPromise;
+            const [eventData, taskData] = await Promise.all([eventDataPromise, taskDataPromise]);
 
             const today = new Date();
-            console.log("What day is today? " + today)
             const todayYear = today.getFullYear();
             const todayMonth = today.getMonth();
             const todayDay = today.getDate();
@@ -50,12 +46,13 @@ function CalendarSnapshot() {
                     const eventYear = eventDate.getFullYear();
                     const eventMonth = eventDate.getMonth();
                     const eventDay = eventDate.getDate();
-                    console.log(eventDate)
+                    // console.log(eventDate)
                     return (eventYear > todayYear) || 
                         (eventYear === todayYear && eventMonth > todayMonth) || 
                         (eventYear === todayYear && eventMonth === todayMonth && eventDay >= todayDay);
                 });
-
+            
+            console.log("Size of taskData.body: " + taskData.body.length)
             const sortedTasks = taskData.body
                 .sort((a, b) => new Date(a.start_date).getTime() - new Date(b.start_date).getTime())
                 .filter(event => {
@@ -63,7 +60,7 @@ function CalendarSnapshot() {
                     const eventYear = eventDate.getFullYear();
                     const eventMonth = eventDate.getMonth();
                     const eventDay = eventDate.getDate();
-                    console.log(eventDate)
+                    // console.log(eventDate)
                     return (eventYear > todayYear) || 
                         (eventYear === todayYear && eventMonth > todayMonth) || 
                         (eventYear === todayYear && eventMonth === todayMonth && eventDay >= todayDay);
@@ -71,9 +68,10 @@ function CalendarSnapshot() {
             
             setEvents(sortedEvents);
             setTasks(sortedTasks);
-            console.log(sortedEvents)
+            console.log("Sorted Events " +  JSON.stringify(sortedEvents));
+            console.log("Sorted Tasks " + JSON.stringify(sortedTasks));
         } catch (error) {
-            console.error("Error fetching inventory item:", error);
+            console.error("Error fetching calendar snapshot item:", error);
         }
         };
 

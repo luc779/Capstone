@@ -32,14 +32,14 @@ export default function Tasks() {
   
         const data = await GetCalendarApiCall({ accessToken: response_accessToken, item_type: "TASK" }) as ApiResponse;
         setResponse(data.body);
-        console.log(response)
+        console.log(data.body);
       } catch (error) {
-        console.error("Error fetching inventory item:", error);
+        console.error("Error fetching Tasks item:", error);
       }
     };
   
     fetchData();
-  });
+  }, []);
 
   if (loading) {
     return (
