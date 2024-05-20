@@ -58,15 +58,12 @@ export default function Tasks() {
 
 // space for events
 const BottomContentPanel: React.FC<PanelProps> = ({ date, setDate, items, currentPanelName }) => (
-  <ResizablePanel defaultSize={90} className="flex h-full p-4">
+  <div className="flex h-full p-4">
     <div className="flex-1 pr-4">
-      <TaskOrEventCalendarCard date={date} setDate={setDate} items={items} currentPanelName={currentPanelName}/>
-    </div>
-    <div className="flex-1 pr-4">
-      <UpcomingTaskOrEvent items={items} currentPanelName={currentPanelName}/>
-    </div>
-    <div className="flex-1">
-      <AddTaskOrEvent currentPanelName={currentPanelName}/>
-    </div>
-  </ResizablePanel>
+      <TaskOrEventCalendarCard date={date} setDate={setDate} items={items} currentPanelName={currentPanelName} />
+    </div><div className="flex-1 pr-4">
+      <UpcomingTaskOrEvent items={items} currentPanelName={currentPanelName} />
+    </div><div className="flex-1">
+      <AddTaskOrEvent currentPanelName={currentPanelName} />
+    </div></div>
 );

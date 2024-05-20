@@ -79,7 +79,9 @@ function Employees() {
                             {members.map((people) => (
                                 <div key={people.given_name + people.family_name} className="flex flex-col items-center gap-2">
                                     <Avatar>
-                                        <AvatarFallback>{people.given_name.charAt(0) + people.family_name.charAt(0)}</AvatarFallback>
+                                        <AvatarFallback>
+                                            {people.given_name?.charAt(0) + (people.family_name ? people.family_name.charAt(0) : '')}
+                                        </AvatarFallback>
                                     </Avatar>
                                     <div className="text-center">
                                         <p className="font-medium">{people.given_name + " " + people.family_name}</p>
