@@ -22,10 +22,10 @@ export const personInfoSchema = z.object({
     email: z.string().email(),
     family_name: z.string().max(160).min(2)
       .regex(/^[^0-9]+$/, 'Can only contain letters')
-      .regex(/^[^\s]+$/, "Can't contain spaces"),
+      .regex(/^[^\s]+$/, "Cannot contain spaces"),
     given_name: z.string().max(160).min(2)
       .regex(/^[^0-9]+$/, 'Can only contain letters')
-      .regex(/^[^\s]+$/, "Can't contain spaces"),
+      .regex(/^[^\s]+$/, "Cannot contain spaces"),
     'custom:user_type': z.string(),
     'custom:museum_name': z.string()
 })
@@ -233,7 +233,7 @@ export function UserInfoForm({ userInfo }: { userInfo?: UserProfile }) {
                     />
                   </FormControl>
                   {!passwordsMatch && (
-                    <p className="text-sm font-medium text-destructive">Passwords don't match</p>
+                    <p className="text-sm font-medium text-destructive">Passwords don&apos;t match</p>
                   )}
                   <FormMessage />
                 </FormItem>

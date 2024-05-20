@@ -76,7 +76,7 @@ function InventorySnapshot() {
     };
 
     fetchData();
-  }, []);
+  }, [router, inventory]);
 
   return (
     <Card className="h-full">
