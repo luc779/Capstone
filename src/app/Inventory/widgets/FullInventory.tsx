@@ -46,7 +46,7 @@ export default function FullInventoryShow() {
         setTasks(post);
         setIsLoading(false);
       } catch (error) {
-        console.error("Error fetching inventory item:", error);
+        console.error("Error fetching full inventory:", error);
         ErrorToast("Server ran into an issue.");
         setIsLoading(false);
       }

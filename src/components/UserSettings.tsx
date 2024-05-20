@@ -70,16 +70,22 @@ export function UserSettings() {
         <Sheet>
           <SheetTrigger asChild>
             <Avatar>
-              <AvatarFallback>{user && user.given_name && user.family_name ? 
+              <AvatarFallback>
+                {user && user.given_name && user.family_name ? 
                 user.given_name.charAt(0) + user.family_name.charAt(0) : 
-                "..."}</AvatarFallback>
-              </Avatar>
+                "..."}
+              </AvatarFallback>
+            </Avatar>
           </SheetTrigger>
           <SheetContent className="">
             <div className=" p-6 h-full">
               <div className="flex gap-4">
                 <Avatar className="h-16 w-16">
-                  <AvatarFallback>{(user?.given_name ?? "...").charAt(0) + user?.family_name.charAt(0)}</AvatarFallback>
+                  <AvatarFallback>
+                    {user && user.given_name && user.family_name ? 
+                    user.given_name.charAt(0) + user.family_name.charAt(0) : 
+                    "..."}  
+                  </AvatarFallback>
                 </Avatar>
                 <div className="space-y-1">
                   <h4 className="text-lg font-medium">{(user?.given_name ?? "...") + " " + user?.family_name}</h4>

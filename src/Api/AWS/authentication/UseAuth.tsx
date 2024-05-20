@@ -2,26 +2,27 @@
 
 import { useEffect, useState } from "react";
 import { IsAuthenticated } from "@/Security/IsAuthenticated";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
+import Router from "next/router"
 
 export const useAuth = () => {
   const [loading, setLoading] = useState(true);
   const [progressValue, setProgressValue] = useState(10);
-  const router = useRouter();
+  // const router = useRouter();
 
   useEffect(() => {
     const checkAuthentication = async () => {
       console.log('Attempting auth')
       if (!(await IsAuthenticated())) {
         console.log('push attempt');
-        router.push('/LogIn'); // Redirect to login page if not authenticated
+        Router.push('/LogIn'); // Redirect to login page if not authenticated
       } else {
         setLoading(false);
       }
     };
 
     checkAuthentication();
-  }, [router]);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {

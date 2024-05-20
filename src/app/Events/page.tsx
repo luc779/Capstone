@@ -32,7 +32,7 @@ export default function Events() {
   
         const data = await GetCalendarApiCall({ accessToken: response_accessToken, item_type: "EVENT" }) as ApiResponse;
         setResponse(data.body);
-        console.log(response)
+        console.log(data.body)
       } catch (error) {
         console.error("Error fetching Events item:", error);
       }
