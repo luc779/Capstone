@@ -32,7 +32,8 @@ function CalendarSnapshot() {
             const eventDataPromise = GetCalendarApiCall({ accessToken: response_accessToken, item_type: "EVENT" }) as Promise<ApiResponse>;
             const taskDataPromise = GetCalendarApiCall({ accessToken: response_accessToken, item_type: "TASK" }) as Promise<ApiResponse>;
 
-            const [eventData, taskData] = await Promise.all([eventDataPromise, taskDataPromise]);
+            const eventData = await eventDataPromise;
+            const taskData = await taskDataPromise;
 
             const today = new Date();
             const todayYear = today.getFullYear();
