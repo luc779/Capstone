@@ -68,7 +68,7 @@ const data01 = [
   { name: 'Fundraising Events', value: 19902.0316 } // 44%
 ];
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042' , '#FF4042'];
+const COLORS = ['#7c3aed', '#00C49F', '#FFBB28', '#FF8042' , '#FF4042'];
 
 const donationsData = [
   { month: 'Jan', donations: 500 },
@@ -460,7 +460,7 @@ const MiddleData = () => (
             <YAxis />
             <Tooltip />
             <Legend />
-            <Line type="monotone" dataKey="visitors" stroke="#8884d8" />
+            <Line type="monotone" dataKey="visitors" stroke="#7c3aed" />
             <Line type="monotone" dataKey="revenue" stroke="#82ca9d" />
           </LineChart>
         </ResponsiveContainer>
@@ -508,7 +508,7 @@ const LeftBottomData = () => (
           <PolarAngleAxis dataKey="carType" />
           <PolarRadiusAxis />
           <Tooltip />
-          <Radar name="Cars" dataKey="carsOfType" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
+          <Radar name="Cars" dataKey="carsOfType" stroke="#7c3aed" fill="#7c3aed" fillOpacity={0.6} />
         </RadarChart>
       </ResponsiveContainer>
       </CardContent>
@@ -524,18 +524,21 @@ const MiddleBottomData = () => (
           Donations
         </CardTitle>
         <svg 
-          xmlns="http://www.w3.org/2000/svg"
+          xmlns="http://www.w3.org/2000/svg" 
+          width="24" height="24" 
           viewBox="0 0 24 24" 
           fill="none" 
           stroke="currentColor" 
-          stroke-width="2" 
+          stroke-width="2"
           stroke-linecap="round" 
-          stroke-linejoin="round" 
+          stroke-linejoin="round"
           className="h-4 w-4 text-muted-foreground"
-        >
-          <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/>
-          <circle cx="7" cy="17" r="2"/><path d="M9 17h6"/>
-          <circle cx="17" cy="17" r="2"/>
+          >
+          <path d="m11 17 2 2a1 1 0 1 0 3-3"/>
+          <path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/>
+          <path d="m21 3 1 11h-2"/>
+          <path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/>
+          <path d="M3 4h8"/>
         </svg>
       </CardHeader>
       <CardContent className="flex h-full items-center justify-center">
@@ -549,7 +552,7 @@ const MiddleBottomData = () => (
           <YAxis />
           <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="donations" stroke="#8884d8" activeDot={{ r: 8 }} />
+          <Line type="monotone" dataKey="donations" stroke="#7c3aed" activeDot={{ r: 8 }} />
         </LineChart>
       </ResponsiveContainer>
       </CardContent>
