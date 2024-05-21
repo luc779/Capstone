@@ -6,7 +6,7 @@ import LoadingIndicator from "@/components/LoadingIndicator";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 
-import { Bar, BarChart, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
+import { Bar, BarChart, CartesianGrid, Cell, Legend, Line, LineChart, Pie, PieChart, PolarAngleAxis, PolarGrid, PolarRadiusAxis, Radar, RadarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
 
 const data = [
   {
@@ -68,6 +68,75 @@ const data01 = [
   { name: 'Fundraising Events', value: 19902.0316 } // 44%
 ];
 
+const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042' , '#FF4042'];
+
+const donationsData = [
+  { month: 'Jan', donations: 500 },
+  { month: 'Feb', donations: 700 },
+  { month: 'Mar', donations: 900 },
+  { month: 'Apr', donations: 600 },
+  { month: 'May', donations: 800 },
+  { month: 'Jun', donations: 1000 },
+  { month: 'Jul', donations: 1200 },
+  { month: 'Aug', donations: 1500 },
+  { month: 'Sep', donations: 1100 },
+  { month: 'Oct', donations: 1300 },
+  { month: 'Nov', donations: 1400 },
+  { month: 'Dec', donations: 1600 },
+];
+
+const carData = [
+  {
+    carType: 'American Classics',
+    carsOfType: 20,
+    B: 15,
+    totalCars: 250,
+  },
+  {
+    carType: 'European Sports Cars',
+    carsOfType: 34,
+    totalCars: 250,
+  },
+  {
+    carType: 'Japanese Icons',
+    carsOfType: 41,
+    totalCars: 250,
+  },
+  {
+    carType: 'Vintage Luxury Cars',
+    carsOfType: 27,
+    totalCars: 250,
+  },
+  {
+    carType: 'Muscle Cars',
+    carsOfType: 36,
+    totalCars: 250,
+  },
+  {
+    carType: 'Racing Legends',
+    carsOfType: 42,
+    totalCars: 250,
+  },
+  {
+    carType: 'Modern Supercars',
+    carsOfType: 49,
+    totalCars: 250,
+  },
+];
+
+interface DataPoint {
+  date: Date;
+  visitors: number;
+  revenue: number;
+}
+
+const visitorData: DataPoint[] = Array.from({ length: 7 }, (_, index) => {
+  const date = new Date();
+  date.setDate(date.getDate() - (14 - index));
+  const visitors = Math.floor(Math.random() * 100) + 50
+  const revenue = Math.floor(Math.random() * 200) + 50
+  return { date, visitors, revenue }
+});
 
 const currentPanelName: string = "Sales";
 
@@ -145,7 +214,7 @@ const MiddleLeftTopData = () => (
     <Card className="h-full">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium">
-          Subscriptions
+          Visitors
         </CardTitle>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -163,9 +232,9 @@ const MiddleLeftTopData = () => (
         </svg>
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold">+2350</div>
+        <div className="text-2xl font-bold">2,350</div>
         <p className="text-xs text-muted-foreground">
-          +180.1% from last month
+          +18.1% from last month
         </p>
       </CardContent>
     </Card>
@@ -206,30 +275,33 @@ const RightTopData = () => (
     <Card className="h-full">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium">
-          Active Now
+          Cars in Museum
         </CardTitle>
-        <svg
+        <svg 
           xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
+          viewBox="0 0 24 24" 
+          fill="none" 
+          stroke="currentColor" 
+          stroke-width="2" 
+          stroke-linecap="round" 
+          stroke-linejoin="round" 
           className="h-4 w-4 text-muted-foreground"
         >
-          <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+            <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/>
+            <circle cx="7" cy="17" r="2"/><path d="M9 17h6"/>
+            <circle cx="17" cy="17" r="2"/>
         </svg>
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold">+573</div>
+        <div className="text-2xl font-bold">250</div>
         <p className="text-xs text-muted-foreground">
-          +201 since last hour
+          +10 since last month
         </p>
       </CardContent>
     </Card>
   </ResizablePanel>
 );
+
 
 const BottomData = () => (
   <ResizablePanel defaultSize={85} className="">
@@ -245,7 +317,7 @@ const BigRightData = () => (
     <Card className="h-full pb-4">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 pt-4">
         <CardTitle>
-          Monthly Revenue
+          Month by Month Revenue
         </CardTitle>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -331,18 +403,23 @@ const LeftMiddleData = () => (
       </CardHeader>
       <CardContent className="flex h-full items-center justify-center">
         <ResponsiveContainer width="100%" height="100%">
-          <PieChart width={400} height={400}>
+          <PieChart width={200} height={200}>
             <Pie
               dataKey="value"
               isAnimationActive={false}
               data={data01}
               cx="50%"
               cy="50%"
-              outerRadius={80}
+              outerRadius={50}
               fill="#8884d8"
               label
-            />
+            >
+              {data.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+              ))}
+            </Pie>
             <Tooltip />
+            <Legend />
           </PieChart>
         </ResponsiveContainer>
       </CardContent>
@@ -353,8 +430,40 @@ const LeftMiddleData = () => (
 const MiddleData = () => (
   <ResizablePanel defaultSize={50} className="">
     <Card className="h-full">
-      <CardContent>
-        MiddleData
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 pt-4">
+        <CardTitle>
+          7-Day Visitors & Revenue
+        </CardTitle>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          className="h-4 w-4 text-muted-foreground"
+        >
+          <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+        </svg>
+      </CardHeader>
+      <CardContent className="flex h-full items-center justify-center">
+        <ResponsiveContainer width="100%" height="80%">
+          <LineChart
+            data={visitorData}
+            margin={{
+              top: 5, right: 30, left: 20, bottom: 5,
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="day" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Line type="monotone" dataKey="visitors" stroke="#8884d8" />
+            <Line type="monotone" dataKey="revenue" stroke="#82ca9d" />
+          </LineChart>
+        </ResponsiveContainer>
       </CardContent>
     </Card>
     
@@ -373,8 +482,35 @@ const BottomRowData = () => (
 const LeftBottomData = () => (
   <ResizablePanel defaultSize={50} className="">
     <Card className="h-full">
-      <CardContent>
-      LeftBottomData
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 pt-4">
+        <CardTitle>
+          Cars Types
+        </CardTitle>
+        <svg 
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24" 
+          fill="none" 
+          stroke="currentColor" 
+          stroke-width="2" 
+          stroke-linecap="round" 
+          stroke-linejoin="round" 
+          className="h-4 w-4 text-muted-foreground"
+        >
+          <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/>
+          <circle cx="7" cy="17" r="2"/><path d="M9 17h6"/>
+          <circle cx="17" cy="17" r="2"/>
+        </svg>
+      </CardHeader>
+      <CardContent className="flex h-full items-center justify-center">
+      <ResponsiveContainer width="100%" height="80%">
+        <RadarChart cx="50%" cy="50%" outerRadius="80%" data={carData}>
+          <PolarGrid />
+          <PolarAngleAxis dataKey="carType" />
+          <PolarRadiusAxis />
+          <Tooltip />
+          <Radar name="Cars" dataKey="carsOfType" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
+        </RadarChart>
+      </ResponsiveContainer>
       </CardContent>
     </Card>
   </ResizablePanel>
@@ -383,8 +519,39 @@ const LeftBottomData = () => (
 const MiddleBottomData = () => (
   <ResizablePanel defaultSize={50} className="">
     <Card className="h-full">
-      <CardContent>
-        MiddleBottomData
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 pt-4">
+        <CardTitle>
+          Donations
+        </CardTitle>
+        <svg 
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24" 
+          fill="none" 
+          stroke="currentColor" 
+          stroke-width="2" 
+          stroke-linecap="round" 
+          stroke-linejoin="round" 
+          className="h-4 w-4 text-muted-foreground"
+        >
+          <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/>
+          <circle cx="7" cy="17" r="2"/><path d="M9 17h6"/>
+          <circle cx="17" cy="17" r="2"/>
+        </svg>
+      </CardHeader>
+      <CardContent className="flex h-full items-center justify-center">
+      <ResponsiveContainer width="100%" height="80%">
+        <LineChart
+          data={donationsData}
+          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="month" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Line type="monotone" dataKey="donations" stroke="#8884d8" activeDot={{ r: 8 }} />
+        </LineChart>
+      </ResponsiveContainer>
       </CardContent>
     </Card>
   </ResizablePanel>
