@@ -27,8 +27,7 @@ import { z } from 'zod';
 import { taskSchema } from '@/Api/inventoryDataSchema/schema';
 import { GetInventoryApiCall } from '@/Api/AWS/database/GetInventory';
 import { ScrollArea } from '@/components/ui/scroll-area';
-// import { useRouter } from "next/navigation";
-import Router from "next/router"
+import { useRouter } from "next/navigation";
 
 interface ApiResponse {
   statusCode: number;
@@ -45,7 +44,7 @@ interface InventoryItem {
 
 // creates a card component which holds a table component on a few vehicles, at the bottom of the card contains a button to direct to inventory
 function InventorySnapshot() {
-  // const router = useRouter();
+  const router = useRouter();
   const [inventory, setInventory] = useState<InventoryItem[]>([]);
 
   useEffect(() => {
@@ -63,7 +62,7 @@ function InventorySnapshot() {
         const data = await GetInventoryApiCall({ accessToken: accessToken}) as ApiResponse;
         if (data.statusCode == 401) {
           AuthenticationErrorToast("Please log in to get a new token.");
-          Router.push('/LogIn');
+          router.push('/LogIn');
           return;
         }
         const post = z.array(taskSchema).parse(data.body);

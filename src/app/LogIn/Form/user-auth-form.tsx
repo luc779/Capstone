@@ -18,8 +18,7 @@ import { Icons } from "../../../components/icons"
 import React, { useEffect, useState } from "react"
 import { LogInApiCall } from "@/Api/AWS/authentication/LogInApiCall"
 import { setCookie } from "../../../Security/SetCookie"
-// import { useRouter } from "next/navigation";
-import Router from "next/router"
+import { useRouter } from "next/navigation"
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -33,10 +32,14 @@ type ProfileFormValues = z.infer<typeof profileFormSchema>
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
     const [isLoading, setIsLoading] = React.useState<boolean>(false)
-    // const router = useRouter();
+    const router = useRouter();
 
     const form = useForm<ProfileFormValues>({
-      resolver: zodResolver(profileFormSchema)
+        resolver: zodResolver(profileFormSchema),
+        defaultValues: { // Initialize default values for form fields
+            username: '',
+            password: ''
+        }
     })
 
     async function onSubmit(data: ProfileFormValues) {
@@ -45,12 +48,11 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         console.log("test")
         try {
             const response = await LogInApiCall(data) as { statusCode: number, body: string, accessToken: string, idToken: string  };
-            console.log("Response from call: " + response)
+            console.log("Response from call: " + JSON.stringify(response))
 
         if (response.statusCode === 200) {
-
             setCookie('accessToken', response.accessToken);
-            Router.push('/Dashboard');
+            router.push('/Dashboard');
         }
         
         // to-DO with resend confitmation code if needed

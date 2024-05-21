@@ -49,12 +49,12 @@ export default function Dashboard() {
 
 // bottom section will be split again
 const BottomContentPanel = () => (
-  <ResizablePanel defaultSize={90} className='flex h-full p-4'>
+  <div className='flex h-full p-4'>
     <ResizablePanelGroup direction="horizontal">
       <LeftMainPanel />
       <RightMainPanel  />
     </ResizablePanelGroup>
-  </ResizablePanel>
+  </div>
 );
 
 // where sales and weather are shown
