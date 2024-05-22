@@ -41,18 +41,18 @@ export default function SimpleEventAndTaskCard({ event, index }: { event: Calend
              {event.priority} Priority Event
            </Badge>
          </CardHeader>
-         <CardContent className=" md:grid md:grid-cols-2 md:gap-4">
-           <div className="space-y-1">
+         <CardContent className="flex justify-between">
+           <div className="space-y-1 w-[150px]">
              <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Dates</p>
              <p>
                 {formatTimestamp(event.start_date)} - {formatTimestamp(event.end_date)} (
                 {formatTime(event.start_date)} - {formatTime(event.end_date)})
              </p>
            </div>
-           <div className="space-y-1">
+           <div className="space-y-2 grid grid-col-2">
             <Popover>
                <PopoverTrigger asChild>
-                 <Button size="sm" variant="outline">
+                 <Button size="sm" variant="outline" className="w-[120px]">
                    Description
                  </Button>
                </PopoverTrigger>
@@ -69,7 +69,7 @@ export default function SimpleEventAndTaskCard({ event, index }: { event: Calend
             </Popover>
             <Popover>
                <PopoverTrigger asChild>
-                 <Button size="sm" variant="outline">
+                 <Button size="sm" variant="outline" className="w-[120px]">
                    Featured Cars
                  </Button>
                </PopoverTrigger>

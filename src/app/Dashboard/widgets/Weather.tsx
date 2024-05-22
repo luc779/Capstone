@@ -14,7 +14,7 @@ import { WeatherApiCall } from '@/Api/Misc/WeatherApiCall';
 // uses a card component to display the recieved upcoming 7 day forcast from weatherAPI
 function Weather() {
   return (
-      <Card className="h-full overflow-auto">
+      <Card className="h-full overflow-hidden">
         <CardHeader>
           <CardTitle>Weather</CardTitle>
           <CardDescription>Next 7 day weather.</CardDescription>

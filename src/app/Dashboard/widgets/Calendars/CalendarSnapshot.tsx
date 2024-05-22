@@ -99,8 +99,8 @@ function CalendarSnapshot() {
                     </div>
                 </CardContent>
             </ScrollArea>
-            </div>
-            <div className="h-1/2">
+        </div>
+        <div className="h-1/2">
             <CardHeader>
                 <CardTitle>Tasks Calendars</CardTitle>
                 <CardDescription>List of upcoming tasks.</CardDescription>

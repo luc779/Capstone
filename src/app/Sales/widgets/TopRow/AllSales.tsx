@@ -9,7 +9,7 @@ export const AllSales = () => (
           <CardTitle className="text-sm font-medium">Sales</CardTitle>
           <CardIcon />
         </CardHeader>
-        <CardContent>
+        <CardContent className="pb-4">
           <div className="text-2xl font-bold">+12,234</div>
           <p className="text-xs text-muted-foreground">
             +19% from last month
