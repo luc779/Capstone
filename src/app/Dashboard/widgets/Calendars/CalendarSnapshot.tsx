@@ -53,7 +53,7 @@ function CalendarSnapshot() {
                         (eventYear === todayYear && eventMonth === todayMonth && eventDay >= todayDay);
                 });
             
-            console.log("Size of taskData.body: " + taskData.body.length)
+            // console.log("Size of taskData.body: " + taskData.body.length)
             const sortedTasks = taskData.body
                 .sort((a, b) => new Date(a.start_date).getTime() - new Date(b.start_date).getTime())
                 .filter(event => {
@@ -69,8 +69,8 @@ function CalendarSnapshot() {
             
             setEvents(sortedEvents);
             setTasks(sortedTasks);
-            console.log("Sorted Events " +  JSON.stringify(sortedEvents));
-            console.log("Sorted Tasks " + JSON.stringify(sortedTasks));
+            // console.log("Sorted Events " +  JSON.stringify(sortedEvents));
+            // console.log("Sorted Tasks " + JSON.stringify(sortedTasks));
         } catch (error) {
             console.error("Error fetching calendar snapshot item:", error);
         }

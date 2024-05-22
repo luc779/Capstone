@@ -52,7 +52,7 @@ export function UserSettings() {
                 // covered in inventorySnapshot
                 return;
             }
-            console.log('USER INFO: ' + JSON.stringify(data.body))
+            // console.log('USER INFO: ' + JSON.stringify(data.body))
             setUser(data.body);
         } catch (error) {
             console.log("Error fetching user:", error);
