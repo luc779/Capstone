@@ -91,6 +91,8 @@ export default function TaskCard({ task, index }: { task: CalendarInterface; ind
                </PopoverContent>
              </Popover>
            </div>
+           <Button variant="secondary">Edit</Button>
+           <Button variant="destructive">Delete</Button>
          </CardContent>
        </Card>
      </div>
