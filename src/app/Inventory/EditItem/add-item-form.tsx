@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { z } from "zod"
+import { object, z } from "zod"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -20,6 +20,7 @@ import { Icons } from "@/components/icons"
 import { AddItemApiCall } from "@/Api/AWS/database/AddItem"
 import { GetInventoryItemApiCall } from "@/Api/AWS/database/GetInventoryItem"
 import { getCookie } from "@/Security/GetCookie"
+import Image from "next/image"
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -28,7 +29,7 @@ const profileFormSchema = z.object({
     make: z.string().max(160).min(4).optional(),
     model: z.string().optional(),
     car_year: z.string().optional(),
-    image: z.any().optional(),
+    image_location: z.any().optional(),
     color: z.string().optional(),
     VIN: z.string().optional(),
     location: z.string().optional(),
@@ -61,14 +62,11 @@ async function getInventoryItem() {
 
     const vin = await getCookie("EditItem")
       .then(async response => {
-        console.log(response);
         return response;
       })
       .catch(error => {
         console.error(error);
       });
-  
-    console.log("running with: " + vin)
   
     return getCookie("accessToken")
       .then(async response => {
@@ -82,21 +80,35 @@ async function getInventoryItem() {
       .catch(error => {
         console.error(error);
       });
-  }
+}
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>
 
 export function ItemEditForm({ className, ...props }: UserAuthFormProps) {
 
     const [isLoading, setIsLoading] = React.useState<boolean>(false)
-    const [carData, setCarData] = useState<ApiResponse | null>(null);
-
+    const [carData, setCarData] = useState<ApiResponse | null>(null)
+    const [originalValues, setOriginalValues] = useState<InventoryItem | null>(null)
 
     useEffect(() => {
         async function fetchInventoryItem() {
           try {
             const data = await getInventoryItem() as ApiResponse;
             setCarData(data);
+            setOriginalValues(data.body)
+            form.reset({
+                model: data.body.model,
+                location: data.body.location,
+                image_location: data.body.image_location,
+                insurance_company: data.body.insurance_company,
+                car_value: data.body.car_value,
+                policy_number: data.body.policy_number,
+                car_year: data.body.car_year,
+                museum_name: data.body.museum_name,
+                VIN: data.body.VIN,
+                color: data.body.color,
+                make: data.body.make,
+            });
           } catch (error) {
             console.error(error);
           }
@@ -108,178 +120,235 @@ export function ItemEditForm({ className, ...props }: UserAuthFormProps) {
       resolver: zodResolver(profileFormSchema)
     })
 
+    const readFileAsBase64 = (file: File): Promise<string> => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                if (reader.result) {
+                    resolve(reader.result.toString().split(",")[1]);
+                } else {
+                    reject(new Error("Failed to read file"));
+                }
+            };
+            reader.readAsDataURL(file);
+        });
+    };
+
     async function onSubmit(data: ProfileFormValues) {
         // setIsLoading(true)
-        console.log(data);
+        const changedData: Partial<InventoryItem> = {};
 
-        for (let key in data) {
-            //@ts-ignore
-            if (data[key] == undefined) {
-                //@ts-ignore
-                console.log(data[key] + " " + key);
-                //@ts-ignore
-                data[key] = carData.body[key];
+        const promises = Object.entries(data).map(async ([key, value]) => {
+            if (originalValues && originalValues[key as keyof InventoryItem] !== value) {
+                if (key === "image_location" && value instanceof FileList) {
+                    const file = value[0];
+                    const base64Image = await readFileAsBase64(file);
+                    console.log("image calculated")
+                    changedData.image_location = base64Image;
+                } else {
+                    changedData[key as keyof InventoryItem] = value;
+                }
             }
+        });
+
+        await Promise.all(promises);
+
+        console.log("loop done")
+
+        if (Object.keys(changedData).length > 0) {
+            toast({
+                title: "Changes:",
+                description: (
+                <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                    <code className="text-white">{JSON.stringify(changedData, null, 2)}</code>
+                </pre>
+                ),
+            });
+            console.log(changedData)
+        } else {
+            toast({
+                title: "No Changes",
+                description: "No changes were made.",
+            });
         }
-
-        console.log(data);
-
     } 
   
     return (
         <div className={cn("grid gap-6", className)} {...props}>
             <Form {...form}>
-                <form  className="grid grid-cols-2 gap-6">
-                <FormField
-                    control={form.control}
-                    name="make"
-                    render={({ field }) => (
-                        <FormItem>
-                        <FormLabel>Make</FormLabel>
-                        <FormControl>
-                            <Input  type="text" autoCapitalize="none" autoCorrect="off" defaultValue={carData?.body.make} {...field} />
-                        </FormControl>
-                        <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="model"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Model</FormLabel>
-                        <FormControl>
-                            <Input placeholder="Model" type="text" autoCapitalize="none" autoCorrect="off" defaultValue={carData?.body.model} {...field} />
-                        </FormControl>
-                        <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="car_year"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Year</FormLabel>
-                        <FormControl>
-                            <Input placeholder="Year" type="number" defaultValue={carData?.body.car_year} {...field} />
-                        </FormControl>
-                        <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="color"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Color</FormLabel>
-                        <FormControl>
-                            <Input placeholder="Color" type="text" autoCapitalize="none" autoCorrect="off" defaultValue={carData?.body.color} {...field} />
-                        </FormControl>
-                        <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="VIN"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>VIN</FormLabel>
-                        <FormControl>
-                            <Input placeholder="VIN" type="text" defaultValue={carData?.body.VIN} {...field} />
-                        </FormControl>
-                        <FormMessage />
-                        </FormItem>
-                    )}
-                />
+                <form  className="grid grid-cols-3 gap-6">
+                    <div className="space-y-2">
+                        <FormLabel className="font-medium">Original Image</FormLabel>
+                        <Image
+                            src={`data:image/png;base64, ${carData?.base64_image}`}
+                            alt="Base64 Image"
+                            width="360"
+                            height="60"
+                            style={{
+                                aspectRatio: "500/300",
+                                objectFit: "cover",
+                            }}
+                            className="rounded-lg"
+                        /> 
+                    </div>
+                    <div className="space-y-6">
+                        <FormField
+                            control={form.control}
+                            name="make"
+                            render={({ field }) => (
+                                <FormItem>
+                                <FormLabel>Make</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Make" type="text" autoCapitalize="none" autoCorrect="off" defaultValue={carData?.body.make} {...field} />
+                                </FormControl>
+                                <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="model"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Model</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Model" type="text" autoCapitalize="none" autoCorrect="off" defaultValue={carData?.body.model} {...field} />
+                                </FormControl>
+                                <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="car_year"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Year</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Year" type="number" defaultValue={carData?.body.car_year} {...field} />
+                                </FormControl>
+                                <FormMessage />
+                                </FormItem>
+                            )}
+                        />
 
-                <FormField
-                    control={form.control}
-                    name="image"
-                    render={({ field }) => {
-                        return (
-                        <FormItem>
-                            <FormLabel>Picture of Car</FormLabel>
-                        <FormControl>
-                            <Input type="file" placeholder="" defaultValue={carData?.base64_image} onChange={(e) => field.onChange(e.target.files)} />
-                        </FormControl>
-                        <FormMessage />
-                        </FormItem>
-                        );
-                    }} 
-                />
+                        <FormField
+                            control={form.control}
+                            name="color"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Color</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Color" type="text" autoCapitalize="none" autoCorrect="off" defaultValue={carData?.body.color} {...field} />
+                                </FormControl>
+                                <FormMessage />
+                                </FormItem>
+                            )}
+                        />
 
-                <FormField
-                    control={form.control}
-                    name="location"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Location in Museum</FormLabel>
-                        <FormControl>
-                            <Input placeholder="Location in Museum" type="text" defaultValue={carData?.body.location} {...field} />
-                        </FormControl>
-                        <FormMessage />
-                        </FormItem>
-                    )}
-                />
+                        <FormField
+                            control={form.control}
+                            name="VIN"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>VIN</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="VIN" type="text" defaultValue={carData?.body.VIN} {...field} />
+                                </FormControl>
+                                <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
 
-                <FormField
-                    control={form.control}
-                    name="insurance_company"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Insurance Company</FormLabel>
-                        <FormControl>
-                            <Input placeholder="Insurance Information" type="text" defaultValue={carData?.body.insurance_company} {...field} />
-                        </FormControl>
-                        <FormMessage />
-                        </FormItem>
-                    )}
-                />
+                    
 
-                <FormField
-                    control={form.control}
-                    name="policy_number"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Policy Number</FormLabel>
-                        <FormControl>
-                            <Input placeholder="Policy Number" type="text" defaultValue={carData?.body.policy_number} {...field} />
-                        </FormControl>
-                        <FormMessage />
-                        </FormItem>
-                    )}
-                />      
+                    <div className="space-y-6">
+                        <FormField
+                            control={form.control}
+                            name="image_location"
+                            render={({ field }) => {
+                                return (
+                                <FormItem>
+                                    <FormLabel>New Image (leave empty if keeping original)</FormLabel>
+                                <FormControl>
+                                    <Input type="file" placeholder="" defaultValue={carData?.body.image_location} onChange={(e) => field.onChange(e.target.files)} />
+                                </FormControl>
+                                <FormMessage />
+                                </FormItem>
+                                );
+                            }} 
+                        />
 
-                <FormField
-                    control={form.control}
-                    name="car_value"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Estimated Car Value</FormLabel>
-                        <FormControl>
-                            <Input placeholder="Value" type="text" defaultValue={carData?.body.car_value} {...field} />
-                        </FormControl>
-                        <FormMessage />
-                        </FormItem>
+                        <FormField
+                            control={form.control}
+                            name="location"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Location in Museum</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Location in Museum" type="text" defaultValue={carData?.body.location} {...field} />
+                                </FormControl>
+                                <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name="insurance_company"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Insurance Company</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Insurance Information" type="text" defaultValue={carData?.body.insurance_company} {...field} />
+                                </FormControl>
+                                <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name="policy_number"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Policy Number</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Policy Number" type="text" defaultValue={carData?.body.policy_number} {...field} />
+                                </FormControl>
+                                <FormMessage />
+                                </FormItem>
+                            )}
+                        />      
+
+                        <FormField
+                            control={form.control}
+                            name="car_value"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Estimated Car Value</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Value" type="text" defaultValue={carData?.body.car_value} {...field} />
+                                </FormControl>
+                                <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+                </form>
+                <Button disabled={isLoading}
+                    onClick={() => {
+                        // Manually trigger form submission
+                        form.handleSubmit(onSubmit)();
+                    }}
+                    >
+                    {isLoading && (    
+                    <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                     )}
-                />
-            </form>
-            <Button disabled={isLoading}
-                onClick={() => {
-                    // Manually trigger form submission
-                    form.handleSubmit(onSubmit)();
-                }}
-                >
-                {isLoading && (    
-                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                )}
-                Edit Item
-            </Button> 
-        </Form>
-      </div>
+                    Edit Item
+                </Button> 
+            </Form>
+        </div>
     )
   }
