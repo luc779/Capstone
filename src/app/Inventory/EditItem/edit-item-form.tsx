@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { object, z } from "zod"
+import { z } from "zod"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -17,7 +17,6 @@ import { toast } from "@/components/ui/use-toast"
 import { Input } from "@/components/ui/input"
 import React, { useEffect, useState } from "react"
 import { Icons } from "@/components/icons"
-import { AddItemApiCall } from "@/Api/AWS/database/AddItem"
 import { GetInventoryItemApiCall } from "@/Api/AWS/database/GetInventoryItem"
 import { getCookie } from "@/Security/GetCookie"
 import Image from "next/image"

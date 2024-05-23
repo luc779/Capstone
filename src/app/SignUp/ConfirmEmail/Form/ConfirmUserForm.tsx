@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { UserAuthForm } from "./user-auth-form";
+import { UserAuthForm } from "./confirm-user-auth-form";
 
 function ConfirmUserForm() {
   return (

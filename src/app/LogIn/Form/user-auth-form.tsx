@@ -15,7 +15,7 @@ import {
 import { toast } from "@/components/ui/use-toast"
 import { Input } from "@/components/ui/input"
 import { Icons } from "../../../components/icons"
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { LogInApiCall } from "@/Api/AWS/authentication/LogInApiCall"
 import { setCookie } from "../../../Security/SetCookie"
 import { useRouter } from "next/navigation"

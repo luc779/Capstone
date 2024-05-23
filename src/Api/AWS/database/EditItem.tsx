@@ -20,7 +20,6 @@ const profileFormSchema = z.object({
 export const EditItemApiCall = async (passedData: Partial<ItemFormValues>) => {
     const axios = require('axios');
     let data = JSON.stringify(passedData, null, 0)
-    // console.log("Passed Data: " + data)
 
     let config = {
     method: 'post',
