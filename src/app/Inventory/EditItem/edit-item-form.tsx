@@ -21,6 +21,7 @@ import { AddItemApiCall } from "@/Api/AWS/database/AddItem"
 import { GetInventoryItemApiCall } from "@/Api/AWS/database/GetInventoryItem"
 import { getCookie } from "@/Security/GetCookie"
 import Image from "next/image"
+import { EditItemApiCall } from "@/Api/AWS/database/EditItem"
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -29,9 +30,16 @@ const profileFormSchema = z.object({
     make: z.string().max(160).min(4).optional(),
     model: z.string().optional(),
     car_year: z.string().optional(),
-    image_location: z.any().optional(),
+    image_base64: z
+        .any()
+        .refine((file) => {
+            if (!file) return true; // If file is not provided, let other validations handle it
+            const acceptedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']; // accepted file types
+            return acceptedTypes.includes(file[0]?.type);
+        }, 'Only image files are allowed.'),
     color: z.string().optional(),
     VIN: z.string().optional(),
+    original_VIN: z.string().optional(),
     location: z.string().optional(),
     insurance_company: z.string().optional(),
     policy_number: z.string().optional(),
@@ -41,7 +49,7 @@ const profileFormSchema = z.object({
 interface InventoryItem {
     model: string;
     location: string;
-    image_location: string;
+    image_base64: string;
     insurance_company: string;
     car_value: string;
     policy_number: string;
@@ -50,6 +58,7 @@ interface InventoryItem {
     VIN: string;
     color: string;
     make: string;
+    original_VIN: string;
 }
 
 interface ApiResponse {
@@ -99,7 +108,7 @@ export function ItemEditForm({ className, ...props }: UserAuthFormProps) {
             form.reset({
                 model: data.body.model,
                 location: data.body.location,
-                image_location: data.body.image_location,
+                image_base64: "",
                 insurance_company: data.body.insurance_company,
                 car_value: data.body.car_value,
                 policy_number: data.body.policy_number,
@@ -108,6 +117,7 @@ export function ItemEditForm({ className, ...props }: UserAuthFormProps) {
                 VIN: data.body.VIN,
                 color: data.body.color,
                 make: data.body.make,
+                original_VIN: data.body.VIN,
             });
           } catch (error) {
             console.error(error);
@@ -135,48 +145,60 @@ export function ItemEditForm({ className, ...props }: UserAuthFormProps) {
     };
 
     async function onSubmit(data: ProfileFormValues) {
-        // setIsLoading(true)
+        setIsLoading(true)
         const changedData: Partial<InventoryItem> = {};
+
+        // toast({
+        //     title: "Changes:",
+        //     description: (
+        //     <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+        //         <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+        //     </pre>
+        //     ),
+        // });
+        // setIsLoading(false)
 
         const promises = Object.entries(data).map(async ([key, value]) => {
             if (originalValues && originalValues[key as keyof InventoryItem] !== value) {
-                if (key === "image_location" && value instanceof FileList) {
+                if (key === "image_base64" && value !== "") {
                     const file = value[0];
                     const base64Image = await readFileAsBase64(file);
-                    console.log("image calculated")
-                    changedData.image_location = base64Image;
-                } else {
+                    changedData.image_base64 = base64Image;
+                } else if (key !== "image_base64") {
                     changedData[key as keyof InventoryItem] = value;
                 }
             }
         });
 
-        await Promise.all(promises);
+        // await the getting of the base64 of an image
+        await Promise.all(promises)
 
-        console.log("loop done")
-
-        if (Object.keys(changedData).length > 0) {
+        if (Object.keys(changedData).length > 1) {
+            changedData.museum_name = data.museum_name;
+            const response = await EditItemApiCall(changedData) as { statusCode: number, body: string }
+            console.log(response.body)
             toast({
                 title: "Changes:",
                 description: (
                 <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                    <code className="text-white">{JSON.stringify(changedData, null, 2)}</code>
+                    <code className="text-white">{JSON.stringify(response.body, null, 2)}</code>
                 </pre>
                 ),
             });
-            console.log(changedData)
+            setIsLoading(false)
         } else {
             toast({
                 title: "No Changes",
                 description: "No changes were made.",
             });
+            setIsLoading(false)
         }
     } 
   
     return (
-        <div className={cn("grid gap-6", className)} {...props}>
+        <div className={cn("grid gap-8", className)} {...props}>
             <Form {...form}>
-                <form  className="grid grid-cols-3 gap-6">
+                <form  className="grid grid-cols-4 gap-6">
                     <div className="space-y-2">
                         <FormLabel className="font-medium">Original Image</FormLabel>
                         <Image
@@ -231,7 +253,8 @@ export function ItemEditForm({ className, ...props }: UserAuthFormProps) {
                                 </FormItem>
                             )}
                         />
-
+                    </div>
+                    <div className="space-y-6">
                         <FormField
                             control={form.control}
                             name="color"
@@ -245,55 +268,37 @@ export function ItemEditForm({ className, ...props }: UserAuthFormProps) {
                                 </FormItem>
                             )}
                         />
-
                         <FormField
                             control={form.control}
-                            name="VIN"
+                            name="car_value"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>VIN</FormLabel>
+                                    <FormLabel>Estimated Car Value</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="VIN" type="text" defaultValue={carData?.body.VIN} {...field} />
+                                    <Input placeholder="Value" type="text" defaultValue={carData?.body.car_value} {...field} />
                                 </FormControl>
                                 <FormMessage />
                                 </FormItem>
                             )}
                         />
-                    </div>
-
-                    
-
-                    <div className="space-y-6">
                         <FormField
                             control={form.control}
-                            name="image_location"
+                            name="image_base64"
                             render={({ field }) => {
                                 return (
                                 <FormItem>
-                                    <FormLabel>New Image (leave empty if keeping original)</FormLabel>
+                                    <FormLabel>New Image (leave blank to keep original)</FormLabel>
                                 <FormControl>
-                                    <Input type="file" placeholder="" defaultValue={carData?.body.image_location} onChange={(e) => field.onChange(e.target.files)} />
+                                    <Input type="file" placeholder="" onChange={(e) => field.onChange(e.target.files)} />
                                 </FormControl>
                                 <FormMessage />
                                 </FormItem>
                                 );
                             }} 
                         />
+                    </div>
 
-                        <FormField
-                            control={form.control}
-                            name="location"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Location in Museum</FormLabel>
-                                <FormControl>
-                                    <Input placeholder="Location in Museum" type="text" defaultValue={carData?.body.location} {...field} />
-                                </FormControl>
-                                <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-
+                    <div className="space-y-6">
                         <FormField
                             control={form.control}
                             name="insurance_company"
@@ -320,21 +325,21 @@ export function ItemEditForm({ className, ...props }: UserAuthFormProps) {
                                 <FormMessage />
                                 </FormItem>
                             )}
-                        />      
+                        />     
 
                         <FormField
                             control={form.control}
-                            name="car_value"
+                            name="location"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Estimated Car Value</FormLabel>
+                                    <FormLabel>Location in Museum</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Value" type="text" defaultValue={carData?.body.car_value} {...field} />
+                                    <Input placeholder="Location in Museum" type="text" defaultValue={carData?.body.location} {...field} />
                                 </FormControl>
                                 <FormMessage />
                                 </FormItem>
                             )}
-                        />
+                        /> 
                     </div>
                 </form>
                 <Button disabled={isLoading}
@@ -344,7 +349,7 @@ export function ItemEditForm({ className, ...props }: UserAuthFormProps) {
                     }}
                     >
                     {isLoading && (    
-                    <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                        <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                     )}
                     Edit Item
                 </Button> 

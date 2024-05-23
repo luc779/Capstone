@@ -21,7 +21,7 @@ function Weather() {
           <CardDescription>Next 14 day weather.</CardDescription>
         </CardHeader>
         <CardContent className="h-full">
-          <ScrollArea className="h-full w-full overflow-y-auto pb-20 pr-4">
+          <ScrollArea className="h-full w-full overflow-y-auto pb-20 pr-2o">
             <WeatherApiCall></WeatherApiCall>
           </ScrollArea>
         </CardContent>
