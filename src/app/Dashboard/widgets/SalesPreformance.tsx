@@ -22,7 +22,7 @@ function SalesPreformance() {
             <CardTitle>Sales Preformance</CardTitle>
             <CardDescription>Snapshot of Sales Data.</CardDescription>
         </CardHeader>
-        <CardContent className=" h-full">
+        <CardContent className="h-full">
           <ScrollArea className="h-full w-full overflow-y-auto pb-20 pr-2">
             <div className='flex flex-col space-y-4'>
               <div className='flex space-x-4'>

@@ -10,6 +10,7 @@ import {
 
 // gets API call
 import { WeatherApiCall } from '@/Api/Misc/WeatherApiCall';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 // uses a card component to display the recieved upcoming 7 day forcast from weatherAPI
 function Weather() {
@@ -17,10 +18,12 @@ function Weather() {
       <Card className="h-full overflow-hidden">
         <CardHeader>
           <CardTitle>Weather</CardTitle>
-          <CardDescription>Next 7 day weather.</CardDescription>
+          <CardDescription>Next 14 day weather.</CardDescription>
         </CardHeader>
-        <CardContent>
-          <WeatherApiCall></WeatherApiCall>
+        <CardContent className="h-full">
+          <ScrollArea className="h-full w-full overflow-y-auto pb-20 pr-4">
+            <WeatherApiCall></WeatherApiCall>
+          </ScrollArea>
         </CardContent>
       </Card>
   );

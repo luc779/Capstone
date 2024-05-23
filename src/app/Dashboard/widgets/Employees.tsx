@@ -69,7 +69,7 @@ function Employees() {
     }, []);
 
     return (
-        <Card className="h-full">
+        <Card className="h-full overflow-hidden">
             <CardHeader>
                 <CardTitle>Team Members</CardTitle>
             </CardHeader>
