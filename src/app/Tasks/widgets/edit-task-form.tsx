@@ -22,11 +22,15 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { format } from "date-fns"
 import { Textarea } from "@/components/ui/textarea"
+import { EditCalendarItemApiCall } from "@/Api/AWS/calendar/EditCalendarItem"
+
+const dateFormat = /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/\d{4}, (0?[1-9]|1[0-2]):[0-5][0-9] (AM|PM)$/;
 
 const calendarFormSchema = z.object({
     location: z.string().optional(),
-    end_date: z.string().optional(),
-    start_date: z.string().optional(),
+    end_date: z.string().regex(dateFormat, {  message: "Please use the format: MM/DD/YYYY, hh:mm AM/PM" }).optional(),
+    start_date: z.string()
+        .regex(dateFormat, {  message: "Please use the format:  MM/DD/YYYY, hh:mm AM/PM" }).optional(),
     priority: z.string().optional(),
     museum_name: z.string().optional(),
     description: z.string().optional(),
@@ -38,14 +42,22 @@ const calendarFormSchema = z.object({
 export function EditTaskForm(task: CalendarInterface) {
 
     const [isLoading, setIsLoading] = React.useState<boolean>(false)
+    const [originalValues, setOriginalValues] = React.useState<CalendarInterface>(task)
     const router = useRouter();
+
+    const updateStartDate = () => {
+        setOriginalValues(prevValues => ({
+            ...prevValues, // Copy all fields from originalValues
+            start_date: new Date(originalValues.start_date).toString() // Update start_date field
+        }));
+    };
 
     const form = useForm<CalendarInterface>({
         resolver: zodResolver(calendarFormSchema),
         defaultValues: { 
             location: task.location,
-            end_date: format(task.end_date, "PPP HH:mm:ss"),
-            start_date: format(task.start_date, "PPP HH:mm:ss"),
+            end_date: format(task.end_date, "Pp"),
+            start_date: format(task.start_date, "Pp"),
             priority: task.priority,
             museum_name: task.museum_name,
             description: task.description,
@@ -56,17 +68,43 @@ export function EditTaskForm(task: CalendarInterface) {
     })
 
     async function onSubmit(data: CalendarInterface) {
-        
         setIsLoading(true)
 
-        toast({
-            title: "Need to confirm Email:",
-            description: (
-                <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-                </pre>
-            ),
+        const changedData: Partial<CalendarInterface> = {};
+
+        const promises = Object.entries(data).map(async ([key, value]) => {
+            if (originalValues && originalValues[key as keyof CalendarInterface] !== value) {
+                if ((key === 'start_date' || key === 'end_date') && typeof value === 'string' && dateFormat.test(value)) {
+                    if (originalValues[key] !== new Date(value).toISOString()) {
+                        changedData[key as keyof CalendarInterface] = new Date(value).toISOString();
+                    }
+                } else {
+                    changedData[key as keyof CalendarInterface] = value;
+                }
+            }
         });
+
+        await Promise.all(promises)
+
+        if (Object.keys(changedData).length > 0) {
+            changedData.ID = data.ID
+            changedData.museum_name = data.museum_name
+            const response = await EditCalendarItemApiCall(changedData) as { statusCode: number, body: string }
+            toast({
+                title: "Changes:",
+                description: (
+                <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                    <code className="text-white">{JSON.stringify(response.body, null, 2)}</code>
+                </pre>
+                ),
+            });
+            setIsLoading(false)
+        } else {
+            toast({
+                title: "No Changes",
+                description: "No changes were made.",
+            });
+        }
 
         setIsLoading(false)
     }

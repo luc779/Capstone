@@ -8,20 +8,7 @@ import React from "react";
 import { Icons } from "@/components/icons";
 import { toast } from "@/components/ui/use-toast";
 import { EditTaskForm } from "./edit-task-form";
-
-const formatTimestamp = (timestamp: string) => {
-  const date = new Date(timestamp);
-  const month = date.toLocaleString('default', { month: 'short' });
-  const day = date.getDate();
-  return `${month} ${day}`;
-};
-
-const formatTime = (timestamp: string) => {
-  const date = new Date(timestamp);
-  const hours = date.getHours().toString().padStart(2, '0');
-  const minutes = date.getMinutes().toString().padStart(2, '0');
-  return `${hours}:${minutes}`;
-};
+import { format } from "date-fns"
 
 const getBadgeColor = (priority: string) => {
   switch (priority) {
@@ -54,9 +41,9 @@ export default function TaskCard({ task, index, popover }: { task: CalendarInter
            <div className="space-y-1">
              <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Dates</p>
              <p>
-                {formatTimestamp(task.start_date)} - {formatTimestamp(task.end_date)} (
-                {formatTime(task.start_date)} - {formatTime(task.end_date)})
+                {format(task.start_date, "MMM dd")} - {format(task.end_date, "MMM dd")}
              </p>
+             <p> ({format(task.start_date, "p")} - {format(task.end_date, "p")})</p>
            </div>
            <div className="md:col-span-2 md:flex md:justify-between">
              <Popover>

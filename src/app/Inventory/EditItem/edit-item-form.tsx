@@ -147,16 +147,6 @@ export function ItemEditForm({ className, ...props }: UserAuthFormProps) {
         setIsLoading(true)
         const changedData: Partial<InventoryItem> = {};
 
-        // toast({
-        //     title: "Changes:",
-        //     description: (
-        //     <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-        //         <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        //     </pre>
-        //     ),
-        // });
-        // setIsLoading(false)
-
         const promises = Object.entries(data).map(async ([key, value]) => {
             if (originalValues && originalValues[key as keyof InventoryItem] !== value) {
                 if (key === "image_base64" && value !== "") {
@@ -175,7 +165,6 @@ export function ItemEditForm({ className, ...props }: UserAuthFormProps) {
         if (Object.keys(changedData).length > 1) {
             changedData.museum_name = data.museum_name;
             const response = await EditItemApiCall(changedData) as { statusCode: number, body: string }
-            console.log(response.body)
             toast({
                 title: "Changes:",
                 description: (
