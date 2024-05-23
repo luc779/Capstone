@@ -87,9 +87,12 @@ function CalendarSnapshot() {
             </CardHeader>
             <ScrollArea className="flex flex-col overlflow-y-auto h-full w-full pb-20 pr-2">
                 <CardContent className="inline-block">
-                    <div className=" space-y-4"> 
+                    <div className="space-y-4"> 
                         {events.length === 0 ? (
-                            <p>No Upcoming Events</p>
+                            <div className='flex items-center'>
+                                <SearchX className='text-primary' size={30} />
+                                <p className='ml-2'>No Upcoming Events</p>
+                            </div>
                         ) : (
                             events.map((items, index) => (
                                 <SimpleEventAndTaskCard key={items.ID} event={items} index={index}/>
@@ -108,9 +111,9 @@ function CalendarSnapshot() {
                 <CardContent className="inline-block w-full h-full">
                     <div className="space-y-4"> 
                         {tasks.length === 0 ? (
-                            <div className='flex'>
+                            <div className='flex items-center'>
                                 <SearchX className='text-primary' size={30} />
-                                <p className='ml-2'>No Results</p>
+                                <p className='ml-2'>No Upcoming Tasks</p>
                             </div>
                         ) : (
                             tasks.map((items, index) => (
