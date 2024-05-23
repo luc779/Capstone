@@ -4,13 +4,10 @@ import { Button } from "@/components/ui/button"
 import { PopoverTrigger, PopoverContent, Popover } from "@/components/ui/popover"
 import { CalendarInterface } from "../../../components/CalendarPages/Interface/CalendarInterfaces";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import React from "react";
 import { Icons } from "@/components/icons";
 import { toast } from "@/components/ui/use-toast";
-import { format } from "date-fns"
-import { Textarea } from "@/components/ui/textarea";
+import { EditTaskForm } from "./edit-task-form";
 
 const formatTimestamp = (timestamp: string) => {
   const date = new Date(timestamp);
@@ -132,70 +129,23 @@ function BottomButtons({ task }: { task: CalendarInterface; index: number; }) {
 
   return (
     <>
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="secondary">Edit</Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Edit Task</DialogTitle>
-          <DialogDescription>
-            Make changes to your task here. Click save when you're done.
-          </DialogDescription>
-        </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="title" className="text-right">
-              Title
-            </Label>
-            <Input
-              id="title"
-              defaultValue={task.title}
-              className="col-span-3" />
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button variant="secondary">Edit</Button>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Edit Task</DialogTitle>
+            <DialogDescription>
+              Make changes to your task here.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <EditTaskForm location={task.location} end_date={task.end_date} start_date={task.start_date} priority={task.priority} museum_name={task.museum_name} description={task.description} ID={task.ID} item_type={task.item_type} title={task.title} />
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="priority" className="text-right">
-              Priority
-            </Label>
-            <Input
-              id="priority"
-              defaultValue={task.priority}
-              className="col-span-3" />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="start_date" className="text-right">
-              Start Date
-            </Label>
-            <Input
-              id="start_date"
-              defaultValue={format(task.start_date, "PPP HH:mm:ss")}
-              className="col-span-3" />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="end_date" className="text-right">
-              End Date
-            </Label>
-            <Input
-              id="end_date"
-              defaultValue={format(task.end_date, "PPP HH:mm:ss")}
-              className="col-span-3" />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="description" className="text-right">
-              Description
-            </Label>
-            <Textarea
-              id="description"
-              defaultValue={task.description}
-              className="col-span-3" />
-          </div>
-        </div>
-        <DialogFooter>
-          <Button type="submit">Save changes</Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-    <Dialog>
+        </DialogContent>
+      </Dialog>
+      <Dialog>
         <DialogTrigger asChild>
           <Button variant="destructive">Delete</Button>
         </DialogTrigger>
@@ -213,7 +163,6 @@ function BottomButtons({ task }: { task: CalendarInterface; index: number; }) {
             <DialogClose asChild>
               <Button className="w-full" variant='destructive' disabled={isLoading}
                 onClick={() => {
-                    // Manually trigger form submission
                     onSubmit(task);
                 }}
                 >
