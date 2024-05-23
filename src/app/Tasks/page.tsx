@@ -1,5 +1,5 @@
 "use client"
-import { ResizablePanel } from "@/components/ui/resizable";
+
 import PageBaseDesign from "@/components/Templates/SoftwareDesign";
 import { useAuth } from "@/Api/AWS/authentication/UseAuth";
 import LoadingIndicator from "@/components/LoadingIndicator";

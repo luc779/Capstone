@@ -3,6 +3,14 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { PopoverTrigger, PopoverContent, Popover } from "@/components/ui/popover"
 import { CalendarInterface } from "../../../components/CalendarPages/Interface/CalendarInterfaces";
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import React from "react";
+import { Icons } from "@/components/icons";
+import { toast } from "@/components/ui/use-toast";
+import { format } from "date-fns"
+import { Textarea } from "@/components/ui/textarea";
 
 const formatTimestamp = (timestamp: string) => {
   const date = new Date(timestamp);
@@ -31,7 +39,7 @@ const getBadgeColor = (priority: string) => {
   }
 };
 
-export default function TaskCard({ task, index }: { task: CalendarInterface; index: number; }) {
+export default function TaskCard({ task, index, popover }: { task: CalendarInterface; index: number; popover: boolean; }) {
   return (
      <div key={index} className="w-full max-w-md">
        <Card>
@@ -91,10 +99,133 @@ export default function TaskCard({ task, index }: { task: CalendarInterface; ind
                </PopoverContent>
              </Popover>
            </div>
-           <Button variant="secondary">Edit</Button>
-           <Button variant="destructive">Delete</Button>
+           {!popover && (
+              <BottomButtons task={task} index={0} />
+           )}
          </CardContent>
        </Card>
      </div>
    )
+}
+
+function BottomButtons({ task }: { task: CalendarInterface; index: number; }) {
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+
+  async function onSubmit(task: CalendarInterface) {
+    setIsLoading(true)
+    const code = 200
+    if (code == 200) {
+      toast({
+        title: "No Changes",
+        description: "No changes were made.",
+      });
+      
+    } else {
+      toast({
+        title: "No",
+        description: "No changes were made.",
+      });
+    }
+
+    setIsLoading(false)
+  } 
+
+  return (
+    <>
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="secondary">Edit</Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Edit Task</DialogTitle>
+          <DialogDescription>
+            Make changes to your task here. Click save when you're done.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="title" className="text-right">
+              Title
+            </Label>
+            <Input
+              id="title"
+              defaultValue={task.title}
+              className="col-span-3" />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="priority" className="text-right">
+              Priority
+            </Label>
+            <Input
+              id="priority"
+              defaultValue={task.priority}
+              className="col-span-3" />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="start_date" className="text-right">
+              Start Date
+            </Label>
+            <Input
+              id="start_date"
+              defaultValue={format(task.start_date, "PPP HH:mm:ss")}
+              className="col-span-3" />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="end_date" className="text-right">
+              End Date
+            </Label>
+            <Input
+              id="end_date"
+              defaultValue={format(task.end_date, "PPP HH:mm:ss")}
+              className="col-span-3" />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="description" className="text-right">
+              Description
+            </Label>
+            <Textarea
+              id="description"
+              defaultValue={task.description}
+              className="col-span-3" />
+          </div>
+        </div>
+        <DialogFooter>
+          <Button type="submit">Save changes</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+    <Dialog>
+        <DialogTrigger asChild>
+          <Button variant="destructive">Delete</Button>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Edit Task</DialogTitle>
+            <DialogDescription>
+              Delete your task here.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <TaskCard task={task} index={0} popover={true} />
+          </div>
+          <DialogFooter className="w-full">
+            <DialogClose asChild>
+              <Button className="w-full" variant='destructive' disabled={isLoading}
+                onClick={() => {
+                    // Manually trigger form submission
+                    onSubmit(task);
+                }}
+                >
+                {isLoading && (    
+                    <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                )}
+                Confirm Delete
+              </Button> 
+            </DialogClose>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </>
+  )
 }

@@ -46,7 +46,7 @@ const TaskOrEventCalendarCard: React.FC<PanelProps> = ({ date, setDate, items, c
                 {eventsOnSelectedDate.map(items => (
                     currentPanelName === "Tasks" ? (
                       <div className="pt-4" key={items.ID}>
-                        <TaskCard task={items} index={0}/>
+                        <TaskCard task={items} index={0} popover={false}/>
                       </div>
                     ) : (
                       <div className="pt-4" key={items.ID}>

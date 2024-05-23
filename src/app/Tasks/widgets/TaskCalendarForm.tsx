@@ -23,6 +23,8 @@ import { Input } from "@/components/ui/input"
 import { TimePicker } from "@/components/TimePicker/time-picker"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { AddToCalendarApiCall } from "@/Api/AWS/calendar/AddToCalendarApiCall"
+import { Icons } from "@/components/icons"
+import React from "react"
 
 const profileFormSchema = z.object({
   title: z.string(),
@@ -38,11 +40,14 @@ const profileFormSchema = z.object({
 type ProfileFormValues = z.infer<typeof profileFormSchema>
 
 export function AddTaskToCalendarForm({ calendarType }: { calendarType: string }) {
+  const [isLoading, setIsLoading] = React.useState<boolean>(false)
+
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
   })
 
   async function onSubmit(data: ProfileFormValues) {
+    setIsLoading(true)
     try {
       const response = await AddToCalendarApiCall(data) as {statusCode: string, body: string};
 
@@ -55,6 +60,7 @@ export function AddTaskToCalendarForm({ calendarType }: { calendarType: string }
             </pre>
           ),
         })
+        setIsLoading(false)
       }
       
     } catch (error) {
@@ -66,6 +72,7 @@ export function AddTaskToCalendarForm({ calendarType }: { calendarType: string }
           </pre>
         ),
       })
+      setIsLoading(false)
     }
   }
 
@@ -102,9 +109,9 @@ export function AddTaskToCalendarForm({ calendarType }: { calendarType: string }
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                    <SelectItem value="High">High</SelectItem>
-                    <SelectItem value="Medium">Medium</SelectItem>
-                    <SelectItem value="Low">Low</SelectItem>
+                  <SelectItem value="High">High</SelectItem>
+                  <SelectItem value="Medium">Medium</SelectItem>
+                  <SelectItem value="Low">Low</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />
@@ -231,7 +238,18 @@ export function AddTaskToCalendarForm({ calendarType }: { calendarType: string }
             </FormItem>
           )}
         />
-        <Button type="submit">Upload {calendarType}</Button>
+        {/* <Button type="submit">Upload {calendarType}</Button> */}
+        <Button disabled={isLoading}
+            onClick={() => {
+                // Manually trigger form submission
+                form.handleSubmit(onSubmit)();
+            }}
+            >
+            {isLoading && (    
+                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+            )}
+            Upload {calendarType}
+        </Button> 
       </form>
     </Form>
   )
