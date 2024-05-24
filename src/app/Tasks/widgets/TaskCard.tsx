@@ -9,6 +9,7 @@ import { Icons } from "@/components/icons";
 import { toast } from "@/components/ui/use-toast";
 import { EditTaskForm } from "./edit-task-form";
 import { format } from "date-fns"
+import { DeleteCalendarItem } from "@/Api/AWS/calendar/DeleteCalendarItem";
 
 const getBadgeColor = (priority: string) => {
   switch (priority) {
@@ -97,20 +98,18 @@ function BottomButtons({ task }: { task: CalendarInterface; index: number; }) {
 
   async function onSubmit(task: CalendarInterface) {
     setIsLoading(true)
-    const code = 200
-    if (code == 200) {
+    const response = await DeleteCalendarItem(task) as { statusCode: number, body: string }
+    if (response.statusCode === 200) {
       toast({
-        title: "No Changes",
-        description: "No changes were made.",
+        title: "Successful Change",
+        description: "Refresh page to see changes",
       });
-      
     } else {
       toast({
-        title: "No",
-        description: "No changes were made.",
+        title: "Error",
+        description: response.body,
       });
     }
-
     setIsLoading(false)
   } 
 
