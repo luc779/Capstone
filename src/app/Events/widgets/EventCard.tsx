@@ -3,20 +3,14 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { PopoverTrigger, PopoverContent, Popover } from "@/components/ui/popover"
 import { CalendarInterface } from "@/components/CalendarPages/Interface/CalendarInterfaces";
-
-const formatTimestamp = (timestamp: string) => {
-  const date = new Date(timestamp);
-  const month = date.toLocaleString('default', { month: 'short' });
-  const day = date.getDate();
-  return `${month} ${day}`;
-};
-
-const formatTime = (timestamp: string) => {
-  const date = new Date(timestamp);
-  const hours = date.getHours().toString().padStart(2, '0');
-  const minutes = date.getMinutes().toString().padStart(2, '0');
-  return `${hours}:${minutes}`;
-};
+import { format } from "date-fns"
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { EditEventForm } from "./edit-event-form";
+import { Icons } from "@/components/icons";
+import React from "react";
+import { DeleteCalendarItem } from "@/Api/AWS/calendar/DeleteCalendarItem";
+import { toast } from "@/components/ui/use-toast";
+import { BottomButtons } from "@/components/CalendarPages/EditAndDeleteButtons";
 
 const getBadgeColor = (priority: string) => {
   switch (priority) {
@@ -31,7 +25,7 @@ const getBadgeColor = (priority: string) => {
   }
 };
 
-export default function EventCard({ event, index }: { event: CalendarInterface; index: number; }) {
+export default function EventCard({ event, index, popover }: { event: CalendarInterface; index: number; popover: boolean; }) {
   return (
      <div key={index} className="w-full max-w-md">
        <Card>
@@ -49,9 +43,11 @@ export default function EventCard({ event, index }: { event: CalendarInterface; 
            <div className="space-y-1">
              <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Dates</p>
              <p>
-                {formatTimestamp(event.start_date)} - {formatTimestamp(event.end_date)} (
-                {formatTime(event.start_date)} - {formatTime(event.end_date)})
+                {format(event.start_date, "MMM dd")} - {format(event.end_date, "MMM dd")}
              </p>
+             <p>
+               ({format(event.start_date, "p")} - {format(event.end_date, "p")})
+              </p>
            </div>
            <div className="md:col-span-2 md:flex md:justify-between">
              <Popover>
@@ -91,6 +87,9 @@ export default function EventCard({ event, index }: { event: CalendarInterface; 
                </PopoverContent>
              </Popover>
            </div>
+           {!popover && (
+              <BottomButtons calendarData={event} index={0} currentPanelName={"event"} />
+           )}
          </CardContent>
        </Card>
      </div>

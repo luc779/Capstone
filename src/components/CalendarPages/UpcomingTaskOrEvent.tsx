@@ -21,7 +21,7 @@ const UpcomingTaskOrEvent: React.FC<{ items: CalendarInterface[], currentPanelNa
               currentPanelName === "Tasks" ? (
                 <TaskCard key={items.ID} task={items} index={index} popover={false}/>
               ) : (
-                <EventCard key={items.ID} event={items} index={index}/>
+                <EventCard key={items.ID} event={items} index={index} popover={false}/>
               )
             ))}
           </div>
