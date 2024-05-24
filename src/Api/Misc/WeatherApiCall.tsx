@@ -50,7 +50,7 @@ const callAPI = async () => {
       `http://api.weatherapi.com/v1/forecast.json?key=${key}&q=${city}&days=${day}&aqi=no&tides=no&hour=12`
     );
     const data = await res.json();
-    console.log(JSON.stringify(data))
+    // console.log(JSON.stringify(data))
     return data;
   } catch (err) {
     return null;

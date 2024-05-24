@@ -88,23 +88,6 @@ export function ResetPasswordForm({ className, ...props }: ResetPasswordFormProp
         setIsLoading(false)
     }
 
-    async function resetOnSubmit(data: ResetPasswordValues) {
-        
-        setIsLoading(true)
-        
-
-        toast({
-            title: "Test:",
-            description: (
-                <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                    <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-                    <code className="text-white">{JSON.stringify(username, null, 2)}</code>
-                </pre>
-            ),
-        });
-        setIsLoading(false)
-    }
-
     return (
         <div>
             {isInitiate ? (
