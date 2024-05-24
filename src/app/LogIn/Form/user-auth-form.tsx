@@ -11,6 +11,8 @@ import {
   FormField,
   FormItem,
   FormMessage,
+  FormDescription,
+  FormLabel,
 } from "@/components/ui/form"
 import { toast } from "@/components/ui/use-toast"
 import { Input } from "@/components/ui/input"
@@ -19,12 +21,13 @@ import React from "react"
 import { LogInApiCall } from "@/Api/AWS/authentication/LogInApiCall"
 import { setCookie } from "../../../Security/SetCookie"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 const profileFormSchema = z.object({
-    username: z.string().max(160).min(4),
-    password: z.string(),
+    username: z.string().min(1, "Username can't be empty"),
+    password: z.string().min(1, "Password can't be empty"),
 })
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>
@@ -109,10 +112,13 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                     name="username"
                     render={({ field }) => (
                         <FormItem>
-                        <FormControl>
-                            <Input placeholder="Username" type="text" autoCapitalize="none" autoCorrect="off" {...field} />
-                        </FormControl>
-                        <FormMessage />
+                            <FormLabel>
+                                Username
+                            </FormLabel>
+                            <FormControl>
+                                <Input placeholder="Username" type="text" autoCapitalize="none" autoCorrect="off" {...field} />
+                            </FormControl>
+                            <FormMessage />
                         </FormItem>
                     )}
                 />
@@ -121,10 +127,21 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                     name="password"
                     render={({ field }) => (
                         <FormItem>
-                        <FormControl>
-                            <Input placeholder="Password" type="password" autoCapitalize="none" autoCorrect="off" {...field} onKeyPress={handleKeyPress} />
-                        </FormControl>
-                        <FormMessage />
+                            <FormLabel>
+                                Password
+                            </FormLabel>
+                            <FormControl>
+                                <Input placeholder="Password" type="password" autoCapitalize="none" autoCorrect="off" {...field} onKeyPress={handleKeyPress} />
+                            </FormControl>
+                            <FormMessage />
+                            <FormDescription>
+                                <Link 
+                                    href="/ResetPassword"
+                                    className="pl-2 underline underline-offset-4 hover:text-primary"
+                                    >
+                                    Forgot Password
+                                </Link>
+                            </FormDescription>
                         </FormItem>
                     )}
                 />
