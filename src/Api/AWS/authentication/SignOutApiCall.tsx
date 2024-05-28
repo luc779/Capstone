@@ -12,7 +12,6 @@ export const SignOutApiCall = async () => {
         accessToken: accessToken
     };
     let data = JSON.stringify(profileData, null, 0)
-    console.log("TEST: " + data)
 
     let config = {
         method: 'post',
@@ -31,7 +30,7 @@ export const SignOutApiCall = async () => {
             resolve(response.data);
         })
         .catch((error: any) => {
-            console.log(error);
+            console.error(error);
             reject('test');
         });
     });

@@ -7,8 +7,6 @@ interface ApiResponse {
 }
 
 export async function DeleteItem(vin: string) {
-  
-  console.log("delete item: " + vin)
 
   return getCookie("accessToken")
     .then(async response => {
@@ -16,7 +14,6 @@ export async function DeleteItem(vin: string) {
         throw Error;
       }
       const test = await DeleteItemApiCall({ accessToken: response, VIN: vin || ""}) as ApiResponse;
-      console.log(test.body)
       return(test)
     })
     .catch(error => {

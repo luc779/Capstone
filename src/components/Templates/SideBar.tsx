@@ -88,7 +88,6 @@ const LinksSection = () => {
 
     async function handleSignOut() {
         const response = await SignOutApiCall() as { statusCode: number, body: string };
-        console.log(response.body)
         DeleteCookie("accessToken")
     }
 

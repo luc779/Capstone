@@ -47,11 +47,8 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     async function onSubmit(data: ProfileFormValues) {
       setIsLoading(true)
       try {
-          console.log(data)
           {/* @ts-ignore */}
           const response = await ConfirmEmailApiCall(data) as { statusCode: number, body: string };
-          console.log("Response from call: " + response);
-          console.log("Response from call: " + response.statusCode);
 
           if (response.statusCode === 200) {
             toast({

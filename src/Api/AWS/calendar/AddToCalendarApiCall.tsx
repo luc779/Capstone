@@ -18,7 +18,6 @@ export const AddToCalendarApiCall = async (passedData: ProfileFormValues) => {
     // add accessToken to form
     const accessToken = await getCookie("accessToken");
     const newForm = {...passedData, accessToken};
-    console.log(newForm);
     let data = JSON.stringify(newForm, null, 0)
     
     let config = {
@@ -38,7 +37,7 @@ export const AddToCalendarApiCall = async (passedData: ProfileFormValues) => {
             resolve(response.data);
         })
         .catch((error: any) => {
-            console.log(error);
+            console.error(error);
             reject('test');
         });
     });

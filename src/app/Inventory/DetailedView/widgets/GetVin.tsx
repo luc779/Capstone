@@ -10,7 +10,6 @@ export default function GetVin() {
             if (typeof window !== 'undefined') {
                 const item = localStorage.getItem('DetailedView');
                 setContent(item)
-                console.log(item)
             }
         };
     

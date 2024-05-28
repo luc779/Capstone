@@ -21,7 +21,7 @@ export const EditCalendarItemApiCall = async (passedData: Partial<CalendarInterf
             resolve(response.data);
         })
         .catch((error: any) => {
-            console.log(error);
+            console.error(error);
             reject('test');
         });
     });

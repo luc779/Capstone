@@ -27,7 +27,7 @@ export const GetCurrentUserItemApiCall = async (passedData: ItemFormValues) => {
             resolve(response.data);
         })
         .catch((error: any) => {
-            console.log(error);
+            console.error(error);
             reject('test');
         });
     });

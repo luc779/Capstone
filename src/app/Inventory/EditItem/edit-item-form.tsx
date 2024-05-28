@@ -82,7 +82,6 @@ async function getInventoryItem() {
           throw Error;
         }
         const test = await GetInventoryItemApiCall({ accessToken: response, VIN: vin || ""}) as ApiResponse;
-        console.log(test.body)
         return(test)
       })
       .catch(error => {
@@ -98,8 +97,13 @@ export function ItemEditForm({ className, ...props }: UserAuthFormProps) {
     const [carData, setCarData] = useState<ApiResponse | null>(null)
     const [originalValues, setOriginalValues] = useState<InventoryItem | null>(null)
 
+    const form = useForm<ProfileFormValues>({
+        resolver: zodResolver(profileFormSchema)
+    })
+
     useEffect(() => {
-        async function fetchInventoryItem() {
+        // async function fetchInventoryItem() {
+        const fetchInventoryItem = async () => {
           try {
             const data = await getInventoryItem() as ApiResponse;
             setCarData(data);
@@ -123,11 +127,7 @@ export function ItemEditForm({ className, ...props }: UserAuthFormProps) {
           }
         }
         fetchInventoryItem();
-      }, []);
-
-    const form = useForm<ProfileFormValues>({
-      resolver: zodResolver(profileFormSchema)
-    })
+    }, [form]);
 
     const readFileAsBase64 = (file: File): Promise<string> => {
         return new Promise((resolve, reject) => {

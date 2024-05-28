@@ -28,7 +28,7 @@ export const ConfirmEmailApiCall = async (passedData: ProfileFormValues) => {
             resolve(response.data);
         })
         .catch((error: any) => {
-            console.log(error);
+            console.error(error);
             reject('test');
         });
     });

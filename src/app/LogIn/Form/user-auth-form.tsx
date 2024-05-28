@@ -48,10 +48,8 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     async function onSubmit(data: ProfileFormValues) {
         
         setIsLoading(true)
-        console.log("test")
         try {
             const response = await LogInApiCall(data) as { statusCode: number, body: string, accessToken: string, idToken: string  };
-            console.log("Response from call: " + JSON.stringify(response))
 
         if (response.statusCode === 200) {
             setCookie('accessToken', response.accessToken);
