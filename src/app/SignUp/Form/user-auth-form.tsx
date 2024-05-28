@@ -20,6 +20,8 @@ import { Icons } from "../../../components/icons"
 import React, { useState } from "react"
 import { Checkbox } from "@/components/ui/checkbox"
 import { SignUpApiCall } from "@/Api/AWS/authentication/SignUpApiCall"
+import { MailIcon } from "lucide-react"
+import { PasswordInput } from "@/components/ui/password-input"
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -146,10 +148,10 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel>
-                                    Username
+                                    Password
                                 </FormLabel>
                             <FormControl>
-                                <Input placeholder="Password" type="password" autoCapitalize="none" autoCorrect="off" {...field} />
+                                <PasswordInput placeholder="Password" type="password" autoCapitalize="none" autoCorrect="off" {...field} />
                             </FormControl>
                             <FormMessage />
                             </FormItem>
