@@ -22,6 +22,7 @@ import { LogInApiCall } from "@/Api/AWS/authentication/LogInApiCall"
 import { setCookie } from "../../../Security/SetCookie"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
+import { PasswordInput } from "@/components/ui/password-input"
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -129,7 +130,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                                 Password
                             </FormLabel>
                             <FormControl>
-                                <Input placeholder="Password" type="password" autoCapitalize="none" autoCorrect="off" {...field} onKeyPress={handleKeyPress} />
+                                <PasswordInput placeholder="Password" type="password" autoCapitalize="none" autoCorrect="off" {...field} onKeyPress={handleKeyPress} />
                             </FormControl>
                             <FormMessage />
                             <FormDescription>

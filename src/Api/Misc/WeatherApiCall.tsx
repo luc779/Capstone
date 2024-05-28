@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Image from "next/image"
+import { GetWeatherApiCall } from '../AWS/weather/GetWeather';
 
 interface WeatherData {
   forecast: {
@@ -16,6 +17,11 @@ interface ForecastDay {
       icon: string;
     };
   };
+}
+
+export interface ApiResponse {
+  statusCode: number;
+  body: ForecastDay[];
 }
 
 const formatDate = (dateString: string) => {
@@ -41,44 +47,34 @@ const formatDate = (dateString: string) => {
   return `${month}/${day}`;
 };
 
-const callAPI = async () => {
-  try {
-    const city = "Seattle";
-    const key = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
-    const day = "14";
-    const res = await fetch(
-      `http://api.weatherapi.com/v1/forecast.json?key=${key}&q=${city}&days=${day}&aqi=no&tides=no&hour=12`
-    );
-    const data = await res.json();
-    return data;
-  } catch (err) {
-    return null;
-  }
-}
-
 function WeatherApiCall() {
 
-  const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
+  const [newWeatherData, setNewWeatherData] = useState<ForecastDay[] | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await callAPI();
-      setWeatherData(data); 
+      const locationTest = "Seattle"
+      const dataTest = await GetWeatherApiCall({ location: locationTest }) as ApiResponse;
+      console.log("WeatherData")
+      console.log(dataTest)
+      setNewWeatherData(dataTest.body)
     };
     fetchData();
   }, []);
 
   return (
     <div>
-      {weatherData && weatherData.forecast && (
+      {newWeatherData ? (
         <div>
-          {weatherData.forecast.forecastday.map((day: ForecastDay) => ( 
-            <div className="inline-block text-center pb-2" key={day.date}>
-                <p>{formatDate(day.date)}</p>
-                <Image src={'https:' + day.day.condition.icon} alt="Weather Icon" width={64} height={64} />
+          {newWeatherData.map((forecast: ForecastDay, index: number) => (
+            <div className="inline-block text-center pb-2" key={index}>
+              <p>{formatDate(forecast.date)}</p>
+              <Image src={'https:' + forecast.day.condition.icon} alt="Weather Icon" width={64} height={64} />
             </div>
           ))}
         </div>
+      ) : (
+        <p>Loading...</p>
       )}
     </div>
   );
