@@ -1,18 +1,18 @@
 import Link from "next/link"
-import { UserAuthForm } from "./confirm-user-auth-form";
+import { ResetPasswordForm } from "./reset-password-form";
 
-function ConfirmUserForm() {
+function ResetPassword() {
   return (
     <>
       <div className="flex flex-col space-y-2 text-center">
         <h1 className="text-2xl font-semibold tracking-tight">
-          Confirm Email Address
+          Reset Password
         </h1>
         <p className="text-sm text-muted-foreground">
-          Enter six digt number recieved by email
+          Enter your information below
         </p>
       </div>
-      <UserAuthForm />
+      <ResetPasswordForm />
       <p className="px-8 text-center text-sm text-muted-foreground">
         By clicking continue, you agree to our{" "}
         <Link
@@ -34,4 +34,4 @@ function ConfirmUserForm() {
   )
 }
 
-export default ConfirmUserForm;
+export default ResetPassword;

@@ -1,25 +1,27 @@
-import { z } from "zod"
-
-type ProfileFormValues = z.infer<typeof profileFormSchema>
+import { getCookie } from "@/Security/GetCookie";
+import { z } from "zod";
 
 const profileFormSchema = z.object({
-    username: z.string(),
-    password: z.string()
+    accessToken: z.string()
 })
 
-export const LogInApiCall = async (passedData: ProfileFormValues) => {
+export const SignOutApiCall = async () => {
     const axios = require('axios');
-    let data = JSON.stringify(passedData, null, 0)
+    const accessToken = await getCookie("accessToken");
+    const profileData = {
+        accessToken: accessToken
+    };
+    let data = JSON.stringify(profileData, null, 0)
 
     let config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: 'https://ajdg3owxqe.execute-api.us-west-2.amazonaws.com/test/SignIn',
+        url: 'https://ajdg3owxqe.execute-api.us-west-2.amazonaws.com/test/SignOut',
         headers: { 
         'x-api-key': process.env.NEXT_PUBLIC_AWS_API_KEY, 
         'Content-Type': 'application/json'
         },
-        data : data
+        data : accessToken
     };
 
     return new Promise(async (resolve, reject) => {

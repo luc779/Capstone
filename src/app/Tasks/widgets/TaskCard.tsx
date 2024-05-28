@@ -3,20 +3,14 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { PopoverTrigger, PopoverContent, Popover } from "@/components/ui/popover"
 import { CalendarInterface } from "../../../components/CalendarPages/Interface/CalendarInterfaces";
-
-const formatTimestamp = (timestamp: string) => {
-  const date = new Date(timestamp);
-  const month = date.toLocaleString('default', { month: 'short' });
-  const day = date.getDate();
-  return `${month} ${day}`;
-};
-
-const formatTime = (timestamp: string) => {
-  const date = new Date(timestamp);
-  const hours = date.getHours().toString().padStart(2, '0');
-  const minutes = date.getMinutes().toString().padStart(2, '0');
-  return `${hours}:${minutes}`;
-};
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import React from "react";
+import { Icons } from "@/components/icons";
+import { toast } from "@/components/ui/use-toast";
+import { EditTaskForm } from "./edit-task-form";
+import { format } from "date-fns"
+import { DeleteCalendarItem } from "@/Api/AWS/calendar/DeleteCalendarItem";
+import { BottomButtons } from "@/components/CalendarPages/EditAndDeleteButtons";
 
 const getBadgeColor = (priority: string) => {
   switch (priority) {
@@ -31,68 +25,73 @@ const getBadgeColor = (priority: string) => {
   }
 };
 
-export default function TaskCard({ task, index }: { task: CalendarInterface; index: number; }) {
+export default function TaskCard({ task, index, popover }: { task: CalendarInterface; index: number; popover: boolean; }) {
   return (
-     <div key={index} className="w-full max-w-md">
-       <Card>
-         <CardHeader className="flex items-center text-center">
-           <CardTitle>{task.title}</CardTitle>
-           <Badge className={getBadgeColor(task.priority)} variant="outline">
-             {task.priority} Priority
-           </Badge>
-         </CardHeader>
-         <CardContent className=" md:grid md:grid-cols-2 md:gap-4">
-           <div className="space-y-1">
-             <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Location</p>
-             <p>{task.location}</p>
-           </div>
-           <div className="space-y-1">
-             <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Dates</p>
-             <p>
-                {formatTimestamp(task.start_date)} - {formatTimestamp(task.end_date)} (
-                {formatTime(task.start_date)} - {formatTime(task.end_date)})
-             </p>
-           </div>
-           <div className="md:col-span-2 md:flex md:justify-between">
-             <Popover>
-               <PopoverTrigger asChild>
-                 <Button size="sm" variant="outline">
-                   Description
-                 </Button>
-               </PopoverTrigger>
-               <PopoverContent className="w-full max-w-md p-6">
-                 <div className="space-y-4">
-                   <div className="space-y-1">
-                     <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Description</p>
-                     <p>
-                       {task.description}
-                     </p>
-                   </div>
-                 </div>
-               </PopoverContent>
-             </Popover>
-             <Popover>
-               <PopoverTrigger asChild>
-                 <Button size="sm" variant="outline">
-                   Featured Cars
-                 </Button>
-               </PopoverTrigger>
-               <PopoverContent className="w-full max-w-md p-6">
-                 <div className="space-y-1">
-                   <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Featured Cars (Comming soon)</p>
-                   <ul className="list-disc pl-4 space-y-1">
-                     <li>1962 Chevrolet Corvette</li>
-                     <li>1967 Ford Mustang</li>
-                     <li>1955 Mercedes-Benz 300SL</li>
-                     <li>1964 Aston Martin DB5</li>
-                     <li>1970 Dodge Challenger</li>
-                   </ul>
-                 </div>
-               </PopoverContent>
-             </Popover>
-           </div>
-         </CardContent>
-       </Card>
-     </div>
-   )
+    <div key={index} className="w-full max-w-md">
+      <Card>
+        <CardHeader className="flex items-center text-center">
+          <CardTitle>{task.title}</CardTitle>
+          <Badge className={getBadgeColor(task.priority)} variant="outline">
+            {task.priority} Priority
+          </Badge>
+        </CardHeader>
+        <CardContent className=" md:grid md:grid-cols-2 md:gap-4">
+          <div className="space-y-1">
+            <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Location</p>
+            <p>{task.location}</p>
+          </div>
+          <div className="space-y-1">
+            <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Dates</p>
+            <p>
+              {format(task.start_date, "MMM dd")} - {format(task.end_date, "MMM dd")}
+            </p>
+            <p>
+              ({format(task.start_date, "p")} - {format(task.end_date, "p")})
+            </p>
+          </div>
+          <div className="md:col-span-2 md:flex md:justify-between">
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button size="sm" variant="outline">
+                  Description
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-full max-w-md p-6">
+                <div className="space-y-4">
+                  <div className="space-y-1">
+                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Description</p>
+                    <p>
+                      {task.description}
+                    </p>
+                  </div>
+                </div>
+              </PopoverContent>
+            </Popover>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button size="sm" variant="outline">
+                  Featured Cars
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-full max-w-md p-6">
+                <div className="space-y-1">
+                  <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Featured Cars (Comming soon)</p>
+                  <ul className="list-disc pl-4 space-y-1">
+                    <li>1962 Chevrolet Corvette</li>
+                    <li>1967 Ford Mustang</li>
+                    <li>1955 Mercedes-Benz 300SL</li>
+                    <li>1964 Aston Martin DB5</li>
+                    <li>1970 Dodge Challenger</li>
+                  </ul>
+                </div>
+              </PopoverContent>
+            </Popover>
+          </div>
+          {!popover && (
+            <BottomButtons calendarData={task} index={0} currentPanelName={"WOO"} />
+          )}
+        </CardContent>
+      </Card>
+    </div>
+  )
 }

@@ -8,6 +8,10 @@ import { AreaChart, LayoutDashboard, Car, ClipboardList, Ticket, LogOut } from '
 import Link from 'next/link';
 import { ResizablePanel, ResizablePanelGroup } from '../ui/resizable';
 import { Separator } from '../ui/separator';
+import { LogInApiCall } from '@/Api/AWS/authentication/LogInApiCall';
+import { SignOutApiCall } from '@/Api/AWS/authentication/SignOutApiCall';
+import { DeleteCookie } from '@/Security/DeleteCookie';
+import { toast } from '../ui/use-toast';
 
 export interface Links {
     link: string;
@@ -82,15 +86,27 @@ const LogoSection = () => (
 const LinksSection = () => {
     const pathname = GetPathname();
 
+    async function handleSignOut() {
+        const response = await SignOutApiCall() as { statusCode: number, body: string };
+        DeleteCookie("accessToken")
+    }
+
     return (
         <ResizablePanel defaultSize={90} className="flex flex-col space-y-4 items-center pt-4">
             {works.map((links) => {
                 return (
                     <figure key={links.link}>
-                        <Link className={`flex items-center gap-2 w-[130px] font-semibold py-1 px-1 rounded ${pathname.props.children === links.link ? 'bg-accent' : 'hover:bg-accent'}`} href={links.link}>
-                            <p>{links.icon}</p>
-                            <p>{links.name}</p>
-                        </Link>
+                        {links.name === "Sign Out" ? (
+                            <Link className={`flex items-center gap-2 w-[130px] font-semibold py-1 px-1 rounded hover:bg-accent`} onClick={handleSignOut} href={links.link}>
+                                <p>{links.icon}</p>
+                                <p>{links.name}</p>
+                            </Link>
+                        ) : (
+                            <Link className={`flex items-center gap-2 w-[130px] font-semibold py-1 px-1 rounded ${pathname.props.children === links.link ? 'bg-accent' : 'hover:bg-accent'}`} href={links.link}>
+                                <p>{links.icon}</p>
+                                <p>{links.name}</p>
+                            </Link>
+                        )}
                     </figure>
                 );
             })}

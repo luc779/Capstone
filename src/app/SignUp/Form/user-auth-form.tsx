@@ -62,7 +62,6 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     async function onSubmit(data: ProfileFormValues) {
         setIsLoading(true)
         try {
-            console.log(data)
             {/* @ts-ignore */}
             const response = await SignUpApiCall(data) as { statusCode: number, body: string };
 

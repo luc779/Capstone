@@ -1,23 +1,16 @@
-import { z } from "zod"
+import { CalendarInterface } from "@/components/CalendarPages/Interface/CalendarInterfaces";
 
-type ProfileFormValues = z.infer<typeof profileFormSchema>
-
-const profileFormSchema = z.object({
-    username: z.string(),
-    password: z.string()
-})
-
-export const LogInApiCall = async (passedData: ProfileFormValues) => {
+export const EditCalendarItemApiCall = async (passedData: Partial<CalendarInterface>) => {
     const axios = require('axios');
     let data = JSON.stringify(passedData, null, 0)
 
     let config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: 'https://ajdg3owxqe.execute-api.us-west-2.amazonaws.com/test/SignIn',
+        url: 'https://ajdg3owxqe.execute-api.us-west-2.amazonaws.com/test/Calendars/EditCalendarItem',
         headers: { 
-        'x-api-key': process.env.NEXT_PUBLIC_AWS_API_KEY, 
-        'Content-Type': 'application/json'
+            'x-api-key': process.env.NEXT_PUBLIC_AWS_API_KEY, 
+            'Content-Type': 'application/json'
         },
         data : data
     };

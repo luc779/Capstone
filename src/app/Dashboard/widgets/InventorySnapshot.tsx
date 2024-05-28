@@ -5,7 +5,6 @@ import {
     Card,
     CardContent,
     CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
@@ -66,17 +65,15 @@ function InventorySnapshot() {
           return;
         }
         const post = z.array(taskSchema).parse(data.body);
-        // console.log("inventory Array: " + post);
         setInventory(post);
       } catch (error) {
         console.error("Error fetching inventory snapshot:", error);
-        console.log("Error here is the inventory: " + JSON.stringify(inventory));
         ErrorToast("Server ran into an issue.");
       }
     };
 
     fetchData();
-  }, []);
+  }, [router]);
 
   return (
     <Card className="h-full">

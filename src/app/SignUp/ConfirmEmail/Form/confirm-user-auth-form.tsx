@@ -1,7 +1,7 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useFieldArray, useForm } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -17,12 +17,11 @@ import {
 import { toast } from "@/components/ui/use-toast"
 import { Input } from "@/components/ui/input"
 import { Icons } from "../../../../components/icons"
-import React, { useState } from "react"
+import React from "react"
 import { ConfirmEmailApiCall } from "@/Api/AWS/authentication/ConfirmEmailApiCall"
 import { 
     InputOTP, 
-    InputOTPGroup, 
-    InputOTPSeparator, 
+    InputOTPGroup,
     InputOTPSlot 
 } from "@/components/ui/input-otp"
 
@@ -48,11 +47,8 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     async function onSubmit(data: ProfileFormValues) {
       setIsLoading(true)
       try {
-          console.log(data)
           {/* @ts-ignore */}
           const response = await ConfirmEmailApiCall(data) as { statusCode: number, body: string };
-          console.log("Response from call: " + response);
-          console.log("Response from call: " + response.statusCode);
 
           if (response.statusCode === 200) {
             toast({

@@ -57,10 +57,9 @@ function Employees() {
                     if (a.user_type !== 'Admin' && b.user_type === 'Admin') return 1;
                     return 0;
                 });
-                console.log("members: "  + JSON.stringify(sortedMembers))
                 setMembers(sortedMembers);
             } catch (error) {
-                console.log("Error fetching employees:", error);
+                console.error("Error fetching employees:", error);
                 ErrorToast("Server ran into an issue.");
             }
         };
@@ -69,7 +68,7 @@ function Employees() {
     }, []);
 
     return (
-        <Card className="h-full">
+        <Card className="h-full overflow-hidden">
             <CardHeader>
                 <CardTitle>Team Members</CardTitle>
             </CardHeader>

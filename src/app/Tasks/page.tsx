@@ -1,5 +1,5 @@
 "use client"
-import { ResizablePanel } from "@/components/ui/resizable";
+
 import PageBaseDesign from "@/components/Templates/SoftwareDesign";
 import { useAuth } from "@/Api/AWS/authentication/UseAuth";
 import LoadingIndicator from "@/components/LoadingIndicator";
@@ -32,7 +32,6 @@ export default function Tasks() {
   
         const data = await GetCalendarApiCall({ accessToken: response_accessToken, item_type: "TASK" }) as ApiResponse;
         setResponse(data.body);
-        console.log(data.body);
       } catch (error) {
         console.error("Error fetching Tasks item:", error);
       }

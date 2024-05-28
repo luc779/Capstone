@@ -58,7 +58,6 @@ export function DataTableRowActions<TData>({
   };
 
   const handleDeleteConfirm = async () => {
-    console.log("attempt")
     setIsLoading(true)
     const response = await DeleteItem(deleteVIN);
     setOpen(false);

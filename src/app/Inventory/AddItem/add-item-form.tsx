@@ -55,7 +55,6 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
 
     async function onSubmit(data: ProfileFormValues) {
         setIsLoading(true)
-        // console.log(data.image[0])
         const file = data.image[0];
         let reader = new FileReader();
         reader.readAsDataURL(file);
@@ -63,10 +62,8 @@ export function InventoryAddForm({ className, ...props }: UserAuthFormProps) {
         reader.onload = async function () {
             if (reader.result != null) {
                 image_base64 = reader.result.toString().split(",")[1]; // base 64 of the inputted image
-                console.log("happened")
                 data.image = image_base64;
                 try {
-                    console.log(data)
                     {/* @ts-ignore */}
                     const response = await AddItemApiCall(data) as { statusCode: number, body: string };
                     form.reset();

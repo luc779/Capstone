@@ -11,7 +11,7 @@ export const Visitors = () => (
           </CardTitle>
           <PersonIcon />
         </CardHeader>
-        <CardContent>
+        <CardContent className="pb-4">
           <div className="text-2xl font-bold">2,350</div>
           <p className="text-xs text-muted-foreground">
             +18.1% from last month

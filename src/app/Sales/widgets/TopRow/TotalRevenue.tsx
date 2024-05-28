@@ -5,7 +5,7 @@ import { ResizablePanel } from "@/components/ui/resizable";
 export const TotalRenevue = () => (
     <ResizablePanel defaultSize={33}>
       <Card className="h-full">
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 pt-4">
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">
             Total Revenue
           </CardTitle>

@@ -11,12 +11,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-  FormDescription,
 } from "@/components/ui/form"
 import { toast } from "@/components/ui/use-toast"
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
-import { ScrollArea } from "@radix-ui/react-scroll-area"
 
 export const personInfoSchema = z.object({
     email: z.string().email(),

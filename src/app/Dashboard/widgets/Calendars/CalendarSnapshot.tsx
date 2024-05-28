@@ -3,7 +3,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
@@ -47,13 +46,11 @@ function CalendarSnapshot() {
                     const eventYear = eventDate.getFullYear();
                     const eventMonth = eventDate.getMonth();
                     const eventDay = eventDate.getDate();
-                    // console.log(eventDate)
                     return (eventYear > todayYear) || 
                         (eventYear === todayYear && eventMonth > todayMonth) || 
                         (eventYear === todayYear && eventMonth === todayMonth && eventDay >= todayDay);
                 });
             
-            console.log("Size of taskData.body: " + taskData.body.length)
             const sortedTasks = taskData.body
                 .sort((a, b) => new Date(a.start_date).getTime() - new Date(b.start_date).getTime())
                 .filter(event => {
@@ -61,7 +58,6 @@ function CalendarSnapshot() {
                     const eventYear = eventDate.getFullYear();
                     const eventMonth = eventDate.getMonth();
                     const eventDay = eventDate.getDate();
-                    // console.log(eventDate)
                     return (eventYear > todayYear) || 
                         (eventYear === todayYear && eventMonth > todayMonth) || 
                         (eventYear === todayYear && eventMonth === todayMonth && eventDay >= todayDay);
@@ -69,8 +65,6 @@ function CalendarSnapshot() {
             
             setEvents(sortedEvents);
             setTasks(sortedTasks);
-            console.log("Sorted Events " +  JSON.stringify(sortedEvents));
-            console.log("Sorted Tasks " + JSON.stringify(sortedTasks));
         } catch (error) {
             console.error("Error fetching calendar snapshot item:", error);
         }
@@ -88,9 +82,12 @@ function CalendarSnapshot() {
             </CardHeader>
             <ScrollArea className="flex flex-col overlflow-y-auto h-full w-full pb-20 pr-2">
                 <CardContent className="inline-block">
-                    <div className=" space-y-4"> 
+                    <div className="space-y-4"> 
                         {events.length === 0 ? (
-                            <p>No Upcoming Events</p>
+                            <div className='flex items-center'>
+                                <SearchX className='text-primary' size={30} />
+                                <p className='ml-2'>No Upcoming Events</p>
+                            </div>
                         ) : (
                             events.map((items, index) => (
                                 <SimpleEventAndTaskCard key={items.ID} event={items} index={index}/>
@@ -99,8 +96,8 @@ function CalendarSnapshot() {
                     </div>
                 </CardContent>
             </ScrollArea>
-            </div>
-            <div className="h-1/2">
+        </div>
+        <div className="h-1/2">
             <CardHeader>
                 <CardTitle>Tasks Calendars</CardTitle>
                 <CardDescription>List of upcoming tasks.</CardDescription>
@@ -109,9 +106,9 @@ function CalendarSnapshot() {
                 <CardContent className="inline-block w-full h-full">
                     <div className="space-y-4"> 
                         {tasks.length === 0 ? (
-                            <div className='flex'>
+                            <div className='flex items-center'>
                                 <SearchX className='text-primary' size={30} />
-                                <p className='ml-2'>No Results</p>
+                                <p className='ml-2'>No Upcoming Tasks</p>
                             </div>
                         ) : (
                             tasks.map((items, index) => (
