@@ -88,7 +88,7 @@ export default function TaskCard({ task, index, popover }: { task: CalendarInter
             </Popover>
           </div>
           {!popover && (
-            <BottomButtons calendarData={task} index={0} currentPanelName={"WOO"} />
+            <BottomButtons calendarData={task} index={0} currentPanelName={"task"} />
           )}
         </CardContent>
       </Card>

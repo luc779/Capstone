@@ -125,14 +125,14 @@ export function EditEventForm(task: CalendarInterface) {
                     render={({ field }) => (
                         <FormItem>
                         <FormControl>
-                            <div className="grid grid-cols-4 items-center gap-4">
-                                <Label htmlFor="title" className="text-right">
+                            <div className="flex items-center gap-4">
+                                <Label htmlFor="title" className="text-right w-[80px]">
                                     Title
                                 </Label>
                                 <Input
                                     id="title"
                                     defaultValue={task.title}
-                                    className="col-span-3" 
+                                    className="w-[280px]"
                                     {...field}
                                 />
                             </div>
@@ -147,13 +147,13 @@ export function EditEventForm(task: CalendarInterface) {
                     render={({ field }) => (
                         <FormItem>
                         <FormControl>
-                            <div className="grid grid-cols-4 items-center gap-4">
-                                <Label htmlFor="priority" className="text-right">
+                            <div className="flex items-center gap-4">
+                                <Label htmlFor="priority" className="text-right w-[80px]">
                                     Priority
                                 </Label>
                                 <Select onValueChange={field.onChange} >
                                     <FormControl>
-                                    <SelectTrigger className="w-[276px]">
+                                    <SelectTrigger className="w-[280px]">
                                         <SelectValue defaultValue={task.priority} placeholder={task.priority} />
                                     </SelectTrigger>
                                     </FormControl>
@@ -175,14 +175,14 @@ export function EditEventForm(task: CalendarInterface) {
                     render={({ field }) => (
                         <FormItem>
                         <FormControl>
-                            <div className="grid grid-cols-4 items-center gap-4">
-                                <Label htmlFor="location" className="text-right">
+                            <div className="flex items-center gap-4">
+                                <Label htmlFor="location" className="text-right w-[80px]">
                                     Location
                                 </Label>
                                 <Input
                                     id="location"
                                     defaultValue={task.location}
-                                    className="col-span-3" 
+                                    className="w-[280px]" 
                                     {...field}
                                 />
                             </div>
@@ -197,14 +197,14 @@ export function EditEventForm(task: CalendarInterface) {
                     render={({ field }) => (
                         <FormItem>
                         <FormControl>
-                            <div className="grid grid-cols-4 items-center gap-4">
-                                <Label htmlFor="start_date" className="text-right">
+                            <div className="flex items-center gap-4">
+                                <Label htmlFor="start_date" className="text-right w-[80px]">
                                     Start Date
                                 </Label>
                                 <Input
                                     id="start_date"
                                     defaultValue={format(task.start_date, "PPP HH:mm:ss")}
-                                    className="col-span-3" 
+                                    className="w-[280px]" 
                                     {...field}
                                 />
                             </div>
@@ -219,15 +219,15 @@ export function EditEventForm(task: CalendarInterface) {
                     render={({ field }) => (
                         <FormItem>
                         <FormControl>
-                            <div className="grid grid-cols-4 items-center gap-4">
-                                <Label htmlFor="end_date" className="text-right">
+                            <div className="flex items-center gap-4">
+                                <Label htmlFor="end_date" className="text-right w-[80px]">
                                     End Date
                                 </Label>
                                 <Input
                                     id="end_date"
                                     placeholder={"test"}
                                     defaultValue={format(task.end_date, "PPP HH:mm:ss")}
-                                    className="col-span-3" 
+                                    className="w-[280px]" 
                                     {...field}
                                 />
                             </div>
@@ -242,7 +242,7 @@ export function EditEventForm(task: CalendarInterface) {
                     render={({ field }) => (
                         <FormItem>
                         <FormControl>
-                            <div className="grid grid-cols-4 items-center gap-4">
+                            <div className="flex items-center gap-4">
                                 <Label htmlFor="description" className="text-right">
                                     Description
                                 </Label>
