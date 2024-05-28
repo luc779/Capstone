@@ -55,8 +55,6 @@ function WeatherApiCall() {
     const fetchData = async () => {
       const locationTest = "Seattle"
       const dataTest = await GetWeatherApiCall({ location: locationTest }) as ApiResponse;
-      console.log("WeatherData")
-      console.log(dataTest)
       setNewWeatherData(dataTest.body)
     };
     fetchData();

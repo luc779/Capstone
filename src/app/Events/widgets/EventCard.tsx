@@ -35,7 +35,7 @@ export default function EventCard({ event, index, popover }: { event: CalendarIn
              {event.priority} Priority Event
            </Badge>
          </CardHeader>
-         <CardContent className=" md:grid md:grid-cols-2 md:gap-4">
+         <CardContent className="md:grid md:grid-cols-2 md:gap-4">
            <div className="space-y-1">
              <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Location</p>
              <p>{event.location}</p>

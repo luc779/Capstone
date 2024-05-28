@@ -22,7 +22,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         />    
         {suffix}
       </div>
-      
     )
   }
 )
