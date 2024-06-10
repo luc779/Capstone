@@ -59,7 +59,7 @@ export function BottomButtons({ calendarData, currentPanelName }: { calendarData
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
-              <DialogTitle>Edit {currentPanelName}</DialogTitle>
+              <DialogTitle>Delete {currentPanelName}</DialogTitle>
               <DialogDescription>
                 Delete your {currentPanelName} here.
               </DialogDescription>

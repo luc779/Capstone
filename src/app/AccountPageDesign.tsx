@@ -42,7 +42,7 @@ function AccountPageDesign({ children }: SignUpProps) {
             >
               <path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3" />
             </svg>
-            Software Managment Inc
+            Musée Clio Inc
           </div>
           <div className="absolute inset-y-0 left-1/2 transform -translate-x-1/2 flex flex-col justify-center z-20">
             <Image src={car} alt={"Car Image"} style={{ width: '700px', height: 'auto' }}></Image>
