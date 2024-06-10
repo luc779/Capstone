@@ -31,19 +31,20 @@ export default function Home() {
         <div className="container grid items-center justify-center gap-4 px-4 text-center md:px-6 lg:gap-10">
           <div className="space-y-3">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-              Welcome to Project Management Platform
+              Musée Clio
             </h2>
             <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
               Complete museum management solution for teams of all sizes.
             </p>
           </div>
           <div className="flex flex-col gap-2 min-[400px]:flex-row justify-center">
-            <Button>
-              <Link href="/#">Contact Sales</Link>
+            {/* <Button >
+              <Link href="/#">Contact Us</Link>
             </Button>
-            <Button>
+            <Button variant="outline">
               <Link href="/#">Learn More</Link>
-            </Button>
+            </Button> */}
+            {/* <Image src={car} width={400} height={300} alt="Car 1" className="rounded-lg object-cover" /> */}
           </div>
         </div>
       </section>
@@ -66,7 +67,7 @@ export default function Home() {
                   <div className="space-y-1 text-center">
                     <h3 className="text-xl font-bold">Fast and Reliable</h3>
                     <p className="text-gray-500 dark:text-gray-400">
-                      Acme Software is built to be fast and reliable, so you can focus on your business.
+                      Musée Clio is built to be fast and reliable, so you can focus on your business.
                     </p>
                   </div>
                 </div>
@@ -75,7 +76,7 @@ export default function Home() {
                   <div className="space-y-1 text-center">
                     <h3 className="text-xl font-bold">Secure and Compliant</h3>
                     <p className="text-gray-500 dark:text-gray-400">
-                      Acme Software is built with security and compliance in mind, so you can trust your data is safe.
+                      Musée Clio is built with security and compliance in mind, so you can trust your data is safe.
                     </p>
                   </div>
                 </div>
@@ -84,7 +85,7 @@ export default function Home() {
                   <div className="space-y-1 text-center">
                     <h3 className="text-xl font-bold">Event Management</h3>
                     <p className="text-gray-500 dark:text-gray-400">
-                      Acme Software includes powerful event management tools to help you plan and execute your events.
+                      Musée Clio includes powerful event management tools to help you plan and execute your events.
                     </p>
                   </div>
                 </div>
@@ -93,7 +94,7 @@ export default function Home() {
                   <div className="space-y-1 text-center">
                     <h3 className="text-xl font-bold">Task Management</h3>
                     <p className="text-gray-500 dark:text-gray-400">
-                      Acme Software includes a robust task management system to help you stay organized and on top of
+                      Musée Clio includes a robust task management system to help you stay organized and on top of
                       your projects.
                     </p>
                   </div>
@@ -103,8 +104,8 @@ export default function Home() {
                   <div className="space-y-1 text-center">
                     <h3 className="text-xl font-bold">Inventory Management</h3>
                     <p className="text-gray-500 dark:text-gray-400">
-                      Acme Software includes a powerful inventory management system to help you track and manage your
-                      products.
+                      Musée Clio includes a powerful inventory management system to help you track and manage your
+                      fleet.
                     </p>
                   </div>
                 </div>
@@ -113,7 +114,7 @@ export default function Home() {
                   <div className="space-y-1 text-center">
                     <h3 className="text-xl font-bold">Export</h3>
                     <p className="text-gray-500 dark:text-gray-400">
-                      Acme Software allows you to export your data in various formats for easy sharing and analysis.
+                      Musée Clio allows you to export your data in various formats for easy sharing and analysis.
                     </p>
                   </div>
                 </div>
