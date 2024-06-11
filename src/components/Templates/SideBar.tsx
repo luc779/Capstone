@@ -3,6 +3,7 @@
 import React from 'react';
 import Image from "next/image"
 import car from "@/app/car_logo.png"
+import car_dark from "@/app/car_logo_dark.png"
 import { usePathname } from 'next/navigation'
 import { AreaChart, LayoutDashboard, Car, ClipboardList, Ticket, LogOut } from 'lucide-react';
 import Link from 'next/link';
@@ -12,6 +13,7 @@ import { LogInApiCall } from '@/Api/AWS/authentication/LogInApiCall';
 import { SignOutApiCall } from '@/Api/AWS/authentication/SignOutApiCall';
 import { DeleteCookie } from '@/Security/DeleteCookie';
 import { toast } from '../ui/use-toast';
+import { useTheme } from "next-themes"
 
 export interface Links {
     link: string;
@@ -62,23 +64,25 @@ export const works: Links[] = [
 ]
 
 function SideBar() {
-  return (
-    <main className='border w-full bg-card'>
-        <ResizablePanelGroup direction="vertical">
-            <LogoSection />
-            <div className='h-[1px]'></div>
-            <Separator />
-            <LinksSection />
-        </ResizablePanelGroup>
-    </main>
+    const { theme } = useTheme()
+
+    return (
+        <main className='border w-full bg-card'>
+            <ResizablePanelGroup direction="vertical">
+               <LogoSection theme={theme} />
+                <div className='h-[1px]'></div>
+                <Separator />
+                <LinksSection />
+            </ResizablePanelGroup>
+        </main>
   );
 }
 export default SideBar;
 
-const LogoSection = () => (
+const LogoSection = ({ theme }: { theme: string | undefined }) => (
     <ResizablePanel defaultSize={10} className="flex h-full items-center justify-center px-4">
-        <div className=" border border-black bg-black dark:border-card rounded-lg dark:bg-card py-2">
-            <Image src={car} alt={"Car Image"} style={{ width: 'auto', height: 'auto' }}></Image>
+        <div className=" py-2">
+            <Image src={theme == 'light' ? car_dark : car} alt={"Car Image"} style={{ width: 'auto', height: 'auto' }}></Image>
         </div>
     </ResizablePanel>
 );
