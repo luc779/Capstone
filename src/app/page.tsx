@@ -1,17 +1,21 @@
-
+'use client'
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import car from "./car_logo.png"
+import car_dark from "./car_logo_dark.png"
 import Image from "next/image"
 import { DarkModeToggle } from "@/components/ui/DarkModeToggle"
 import { BoxIcon, CalendarIcon, ClipboardIcon, DownloadIcon, GaugeIcon, ShieldIcon } from "lucide-react"
+import { useTheme } from "next-themes"
 
 export default function Home() {
+  const { theme } = useTheme()
+
   return (
     <main>
       <header className="flex h-20 w-full shrink-0 items-center px-4 md:px-6">
-        <Link className="mr-6 border border-black rounded-lg bg-black p-4" href="/">
-          <Image src={car} alt={"Dark Car Image"} style={{ width: '100px', height: 'auto'}} />
+        <Link className="mr-6 rounded-lg p-4" href="/">
+          <Image src={theme == 'light' ? car_dark : car} alt={"Dark Car Image"} style={{ width: '100px', height: 'auto'}} />
         </Link>
         <div className="ml-auto flex flex-row gap-2">
           <Button variant="link">
@@ -44,7 +48,7 @@ export default function Home() {
             <Button variant="outline">
               <Link href="/#">Learn More</Link>
             </Button> */}
-            {/* <Image src={car} width={400} height={300} alt="Car 1" className="rounded-lg object-cover" /> */}
+            <Image src={theme == 'light' ? car_dark : car} width={400} height={300} alt="Car 1" className="rounded-lg object-cover" />
           </div>
         </div>
       </section>

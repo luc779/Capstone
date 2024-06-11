@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { IsAuthenticated } from "@/Security/IsAuthenticated";
 import { useRouter } from "next/navigation";
-// import Router from "next/router"
 
 export const useAuth = () => {
   const [loading, setLoading] = useState(true);
