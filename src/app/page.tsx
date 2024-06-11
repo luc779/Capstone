@@ -7,15 +7,26 @@ import Image from "next/image"
 import { DarkModeToggle } from "@/components/ui/DarkModeToggle"
 import { BoxIcon, CalendarIcon, ClipboardIcon, DownloadIcon, GaugeIcon, ShieldIcon } from "lucide-react"
 import { useTheme } from "next-themes"
+import { useEffect, useState } from "react"
 
 export default function Home() {
   const { theme } = useTheme()
+
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <main>
       <header className="flex h-20 w-full shrink-0 items-center px-4 md:px-6">
         <Link className="mr-6 rounded-lg p-4" href="/">
-          <Image src={theme == 'light' ? car_dark : car} alt={"Dark Car Image"} style={{ width: '100px', height: 'auto'}} />
+          {mounted ? 
+              <Image src={theme == 'light' ? car_dark : car} alt={"Dark Car Image"} style={{ width: '100px', height: 'auto'}} />
+            :
+            <Image src={car_dark} alt={"Dark Car Image"} style={{ width: '100px', height: 'auto'}} />
+            }
         </Link>
         <div className="ml-auto flex flex-row gap-2">
           <Button variant="link">
@@ -48,7 +59,11 @@ export default function Home() {
             <Button variant="outline">
               <Link href="/#">Learn More</Link>
             </Button> */}
-            <Image src={theme == 'light' ? car_dark : car} width={400} height={300} alt="Car 1" className="rounded-lg object-cover" />
+            {mounted ? 
+              <Image src={theme == 'light' ? car_dark : car} width={400} height={300} alt="Car 1" className="rounded-lg object-cover" />
+            :
+              <Image src={car_dark} width={400} height={300} alt="Car 1" className="rounded-lg object-cover" />
+            }
           </div>
         </div>
       </section>
