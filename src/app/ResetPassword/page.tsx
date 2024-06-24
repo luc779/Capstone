@@ -1,3 +1,4 @@
+import { MobileAuthentication } from "@/components/mobile-authentication"
 import { Metadata } from "next"
 import AccountPageDesign from "../AccountPageDesign"
 import ResetPassword from "./Form/ResetPassowrdForm"
@@ -13,6 +14,10 @@ export default function LogIn() {
       <AccountPageDesign>
         <ResetPassword />
       </AccountPageDesign>
+
+      <MobileAuthentication>
+        <ResetPassword />
+      </MobileAuthentication>
     </>
   )
 }
