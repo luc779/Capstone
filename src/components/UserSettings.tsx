@@ -76,7 +76,7 @@ export function UserSettings() {
               </AvatarFallback>
             </Avatar>
           </SheetTrigger>
-          <SheetContent className="">
+          <SheetContent className="pb-10">
             <div className=" p-6 h-full">
               <div className="flex gap-4">
                 <Avatar className="h-16 w-16">

@@ -5,9 +5,10 @@ import car from "./car_logo.png"
 import car_dark from "./car_logo_dark.png"
 import Image from "next/image"
 import { DarkModeToggle } from "@/components/ui/DarkModeToggle"
-import { BoxIcon, CalendarIcon, ClipboardIcon, DownloadIcon, GaugeIcon, ShieldIcon } from "lucide-react"
+import { AlignJustify, BoxIcon, CalendarIcon, ClipboardIcon, DownloadIcon, GaugeIcon, ShieldIcon } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 export default function Home() {
   const { theme } = useTheme()
@@ -28,7 +29,7 @@ export default function Home() {
             <Image src={car_dark} alt={"Dark Car Image"} style={{ width: '100px', height: 'auto'}} />
             }
         </Link>
-        <div className="ml-auto flex flex-row gap-2">
+        <div className="ml-auto flex flex-row gap-2 hidden sm:flex">
           <Button variant="link">
             <Link href="/LogIn">Log In</Link>
           </Button>
@@ -39,6 +40,29 @@ export default function Home() {
             <Link href="/SignUp/ConfirmEmail">Confirm Email</Link>
           </Button>
           <DarkModeToggle />
+        </div>
+        <div className="ml-auto flex flex-row gap-2 sm:hidden">
+        <Sheet>
+          <SheetTrigger asChild>
+            <AlignJustify />
+          </SheetTrigger>
+          <SheetContent className="pb-14">
+            <div className=" p-10 h-full flex flex-col items-center">
+              <div className="flex flex-col gap-4">
+                <Button variant="link" className="text-lg">
+                  <Link href="/LogIn">Log In</Link>
+                </Button>
+                <Button variant="link" className="text-lg">
+                  <Link href="/SignUp">Sign Up</Link>
+                </Button>
+                <Button variant="link" className="text-lg">
+                  <Link href="/SignUp/ConfirmEmail">Confirm Email</Link>
+                </Button>
+              </div>
+            </div>
+            <DarkModeToggle />
+          </SheetContent>
+        </Sheet>
         </div>
       </header>
       {/* Title for page */}
@@ -52,7 +76,7 @@ export default function Home() {
               Complete museum management solution for teams of all sizes.
             </p>
           </div>
-          <div className="flex flex-col gap-2 min-[400px]:flex-row justify-center">
+          <div className="sm:flex flex-col gap-2 min-[400px]:flex-row justify-center hidden">
             {/* <Button >
               <Link href="/#">Contact Us</Link>
             </Button>
@@ -61,6 +85,19 @@ export default function Home() {
             </Button> */}
             {mounted ? 
               <Image src={theme == 'light' ? car_dark : car} width={400} height={300} alt="Car 1" className="rounded-lg object-cover" />
+            :
+              <Image src={car_dark} width={400} height={300} alt="Car 1" className="rounded-lg object-cover" />
+            }
+          </div>
+          <div className="flex flex-col gap-2 min-[400px]:flex-row items-center justify-center sm:hidden">
+            {/* <Button >
+              <Link href="/#">Contact Us</Link>
+            </Button>
+            <Button variant="outline">
+              <Link href="/#">Learn More</Link>
+            </Button> */}
+            {mounted ? 
+              <Image src={theme == 'light' ? car_dark : car} width={200} height={300} alt="Car 1" className="rounded-lg object-cover" />
             :
               <Image src={car_dark} width={400} height={300} alt="Car 1" className="rounded-lg object-cover" />
             }
