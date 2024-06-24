@@ -5,10 +5,10 @@ import car from "./car_logo.png"
 import car_dark from "./car_logo_dark.png"
 import Image from "next/image"
 import { DarkModeToggle } from "@/components/ui/DarkModeToggle"
-import { AlignJustify, BoxIcon, CalendarIcon, ClipboardIcon, DownloadIcon, GaugeIcon, ShieldIcon } from "lucide-react"
+import { BoxIcon, CalendarIcon, ClipboardIcon, DownloadIcon, GaugeIcon, ShieldIcon } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { MobileNav } from "../components/mobile-nav"
 
 export default function Home() {
   const { theme } = useTheme()
@@ -41,29 +41,7 @@ export default function Home() {
           </Button>
           <DarkModeToggle />
         </div>
-        <div className="ml-auto flex flex-row gap-2 sm:hidden">
-        <Sheet>
-          <SheetTrigger asChild>
-            <AlignJustify />
-          </SheetTrigger>
-          <SheetContent className="pb-14">
-            <div className=" p-10 h-full flex flex-col items-center">
-              <div className="flex flex-col gap-4">
-                <Button variant="link" className="text-lg">
-                  <Link href="/LogIn">Log In</Link>
-                </Button>
-                <Button variant="link" className="text-lg">
-                  <Link href="/SignUp">Sign Up</Link>
-                </Button>
-                <Button variant="link" className="text-lg">
-                  <Link href="/SignUp/ConfirmEmail">Confirm Email</Link>
-                </Button>
-              </div>
-            </div>
-            <DarkModeToggle />
-          </SheetContent>
-        </Sheet>
-        </div>
+        <MobileNav />
       </header>
       {/* Title for page */}
       <section className="w-full py-12 md:py-24 lg:py-32 bg-accent"> 
