@@ -8,6 +8,7 @@ import { DarkModeToggle } from "@/components/ui/DarkModeToggle"
 import { BoxIcon, CalendarIcon, ClipboardIcon, DownloadIcon, GaugeIcon, ShieldIcon } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
+import { MobileNav } from "../components/mobile-nav"
 
 export default function Home() {
   const { theme } = useTheme()
@@ -28,7 +29,7 @@ export default function Home() {
             <Image src={car_dark} alt={"Dark Car Image"} style={{ width: '100px', height: 'auto'}} />
             }
         </Link>
-        <div className="ml-auto flex flex-row gap-2">
+        <div className="ml-auto flex flex-row gap-2 hidden sm:flex">
           <Button variant="link">
             <Link href="/LogIn">Log In</Link>
           </Button>
@@ -40,6 +41,7 @@ export default function Home() {
           </Button>
           <DarkModeToggle />
         </div>
+        <MobileNav />
       </header>
       {/* Title for page */}
       <section className="w-full py-12 md:py-24 lg:py-32 bg-accent"> 
@@ -52,7 +54,7 @@ export default function Home() {
               Complete museum management solution for teams of all sizes.
             </p>
           </div>
-          <div className="flex flex-col gap-2 min-[400px]:flex-row justify-center">
+          <div className="sm:flex flex-col gap-2 min-[400px]:flex-row justify-center hidden">
             {/* <Button >
               <Link href="/#">Contact Us</Link>
             </Button>
@@ -61,6 +63,19 @@ export default function Home() {
             </Button> */}
             {mounted ? 
               <Image src={theme == 'light' ? car_dark : car} width={400} height={300} alt="Car 1" className="rounded-lg object-cover" />
+            :
+              <Image src={car_dark} width={400} height={300} alt="Car 1" className="rounded-lg object-cover" />
+            }
+          </div>
+          <div className="flex flex-col gap-2 min-[400px]:flex-row items-center justify-center sm:hidden">
+            {/* <Button >
+              <Link href="/#">Contact Us</Link>
+            </Button>
+            <Button variant="outline">
+              <Link href="/#">Learn More</Link>
+            </Button> */}
+            {mounted ? 
+              <Image src={theme == 'light' ? car_dark : car} width={200} height={300} alt="Car 1" className="rounded-lg object-cover" />
             :
               <Image src={car_dark} width={400} height={300} alt="Car 1" className="rounded-lg object-cover" />
             }

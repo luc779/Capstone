@@ -95,7 +95,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                     control={form.control}
                     name="username"
                     render={({ field }) => (
-                        <FormItem>
+                        <FormItem >
                             <FormLabel>Username</FormLabel>
                         <FormControl>
                             <Input placeholder="Username" type="text" autoCapitalize="none" autoCorrect="off" {...field} />
