@@ -21,7 +21,7 @@ export const MobileAuthentication = ({ children}: MobileSignInProps) => {
     }, []);
 
     return (
-        <div className="relative">
+        <div className="relative sm:hidden">
             <div className="sm:hidden absolute top-0 left-0 w-full flex items-center px-4 md:px-6 z-10">
                 <Link className="mr-6 rounded-lg p-4" href="/">
                 {mounted ? 
@@ -33,7 +33,7 @@ export const MobileAuthentication = ({ children}: MobileSignInProps) => {
                 <MobileNav />
             </div>
             <div className="lg:p-8 lg:col-span-2 h-[calc(100dvh)] justify-center flex items-center relative">
-                <div className="mx-auto flex w-full flex-col justify-center space-y-6 pr-10 pl-10">
+                <div className="mx-auto flex w-full flex-col justify-center space-y-6 px-10">
                     {children}
                 </div>
             </div>

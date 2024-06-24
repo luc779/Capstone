@@ -1,3 +1,4 @@
+import { MobileAuthentication } from "@/components/mobile-authentication"
 import { Metadata } from "next"
 import AccountPageDesign from "../../AccountPageDesign"
 import ConfirmUserForm from "./Form/ConfirmUserForm"
@@ -13,6 +14,10 @@ export default function ConfirmEmail() {
       <AccountPageDesign>
         <ConfirmUserForm/>
       </AccountPageDesign>
+
+      <MobileAuthentication>
+        <ConfirmUserForm />
+      </MobileAuthentication>
     </>
   )
 }
