@@ -1,18 +1,25 @@
+'use client'
 import Link from "next/link"
 import { useTheme } from "next-themes"
 import Image from "next/image"
 import car from "../app/car_logo.png"
 import car_dark from "../app/car_logo_dark.png"
 import { MobileNav } from "./mobile-nav"
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 
 interface MobileSignInProps {
-    mounted: boolean;
     children: ReactNode;
   }
 
-export const MobileAuthentication = ({mounted, children}: MobileSignInProps) => {
+export const MobileAuthentication = ({ children}: MobileSignInProps) => {
     const { theme } = useTheme();
+
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
     return (
         <div className="relative">
             <div className="sm:hidden absolute top-0 left-0 w-full flex items-center px-4 md:px-6 z-10">

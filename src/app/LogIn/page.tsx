@@ -1,28 +1,22 @@
-"use client"
 import AccountPageDesign from "../AccountPageDesign"
 import LogInForm from "./Form/LogInForm"
 import { useTheme } from "next-themes"
-import { useEffect, useState } from "react"
+import { Metadata } from "next"
 import { MobileAuthentication } from "@/components/mobile-authentication"
 
+export const metadata: Metadata = {
+  title: "Musée Clio: Sign In",
+  description: "Sign Up page.",
+}
 
 export default function LogIn() {
-  const { theme } = useTheme()
-
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   return (
     <>
-      <title>Musée Clio: Sign In</title>
       <AccountPageDesign>
         <LogInForm/>
       </AccountPageDesign>
 
-      <MobileAuthentication mounted={mounted}>
+      <MobileAuthentication >
         <LogInForm />
       </MobileAuthentication>
     </>

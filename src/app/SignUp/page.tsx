@@ -1,9 +1,10 @@
 import { Metadata } from "next"
 import SignUpForm from "./Form/SignUpForm"
 import AccountPageDesign from "../AccountPageDesign"
+import { MobileAuthentication } from "@/components/mobile-authentication"
 
 export const metadata: Metadata = {
-  title: "Sign Up",
+  title: "Musée Clio: Sign Up",
   description: "Sign Up page.",
 }
 
@@ -13,6 +14,10 @@ export default function SignUp() {
       <AccountPageDesign>
         <SignUpForm/>
       </AccountPageDesign>
+
+      <MobileAuthentication >
+        <SignUpForm />
+      </MobileAuthentication>
     </>
   )
 }
